@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:graduation_project/presentation/login_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -8,11 +9,25 @@ class OnboardingScreen extends StatefulWidget {
   State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-List images = [
-  "10780304_19197030",
-  "11667132_20943447",
-  "11668286_20945170",
+// List images = [
+//   "10780304_19197030",
+//   "11667132_20943447",
+//   "11668286_20945170",
+// ];
+final images = [
+  // AssetImage("lib/images/10780304_19197030-min.jpg"),
+  // AssetImage("lib/images/11667132_20943447-min.jpg"),
+  // AssetImage("lib/images/11668286_20945170-min.jpg"),
+  AssetImage("images/about.png"),
+  AssetImage("images/about.png"),
+  AssetImage("images/about.png"),
 ];
+List txt=[
+  "Lorem ipsum is simply a\ndummy text for your design or\nyour mobile app.",
+  "Lorem ipsum is simply a\ndummy text for your design or\nyour mobile app2.",
+  "Lorem ipsum is simply a\ndummy text for your design or\nyour mobile app3.",
+];
+
 int ind = 0;
 
 class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerProviderStateMixin{
@@ -21,19 +36,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
   void initState() {
     super.initState();
     animationController= AnimationController(vsync: this);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      precacheImage(AssetImage("lib/images/${images[0]}.png"), context);
-      precacheImage(AssetImage("lib/images/${images[1]}.png"), context);
-      precacheImage(AssetImage("lib/images/${images[2]}.png"), context);
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   precacheImage(AssetImage("lib/images/${images[0]}.png"), context);
+    //   precacheImage(AssetImage("lib/images/${images[1]}.png"), context);
+    //   precacheImage(AssetImage("lib/images/${images[2]}.png"), context);
+    // });
   }
   @override
   void dispose() {
     animationController.dispose();
     super.dispose();
   }
+  _preloadImages() {
+    images.map((img) => precacheImage(img, context));
+  }
   @override
   void didChangeDependencies() {
+    _preloadImages();
     super.didChangeDependencies();
   }
   @override
@@ -81,20 +100,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
                     height: wid>480?400:wid,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage("lib/images/${images[ind]}.png"),
+                        image: images[ind],
                         fit: BoxFit.cover,
                       ),
                     ),
-                  ).animate(controller: animationController).fadeIn(duration: 0.5.seconds),
+                    // child: Image.asset("lib/images/11668286_20945170.jpg"),
+                    // Image.network(ind==0?'https://picsum.photos/250?image=9':(ind==1?"https://images.pexels.com/photos/213780/pexels-photo-213780.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500":"https://images.pexels.com/photos/2899097/pexels-photo-2899097.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500")),
+                  ),
                             Text(
-                              "Lorem ipsum is simply a\ndummy text for your design or\nyour mobile app.",
+                              "${txt[ind]}",
                               style: TextStyle(
                                   fontFamily: "NotoSans", fontSize: 18),
                               textAlign: TextAlign.center,
                             ),
                           ],
                         ),
-                ),
+                ).animate(controller: animationController).fadeIn(duration: 0.5.seconds, curve: Curves.easeInOut),
                 Column(
                   children: [
                     Row(
@@ -104,7 +125,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
                           width: i == ind ? 30 : 10,
                           height: 10,
                           decoration: BoxDecoration(
-                            color: Color(0xff31344A),
+                            color: Color(0xff155E7D),
                             borderRadius: BorderRadius.all(
                               Radius.circular(5),
                             ),
@@ -125,9 +146,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
                         //       )
                         //     : print("END");
                         setState(() {
-                          ind!=2?ind++:ind;
-                          animationController.reset();
-                          animationController.forward();
+                          // ind!=2?ind++:null;
+                          if(ind!=2){
+                            ind++;
+                            animationController.reset();
+                            animationController.forward();
+                          }else{
+                            Navigator.pushReplacement(context,
+                                MaterialPageRoute(builder:
+                                    (context) => LoginScreen(),
+                                ),
+                            );
+                          }
                         });
                       },
                       child: Container(
@@ -135,7 +165,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
                         height: 80,
                         margin: EdgeInsets.only(bottom: 60),
                         decoration: BoxDecoration(
-                          color: Color(0xff31344A),
+                          color: Color(0xff155E7D),
                           borderRadius: BorderRadius.all(
                             Radius.circular(100),
                           ),
