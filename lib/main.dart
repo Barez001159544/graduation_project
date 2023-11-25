@@ -3,6 +3,10 @@ import 'dart:async';
 import 'package:easy_splash_screen/easy_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:graduation_project/custom%20theme%20data/themes.dart';
+import 'package:graduation_project/presentation/forgot_password_reset.dart';
+import 'package:graduation_project/presentation/forgot_password_screen.dart';
+import 'package:graduation_project/presentation/forgot_password_success.dart';
 import 'package:graduation_project/presentation/login_screen.dart';
 import 'package:graduation_project/presentation/onboarding_screen.dart';
 
@@ -47,15 +51,11 @@ void main() {
 //   }
 // }
 
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Splash Screen',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
       home: MyHomePage(),
       debugShowCheckedModeBanner: false,
     );
@@ -70,11 +70,11 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 5),
+    Timer(Duration(seconds: 1),
             ()=>Navigator.pushReplacement(context,
             MaterialPageRoute(builder:
                 (context) =>
-                    // LoginScreen(),
+                    // ForgotPasswordScreen(),
                 OnboardingScreen(),
             )
         )
