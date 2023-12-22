@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/presentation/forgot_password_screen.dart';
+import 'package:graduation_project/presentation/home_screen.dart';
+import 'package:graduation_project/presentation/taxi_home.dart';
+import 'package:provider/provider.dart';
 
+import '../controllers/theme_changer.dart';
 import '../custom theme data/themes.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -16,15 +20,15 @@ bool isShown=true;
 TextEditingController username= TextEditingController();
 TextEditingController password= TextEditingController();
 String errorMessage="";
-
-bool isDark=true;
-ThemeData cTheme = isDark?lightTheme:darkTheme;
+// bool isDark=true;
+// ThemeData cTheme = isDark?lightTheme:darkTheme;
 
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     double wid = MediaQuery.of(context).size.width;
     double hei = MediaQuery.of(context).size.height;
+    ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: cTheme,
@@ -88,14 +92,23 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ],
                         ),
-                        mainBtn(wid>600?wid*0.35-80:wid*0.5, wid>600?62.0:72.0, cTheme.primaryColor, "Login", () {
+                        mainBtn(wid>600?wid*0.35-80:wid-80, wid>600?62.0:72.0, cTheme.primaryColor, "LOGIN", () {
                           setState(() {
                             if(username.text.isEmpty || password.text.isEmpty){
                               errorMessage="leave no field empty";
+                            }else if(username.text=="john" && password.text=="taxi"){
+                              Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
+                                return TaxiHomeScreen();
+                              }));
+                            }else if(username.text=="john" && password.text=="res"){
+                              Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
+                                return HomeScreen();
+                              }));
                             }else{
-                              print("\$USERNAME: ${username.text}, \$PASSWORD: ${password.text}");
+                              errorMessage="username or password incorrect";
                             }
                           });
+
                         }),
                         GestureDetector(
                           onTap: (){
@@ -124,11 +137,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 left: 10,
                 child: GestureDetector(
                   onTap: (){
-                    setState(() {
-                      // isDark=!isDark;
-                      cTheme = cTheme==lightTheme?darkTheme:lightTheme;
-                      print(isDark);
-                    });
+                    // setState(() {
+                    //   cTheme = cTheme==lightTheme?darkTheme:lightTheme;
+                    //   print(isDark);
+                    // });
                   },
                   child: Container(
                     width: 70,

@@ -1,7 +1,13 @@
+import 'package:cool_dropdown/cool_dropdown.dart';
+import 'package:cool_dropdown/models/cool_dropdown_item.dart';
+import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/presentation/forgot_password_reset.dart';
+import 'package:provider/provider.dart';
 
+import '../controllers/theme_changer.dart';
 import '../custom theme data/themes.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -11,16 +17,54 @@ class ForgotPasswordScreen extends StatefulWidget {
   State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
 }
 
-bool isDark=true;
-ThemeData cTheme = isDark?lightTheme:darkTheme;
+// bool isDark=true;
+// ThemeData cTheme = isDark?lightTheme:darkTheme;
 PageController pageController= PageController();
+String? chosenCode=null;
+List<String> countryCodes = [
+  ' +964',
+  ' +90',
+  ' +98',
+  ' +20',
+  ' +965',
+];
+List countryLangCodes=[
+  "iq",
+  "tr",
+  "ir",
+  "eg",
+  "kw",
+];
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+  List<CoolDropdownItem<String>> countryCodesDropdownItems = [];
+  final countryCodesDropdownController = DropdownController();
 
+  @override
+  void initState() {
+    super.initState();
+    for (var i = 0; i < countryCodes.length; i++) {
+      countryCodesDropdownItems.add(
+        CoolDropdownItem<String>(
+            label: '${countryCodes[i]}',
+            icon: Container(
+              height: 25,
+              width: 25,
+              child: CountryFlag.fromCountryCode(
+                countryLangCodes[i],
+                width: 20,
+                height: 20,
+              ),
+            ),
+            value: '${countryCodes[i]}'),
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     double wid = MediaQuery.of(context).size.width;
     double hei = MediaQuery.of(context).size.height;
+    ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List views=[
       Container(
         margin: EdgeInsets.symmetric(horizontal: wid<500?0:wid-(wid-300)),
@@ -47,19 +91,82 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   direction: Axis.horizontal,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    customDropDownMenu(120.0, 30.0, ["IRAQ +964", "USA +006"], null, (val) {}),
+                    // customDropDownMenu(120.0, 30.0, ["IRAQ +964", "USA +006"], chosenCode, (val) {
+                    //   setState(() {
+                    //     chosenCode=val;
+                    //   });
+                    // }),
+                    // CoolDropdown(dropdownList: List<CoolDropdownItem>["IRAQ +964", "USA +006"], controller: DropdownController(), onChange: (dynamic val){}),
+                  CoolDropdown<String>(
+                  controller: countryCodesDropdownController,
+                  dropdownList: countryCodesDropdownItems,
+                  defaultItem: countryCodesDropdownItems[0],
+                  onChange: (value) async {
+                    if (countryCodesDropdownController.isError) {
+                      await countryCodesDropdownController.resetError();
+                    }
+                    // fruitDropdownController.close();
+                  },
+                  onOpen: (value) {},
+                  resultOptions: ResultOptions(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    width: 70,
+                    icon: SizedBox(
+                      width: 10,
+                      height: 10,
+                      child: CustomPaint(
+                        painter: DropdownArrowPainter(),
+                      ),
+                    ),
+                    render: ResultRender.icon,
+                    placeholder: 'Select Country Code',
+                    isMarquee: true,
+                  ),
+                  dropdownOptions: DropdownOptions(
+                      top: 20,
+                      height: hei/2-50,
+                      width: 200,
+                      gap: DropdownGap.all(5),
+                      borderSide: BorderSide(width: 1, color: Colors.green),
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      align: DropdownAlign.left,
+                      animationType: DropdownAnimationType.size),
+                  dropdownTriangleOptions: DropdownTriangleOptions(
+                    width: 20,
+                    height: 10,
+                    align: DropdownTriangleAlign.left,
+                    borderRadius: 3,
+                    left: 20,
+                  ),
+                  dropdownItemOptions: DropdownItemOptions(
+                    isMarquee: true,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    render: DropdownItemRender.reverse,
+                    height: 50,
+                    selectedBoxDecoration: BoxDecoration(
+                      color: Colors.green.withOpacity(0.3),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                    ),
+                    selectedTextStyle: TextStyle(
+                      color: Colors.black, fontSize: 16, fontWeight: FontWeight.w400
+                    ),
+                  ),
+                ),
+
                     SizedBox(
                       width: 10,
                     ),
                     Expanded(
-                        child: loginFields(TextEditingController(), false, "Enter phone number", cTheme.primaryColorDark, cTheme.primaryColorDark),
+                        child: loginFields(TextEditingController(), false, "### ####", cTheme.primaryColorDark, cTheme.primaryColorDark),
                     ),
                   ],
                 ),
                 SizedBox(
                   height: 60,
                 ),
-                mainBtn(wid>500?wid*0.35-80:wid*0.5, wid>500?62.0:72.0, cTheme.primaryColor, "SEND", () {
+                mainBtn(wid>500?wid*0.35-80:wid-40, wid>500?62.0:72.0, cTheme.primaryColor, "SEND", () {
                   Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
                     return ForgotPasswordReset();
                   }));
@@ -136,12 +243,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       height: 10,
                     ),
                         Flexible(
-                          child: loginFields(TextEditingController(), false, "Enter G-Mail", cTheme.primaryColorDark, cTheme.primaryColorDark),
+                          child: loginFields(TextEditingController(), false, "example@gmail.com", cTheme.primaryColorDark, cTheme.primaryColorDark),
                         ),
                     SizedBox(
                       height: 60,
                     ),
-                    mainBtn(wid>500?wid*0.35-80:wid*0.5, wid>500?62.0:72.0, cTheme.primaryColor, "SEND", () {
+                    mainBtn(wid>500?wid*0.35-80:wid-40, wid>500?62.0:72.0, cTheme.primaryColor, "SEND", () {
                       Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
                         return ForgotPasswordReset();
                       }));
@@ -158,19 +265,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       debugShowCheckedModeBanner: false,
       theme: cTheme,
       home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          scrolledUnderElevation: 0,
-          leading: Builder(
-            builder: (BuildContext){
-              return IconButton(onPressed: (){
-                Navigator.of(context).pop();
-              },
-                icon: Icon(Icons.keyboard_arrow_left_rounded, color: cTheme.primaryColorDark,),
-              );
-            },
-          ),
-        ),
+        appBar: customAppbar(cTheme.backgroundColor, "", cTheme.primaryColorDark, context),
         backgroundColor: cTheme.backgroundColor,
         body: SafeArea(
           child: PageView.builder(

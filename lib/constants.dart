@@ -40,8 +40,8 @@ Widget customDropDownMenu(double wid, double height, List<String>? items, String
       child: DropdownButton(
         dropdownColor: Color(0xfff8f8f8),
         isExpanded: true,
-        disabledHint: Text("Code"),
-        hint: Text("Code"),
+        disabledHint: Text("Code", style: TextStyle(fontFamily: "NotoSans"),),
+        hint: Text("Code", style: TextStyle(fontFamily: "NotoSans"),),
         value: value != null ? value : null,
         style: TextStyle(color: Colors.black),
         icon: Icon(
@@ -57,6 +57,7 @@ Widget customDropDownMenu(double wid, double height, List<String>? items, String
                 child: Text(
                   itemss,
                   textAlign: TextAlign.center,
+                  style: TextStyle(fontFamily: "NotoSans"),
                 )),
           );
         }).toList(),
@@ -76,12 +77,13 @@ Widget loginFields(TextEditingController controller, bool isShown, String hint, 
     textAlignVertical: TextAlignVertical.bottom,
     style: TextStyle(
       color: primaryColor,
+      fontSize: hint=="### ####"?24:16,
     ),
     decoration: InputDecoration(
       hintText: "$hint",
       hintStyle: TextStyle(
         color: Colors.grey,
-        fontSize: 14,
+        fontSize: hint=="### ####"?24:14,
       ),
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(
@@ -93,6 +95,24 @@ Widget loginFields(TextEditingController controller, bool isShown, String hint, 
           width: 1, color: Color(0xff155E7D), style: BorderStyle.solid,
         ),
       ),
+    ),
+  );
+}
+
+AppBar customAppbar(Color bgColor, String title, Color titleColor, BuildContext context){
+  return AppBar(
+    backgroundColor: bgColor,
+    scrolledUnderElevation: 0,
+    title: Text(title, style: TextStyle(color: titleColor),),
+    centerTitle: true,
+    leading: Builder(
+      builder: (BuildContext){
+        return IconButton(onPressed: (){
+          Navigator.of(context).pop();
+        },
+          icon: Icon(Icons.arrow_back_rounded, color: titleColor,),
+        );
+      },
     ),
   );
 }

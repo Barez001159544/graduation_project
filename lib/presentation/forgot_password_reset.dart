@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/presentation/forgot_password_success.dart';
+import 'package:provider/provider.dart';
 
 import '../constants.dart';
+import '../controllers/theme_changer.dart';
 import '../custom theme data/themes.dart';
 
 class ForgotPasswordReset extends StatefulWidget {
@@ -15,8 +17,8 @@ bool isShown1=true;
 bool isShown2=true;
 TextEditingController resetPassword1= TextEditingController();
 TextEditingController resetPassword2= TextEditingController();
-bool isDark=true;
-ThemeData cTheme = isDark?lightTheme:darkTheme;
+// bool isDark=true;
+// ThemeData cTheme = isDark?lightTheme:darkTheme;
 String errorMessage="";
 
 class _ForgotPasswordResetState extends State<ForgotPasswordReset> {
@@ -24,8 +26,10 @@ class _ForgotPasswordResetState extends State<ForgotPasswordReset> {
   Widget build(BuildContext context) {
     double wid = MediaQuery.of(context).size.width;
     double hei = MediaQuery.of(context).size.height;
+    ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: cTheme,
       home: Scaffold(
         backgroundColor: cTheme.backgroundColor,
         body: SafeArea(
@@ -37,7 +41,7 @@ class _ForgotPasswordResetState extends State<ForgotPasswordReset> {
               children: [
                 Container(
                   width: wid,
-                  child: Text("Create New Password", style: TextStyle(fontFamily: "NotoSans", fontSize: 28, fontWeight: FontWeight.bold, color: cTheme.primaryColorDark),),
+                  child: Text("Create New Password", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: cTheme.primaryColorDark),),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 10),
@@ -97,7 +101,7 @@ class _ForgotPasswordResetState extends State<ForgotPasswordReset> {
                   padding: EdgeInsets.symmetric(vertical: 15),
                   child: Text("$errorMessage", style: TextStyle(fontSize: 10, color: Colors.red),),
                 ),
-                mainBtn(wid>500?wid*0.35-80:wid*0.5, wid>500?62.0:72.0, cTheme.primaryColor, "LOGIN", () {
+                mainBtn(wid>500?wid*0.35-80:wid-40, wid>500?62.0:72.0, cTheme.primaryColor, "SAVE", () {
                   Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
                     return ForgotPasswordSuccess();
                   }));

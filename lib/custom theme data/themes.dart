@@ -12,11 +12,11 @@ final ThemeData lightTheme = ThemeData(
       fontSize: 14,
     ),
   ),
-  fontFamily: "NotoSans",
   // colorScheme: lightThemeColors(),
   textSelectionTheme: TextSelectionThemeData(
       selectionColor: Colors.blueGrey,
   ),
+  fontFamily: "NotoSans",
 );
 
 ColorScheme lightThemeColors() {
