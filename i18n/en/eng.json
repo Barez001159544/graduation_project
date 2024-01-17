@@ -1,0 +1,93 @@
+{
+  "screens": [
+    {
+      "title": "Settings",
+      "gotoProfile": "Edit Profile",
+      "theme": "Dark Mode",
+      "lang": "Language",
+      "notification": "Notification"
+    },
+    {
+      "title": "Profile",
+      "ph1": "Name",
+      "ph2": "Phone Number",
+      "ph3": "G-Mail",
+      "ph4": "Password",
+      "btn": "Save"
+    },
+    {
+      "title1": "Welcome Back!",
+      "title2": "Welcome\nBack!",
+      "ph1": "Username",
+      "ph2": "Password",
+      "btn": "Login",
+      "fbtn": "Forgot Password?"
+    },
+    {
+      "title": "Recover Password",
+      "subtitle1": "Please enter your phone number",
+      "btn": "send",
+      "tryg": "Try Your G-Mail",
+      "tryp": "Try Your Phone Number",
+      "subtitle2": "Please enter your G-Mail",
+      "ph": "example@gmail.com"
+    },
+    {
+      "title": "Create New Password",
+      "ph1": "New Password",
+      "ph2": "Confirm Password",
+      "btn": "Save"
+    },
+    {
+      "title": "Password Reset Complete",
+      "subtitle": "Your password reset was successful. You can now proceed to login to your account",
+      "btn": "LOGIN"
+    },
+    {
+      "settings": "Settings",
+      "area": "View Your Area",
+      "welcome": "Welcome Back",
+      "comTitle": "Your Community",
+      "comSubtitle": "Find out what is new in you community",
+      "serTitle": "Whatever you need",
+      "serSubtitle": "Support, Taxi, Fixation and more",
+      "bigBtn1": "Some Large Heading Here",
+      "bigBtn2": "Some Large\nHeading Here"
+    },
+    {
+      "title": "FIB Payment"
+    },
+    {
+      "title": "Scan QR Code",
+      "subtitle": "Lorem ipsum is simply a dummy text for your\nweb design and mobile app development",
+      "btn": "Save",
+      "sideBtn": "Enter Manually"
+    },
+    {
+      "title": "Services",
+      "subtitle": "What do you Need, ",
+      "taxiTitle": "Taxi",
+      "taxiSubtitle": "Lorem ipsum is simply a dummy text for your nweb design and mobile app."
+    },
+    {
+      "title": "Taxi Services",
+      "subtitle": "How to get a ride?",
+      "subtitle2": "Here, you can easily find and book\nan available taxi for your convenience.",
+      "btn": "Continue"
+    },
+    {
+      "title": "Taxi Driver",
+      "nomber": "No.",
+      "carModel": "Model",
+      "availableNot": "You are not available",
+      "availableYes": "You are now available",
+      "btnNot": "Unavailable",
+      "btnYes": "Available"
+    },
+    {
+      "title": "Taxi is needed for:",
+      "name": "Name",
+      "location": "Location"
+    }
+  ]
+}

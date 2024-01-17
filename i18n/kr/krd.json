@@ -1,0 +1,93 @@
+{
+  "screens": [
+    {
+      "title": "چاککردن",
+      "gotoProfile": "هەژمارت چاککە",
+      "theme": "دۆخی تاریکی",
+      "lang": "زمان",
+      "notification": "ئاگاداربوون"
+    },
+    {
+      "title": "هەژمارەکەت",
+      "ph1": "ناو",
+      "ph2": "ژمارەی تەلەفۆن",
+      "ph3": "گوگڵ مەیڵ",
+      "ph4": "رەمز",
+      "btn": "تەواو"
+    },
+    {
+      "title1": "بەخێربێیتەوە!",
+      "title2": "بەخێربێیتەوە!",
+      "ph1": "ناوی بەکارهێنەر",
+      "ph2": "رەمز",
+      "btn": "بڕۆ",
+      "fbtn": "پاسوۆردەکەتت بیرچووە؟"
+    },
+    {
+      "title": "پاسوۆردەکەت بهێنەوە",
+      "subtitle1": "تکایە ژمارە مۆبایلەکەت بنووسە",
+      "btn": "بنێرە",
+      "tryg": "بە گوگڵ مەیڵ هەوڵدە",
+      "tryp": "بە ژمارە مۆبایل هەوڵدە",
+      "subtitle2": "تکایە گوگڵ مەیڵەکەت بنووسە",
+      "ph": "example@gmail.com"
+    },
+    {
+      "title": "پاسوۆردێکی نوێ درەوستبکە",
+      "ph1": "رەمزە نوێکە",
+      "ph2": "دڵنیایی لە رەمزەکەت",
+      "btn": "Save"
+    },
+    {
+      "title": "رەمزەکەت بەسەرکەوتوویی گۆڕا",
+      "subtitle": "رەمزەکەت بە سەرکەوتووی گۆڕا، دەتوانیت بەردەوامبیت بۆ چوونە ژوورەوە",
+      "btn": "بچۆ ژوورەوە"
+    },
+    {
+      "settings": "چاککردن",
+      "area": "رووبەرەکەت ببینە",
+      "welcome": "بەخێربێیتەوە",
+      "comTitle": "کۆمەڵگاکەت",
+      "comSubtitle": "بزانە چی لە کۆمەڵگاکەت دەگوزەرێت",
+      "serTitle": "هەرچیەکت پێوویستبێت",
+      "serSubtitle": "Support, Taxi, Fixation and more",
+      "bigBtn1": "Some Large Heading Here",
+      "bigBtn2": "Some Large\nHeading Here"
+    },
+    {
+      "title": "FIB پارەدان بە"
+    },
+    {
+      "title": "QR سکانبکە",
+      "subtitle": "Lorem ipsum is simply a dummy text for your\nweb design and mobile app development",
+      "btn": "بنێرە",
+      "sideBtn": "بە کۆد بنووسە"
+    },
+    {
+      "title": "خزمەتگوزاریەکان",
+      "subtitle": "پێوویستیت بە چییە، ",
+      "taxiTitle": "تەکسی",
+      "taxiSubtitle": "Lorem ipsum is simply a dummy text for your nweb design and mobile app."
+    },
+    {
+      "title": "خزمەتگوزاری تاکسی",
+      "subtitle": "چۆن تەکسیەکم دەستبکەوێت؟",
+      "subtitle2": "Here, you can easily find and book\nan available taxi for your convenience.",
+      "btn": "بەردەوامبە"
+    },
+    {
+      "title": "شۆفێری تەکسی",
+      "nomber": "ژمارە",
+      "carModel": "مۆدێل",
+      "availableNot": "لەئێستادا بەردەستنییت",
+      "availableYes": "تۆ ئێستا بەردەستیت",
+      "btnNot": "بەردەستمەبە",
+      "btnYes": "بەردەستبە"
+    },
+    {
+      "title": "تەکسیەک پێوویستە بۆ:",
+      "name": "ناو",
+      "location": "شوێن"
+    }
+  ]
+}

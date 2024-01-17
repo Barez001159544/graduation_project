@@ -4,8 +4,11 @@ import 'package:easy_splash_screen/easy_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:graduation_project/controllers/language_changer.dart';
 import 'package:graduation_project/controllers/theme_changer.dart';
 import 'package:graduation_project/custom%20theme%20data/themes.dart';
+import 'package:graduation_project/presentation/about_app.dart';
+import 'package:graduation_project/presentation/community_screen.dart';
 import 'package:graduation_project/presentation/payment_scanner_screen.dart';
 import 'package:graduation_project/presentation/payment_screen.dart';
 import 'package:graduation_project/presentation/forgot_password_reset.dart';
@@ -16,6 +19,7 @@ import 'package:graduation_project/presentation/login_screen.dart';
 import 'package:graduation_project/presentation/onboarding_screen.dart';
 import 'package:graduation_project/presentation/home_screen.dart';
 import 'package:graduation_project/presentation/profile_screen.dart';
+import 'package:graduation_project/presentation/repair_screen.dart';
 import 'package:graduation_project/presentation/services_screen.dart';
 import 'package:graduation_project/presentation/services_screen.dart';
 import 'package:graduation_project/presentation/settings_screen.dart';
@@ -28,8 +32,13 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (BuildContext context) =>ThemeChanger(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (BuildContext context) =>ThemeChanger(),
+        ),
+        ChangeNotifierProvider(create: (BuildContext context)=>LanguageChanger(),),
+      ],
       child: MyApp(),
     ),
   );
@@ -80,6 +89,7 @@ class MyApp extends StatelessWidget {
         // Use builder only if you need to use library outside ScreenUtilInit context
         builder: (_ , child) {
         return MaterialApp(
+          locale: Locale("ar"),
           home: MyHomePage(),
           debugShowCheckedModeBanner: false,
         );
@@ -98,12 +108,13 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<ThemeChanger>(context, listen: false).getDefaultTheme();
+      Provider.of<LanguageChanger>(context, listen: false).readJson();
     });
     Timer(Duration(seconds: 1),
             ()=>Navigator.pushReplacement(context,
             MaterialPageRoute(builder:
                 (context) =>
-                    TaxiHomeScreen(),
+                    RepairScreen(),
                 // OnboardingScreen(),
             ),
         ),
