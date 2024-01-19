@@ -46,6 +46,9 @@ dependencies:
   shared_preferences: ^2.2.2
   provider: ^6.1.1
   parallax_rain: ^1.1.0
+  http: ^1.2.0
+  flutter_secure_storage:
+  jwt_decode:
 
 dev_dependencies:
   flutter_test:

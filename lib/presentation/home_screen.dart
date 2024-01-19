@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:graduation_project/presentation/fib_login.dart';
 import 'package:graduation_project/presentation/payment_screen.dart';
 import 'package:graduation_project/presentation/profile_screen.dart';
 import 'package:graduation_project/presentation/services_screen.dart';
 import 'package:graduation_project/presentation/settings_screen.dart';
 import 'package:provider/provider.dart';
 
+import '../controllers/get_token.dart';
 import '../controllers/language_changer.dart';
 import '../controllers/theme_changer.dart';
 import '../custom theme data/themes.dart';
@@ -52,8 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: cTheme,
-      home: Consumer<LanguageChanger>(
-        builder: (_, languageChanger, __) {
+      home: Consumer2<LanguageChanger, GetToken>(
+        builder: (_, languageChanger, getToken, __) {
           lChanger= languageChanger.data;
           return Directionality(
             textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
@@ -263,7 +265,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           GestureDetector(
                             onTap: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context){
-                                return PaymentScreen();
+                                return getToken==null?FIBLogin():PaymentScreen();
                               }));
                             },
                             child: Container(

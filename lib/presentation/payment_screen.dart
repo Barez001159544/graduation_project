@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:graduation_project/controllers/get_payment.dart";
 import "package:graduation_project/presentation/payment_scanner_screen.dart";
 import "package:provider/provider.dart";
 
@@ -28,8 +29,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
     return MaterialApp(
       theme: cTheme,
       debugShowCheckedModeBanner: false,
-      home: Consumer<LanguageChanger>(
-          builder: (_, languageChanger, __) {
+      home: Consumer2<LanguageChanger, GetPayment>(
+          builder: (_, languageChanger, getPayment, __) {
             lChanger= languageChanger.data;
             return Directionality(
               textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
@@ -128,6 +129,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               Navigator.push(context, MaterialPageRoute(builder: (context){
                                 return PaymentScannerScreen();
                               }));
+                              getPayment.getPaymentInformation();
                             },
                             child: Container(
                               width: 100,

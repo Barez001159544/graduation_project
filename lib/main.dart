@@ -4,11 +4,14 @@ import 'package:easy_splash_screen/easy_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:graduation_project/controllers/get_payment.dart';
+import 'package:graduation_project/controllers/get_token.dart';
 import 'package:graduation_project/controllers/language_changer.dart';
 import 'package:graduation_project/controllers/theme_changer.dart';
 import 'package:graduation_project/custom%20theme%20data/themes.dart';
 import 'package:graduation_project/presentation/about_app.dart';
 import 'package:graduation_project/presentation/community_screen.dart';
+import 'package:graduation_project/presentation/fib_login.dart';
 import 'package:graduation_project/presentation/payment_scanner_screen.dart';
 import 'package:graduation_project/presentation/payment_screen.dart';
 import 'package:graduation_project/presentation/forgot_password_reset.dart';
@@ -28,6 +31,7 @@ import 'package:graduation_project/presentation/home_screen.dart';
 import 'package:graduation_project/presentation/taxi_home.dart';
 import 'package:graduation_project/presentation/taxi_onway.dart';
 import 'package:graduation_project/presentation/taxi_services.dart';
+import 'package:graduation_project/tokenManager.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -37,7 +41,15 @@ void main() {
         ChangeNotifierProvider(
           create: (BuildContext context) =>ThemeChanger(),
         ),
-        ChangeNotifierProvider(create: (BuildContext context)=>LanguageChanger(),),
+        ChangeNotifierProvider(
+          create: (BuildContext context)=>LanguageChanger(),
+        ),
+        ChangeNotifierProvider(
+          create: (BuildContext context)=>GetToken(),
+        ),
+        ChangeNotifierProvider(
+          create: (BuildContext context)=>GetPayment(),
+        ),
       ],
       child: MyApp(),
     ),
@@ -103,22 +115,43 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 class _MyHomePageState extends State<MyHomePage> {
+  getToken() async {
+    String? rToken= await TokenManager().readToken();
+    // print(rToken);
+    Timer(Duration(seconds: 1),
+      ()=>Navigator.of(context, rootNavigator: false).pushReplacement(MaterialPageRoute(builder:
+          (context,) =>
+      rToken==null?FIBLogin():PaymentScannerScreen(),
+        // OnboardingScreen(),
+      ),),
+      //     ()=>Navigator.pushReplacement(context,
+      //   MaterialPageRoute(builder:
+      //       (context,) =>
+      //   getToken()==null?FIBLogin():HomeScreen(),
+      //     // OnboardingScreen(),
+      //   ),
+      // ),
+    );
+    // print(rToken);
+  }
   @override
-  void initState() {
+  initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<ThemeChanger>(context, listen: false).getDefaultTheme();
       Provider.of<LanguageChanger>(context, listen: false).readJson();
+      // Provider.of<GetToken>(context, listen: false).readToken();
+      // Map<String, dynamic> decodedToken = {};
+      // Map<String, dynamic> jwtToken;
+      // Map<String, dynamic> getDecodedToken() {
+      //   jwtToken = Provider.of<GetToken>(context, listen: false).dToken;
+      //   print(jwtToken);
+      //   return jwtToken;
+      // }
+      // decodedToken= getDecodedToken();
+      // print(decodedToken);
     });
-    Timer(Duration(seconds: 1),
-            ()=>Navigator.pushReplacement(context,
-            MaterialPageRoute(builder:
-                (context) =>
-                    RepairScreen(),
-                // OnboardingScreen(),
-            ),
-        ),
-    );
+    getToken();
   }
   @override
   Widget build(BuildContext context) {
