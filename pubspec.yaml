@@ -49,6 +49,8 @@ dependencies:
   http: ^1.2.0
   flutter_secure_storage:
   jwt_decode:
+  flutter_styled_toast: ^2.2.1
+  timer_count_down: ^2.2.2
 
 dev_dependencies:
   flutter_test:

@@ -10,6 +10,7 @@ import '../constants.dart';
 import '../controllers/language_changer.dart';
 import '../controllers/theme_changer.dart';
 import '../custom theme data/themes.dart';
+import '../tokenManager.dart';
 import 'forgot_password_screen.dart';
 import 'home_screen.dart';
 
@@ -72,20 +73,20 @@ class _FIBLoginState extends State<FIBLogin> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text("Login to your\nFIB Account", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 36), textAlign: TextAlign.center,),
+                              Text(lChanger[14]["title"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 36), textAlign: TextAlign.center,),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
                                       padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                                      child: loginFields(id, false, lChanger[2]["ph1"], cTheme.primaryColorDark, cTheme.primaryColorDark)),
+                                      child: loginFields(id, false, lChanger[14]["ph1"], cTheme.primaryColorDark, cTheme.primaryColorDark)),
                                   Padding(
                                     padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.end,
                                       children: [
                                         Expanded(
-                                          child: loginFields(secret, isShown, lChanger[2]["ph2"], cTheme.primaryColorDark, cTheme.primaryColorDark),
+                                          child: loginFields(secret, isShown, lChanger[14]["ph2"], cTheme.primaryColorDark, cTheme.primaryColorDark),
                                         ),
                                         GestureDetector(
                                           onTap: (){
@@ -112,7 +113,7 @@ class _FIBLoginState extends State<FIBLogin> {
                                   ),
                                 ],
                               ),
-                              mainBtn(wid>600?wid*0.35-80:wid-80, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[2]["btn"], () async {
+                              mainBtn(wid>600?wid*0.35-80:wid-80, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[14]["btn"], () async {
                                   if(id.text.isEmpty || secret.text.isEmpty){
                                     setState(() {
                                       errorMessage="leave no field empty";
@@ -121,7 +122,9 @@ class _FIBLoginState extends State<FIBLogin> {
                                     var request= FIBLoginParameters("client_credentials", id.text, secret.text);//"koya-uni", "1fb32463-c472-4572-8797-670b15be7e3c");
                                     Authentication auth= Authentication();
                                     var logSuccess= await auth.login(request);
-                                    print(logSuccess);
+                                    print("----------");
+                                    print(logSuccess?.scope);
+                                    print("----------");
                                     if(logSuccess!=null){
                                       Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
                                         return PaymentScreen();
@@ -147,7 +150,7 @@ class _FIBLoginState extends State<FIBLogin> {
                                     ),
                                     color: Colors.transparent,
                                   ),
-                                  child: Text("Don't have an account?",
+                                  child: Text(lChanger[14]["fbtn"],
                                     style: TextStyle(color: Colors.grey.shade700, fontSize: 12),
                                   ),
                                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:graduation_project/presentation/login_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -135,20 +136,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
                     ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 50),
-                      child: mainBtn(wid>600?wid*0.35-80:wid-40, wid>600?62.0:72.0, cTheme.primaryColor, "CONTINUE", () {
-                        setState(() {
+                      child: mainBtn(wid>600?wid*0.35-80:wid-40, wid>600?62.0:72.0, cTheme.primaryColor, "CONTINUE", () async {
                           if(ind!=2){
-                            ind++;
-                            animationController.reset();
-                            animationController.forward();
+                            setState(() {
+                              ind++;
+                              animationController.reset();
+                              animationController.forward();
+                            });
                           }else{
+                            final storage = new FlutterSecureStorage();
+                            await storage.write(key: "firstTime", value: "Yes");
                             Navigator.pushReplacement(context,
                               MaterialPageRoute(builder:
                                   (context) => LoginScreen(),
                               ),
                             );
                           }
-                        });
                       }),
                     ),
                   ],

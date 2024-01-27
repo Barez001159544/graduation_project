@@ -88,6 +88,25 @@
       "title": "تەکسیەک پێوویستە بۆ:",
       "name": "ناو",
       "location": "شوێن"
+    },
+    {
+      "title": "کۆمەڵگاکەت"
+    },
+    {
+      "title": "هەژماری FIB بکەوە",
+      "ph1": "ناوی بەکارهێنەر",
+      "ph2": "رەمز",
+      "btn": "بڕۆ",
+      "fbtn": "هەژمارێک درووستبکە"
+    },
+    {
+      "title": "چاککردنەوە",
+      "subtitle": "Lorem ipsum is simply a dummy text for your web design and mobile app development KRD",
+      "btn": "بنێرە",
+      "popTitle": "Title KRD",
+      "popSubtitle": "Message should be showed here as a 2 line text KRD",
+      "agreeBtn": "Ok KRD",
+      "declineBtn": "Decline KRD"
     }
   ]
 }

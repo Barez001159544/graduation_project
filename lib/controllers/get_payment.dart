@@ -10,7 +10,7 @@ class GetPayment extends ChangeNotifier{
   FIBCreatePaymentResponse? _createPaymentResponse=null;
   FIBCreatePaymentResponse? get createPaymentResponse=> _createPaymentResponse;
   
-  Future<void> getPaymentInformation() async {
+  Future<void> getPaymentInformation(String token) async {
     isLoading=true;
     notifyListeners();
     
@@ -18,9 +18,11 @@ class GetPayment extends ChangeNotifier{
         MonetaryValue("500.00", "IQD"),
         "https://URL_TO_UPDATE_YOUR_PAYMENT_STATUS",
         "Lorem ipsum dolor sit amet.",
-        "PT8H6M12.345S"));
-    print(response);
+        "PT8H6M12.345S"), token);
     _createPaymentResponse= response;
+    print("------------");
+    print(_createPaymentResponse?.qrCode);
+    print("------------");
     isLoading=false;
     notifyListeners();
   }

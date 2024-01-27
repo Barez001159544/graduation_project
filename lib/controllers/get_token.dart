@@ -1,17 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:graduation_project/tokenManager.dart';
 import 'package:jwt_decode/jwt_decode.dart';
+import '../models/fib_login_parameters.dart';
 
 class GetToken extends ChangeNotifier{
-  Map<String, dynamic> _dToken={};
-  Map<String, dynamic> get dToken=> _dToken;
+
+  late String _dToken;
+  String get dToken=> _dToken;
+  bool isLoading=false;
+
   void readToken() async{
-    // _token= await Auth().ReadToken();
+    isLoading=true;
+    notifyListeners();
+
     TokenManager tokenManager= TokenManager();
-    _dToken = Jwt.parseJwt("${await tokenManager.readToken()}");
-    print("----------");
+    _dToken = (await tokenManager.readToken())!;
     print(_dToken);
-    print("----------");
+    isLoading=false;
     notifyListeners();
   }
 }

@@ -1,5 +1,12 @@
+import "dart:convert";
+
+import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
+import "package:flutter/widgets.dart";
+import "package:flutter_styled_toast/flutter_styled_toast.dart";
 import "package:graduation_project/controllers/get_payment.dart";
+import "package:graduation_project/controllers/get_token.dart";
+import "package:graduation_project/fib_login/return_info.dart";
 import "package:graduation_project/presentation/payment_scanner_screen.dart";
 import "package:provider/provider.dart";
 
@@ -7,6 +14,7 @@ import "../constants.dart";
 import "../controllers/language_changer.dart";
 import "../controllers/theme_changer.dart";
 import "../custom theme data/themes.dart";
+import "../models/fib_login_parameters.dart";
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key});
@@ -29,8 +37,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
     return MaterialApp(
       theme: cTheme,
       debugShowCheckedModeBanner: false,
-      home: Consumer2<LanguageChanger, GetPayment>(
-          builder: (_, languageChanger, getPayment, __) {
+      home: Consumer3<LanguageChanger, GetPayment, GetToken>(
+          builder: (_, languageChanger, getPayment, getToken, __) {
             lChanger= languageChanger.data;
             return Directionality(
               textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
@@ -125,11 +133,84 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             height: 30,
                           ),
                           GestureDetector(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context){
-                                return PaymentScannerScreen();
-                              }));
-                              getPayment.getPaymentInformation();
+                            onTap: () async {
+                              // Navigator.push(context, MaterialPageRoute(builder: (context){
+                              //   return PaymentScannerScreen();
+                              // }));
+                              // getToken.readToken();
+                              // print("${getToken.dToken}----------------)");
+                              // final userMap = jsonDecode(getToken.dToken) as Map<String, dynamic>;
+                              // final user = FIBLoginParameters.fromJson(userMap);
+                              // print(user.id);
+                              // FIBLoginParameters flp= FIBLoginParameters(user.grantType, user.id, user.secret);
+                              // FIBLoginParameters fibLogin= FIBLoginParameters.fromJson(flp.toJson());
+                              // print("$fibLogin<><<<<<<<<<<>>>>>>");
+                                var request= FIBLoginParameters("client_credentials", "koya-uni", "1fb32463-c472-4572-8797-670b15be7e3c");
+                                ReturnInfo rInfo= ReturnInfo();
+                                var logSuccess= await rInfo.returnInfo(request);
+                                // print(logSuccess);
+                                if(logSuccess!=null){
+                                  await getPayment.getPaymentInformation(logSuccess.accessToken);
+                                  if(getPayment.createPaymentResponse?.qrCode==null){
+                                    showToastWidget(
+                                      Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Container(
+                                          margin: EdgeInsets.only(top: 10),
+                                          padding: EdgeInsets.all(15),
+                                          decoration: BoxDecoration(
+                                            color: cTheme.primaryColorLight,
+                                            borderRadius: BorderRadius.all(Radius.circular(15),),
+                                          ),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Icon(Icons.error_outline_rounded, color: Colors.red,),
+                                              SizedBox(width: 15,),
+                                              Text('An Error Occured'),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      duration: Duration(seconds: 5),
+                                      animation: StyledToastAnimation.slideFromTopFade,
+                                      reverseAnimation: StyledToastAnimation.slideFromTopFade,
+                                      context: context,
+                                    );
+                                    print("ID or Secret invalid!: 2");
+                                  }else{
+                                    Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
+                                      return PaymentScannerScreen();
+                                    }));
+                                  }
+                                }else{
+                                  showToastWidget(
+                                      Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Container(
+                                          margin: EdgeInsets.only(top: 10),
+                                          padding: EdgeInsets.all(15),
+                                          decoration: BoxDecoration(
+                                            color: cTheme.primaryColorLight,
+                                            borderRadius: BorderRadius.all(Radius.circular(15),),
+                                          ),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Icon(Icons.error_outline_rounded, color: Colors.red,),
+                                                SizedBox(width: 15,),
+                                                Text('An Error Occured'),
+                                              ],
+                                            ),
+                                        ),
+                                      ),
+                                      duration: Duration(seconds: 5),
+                                      animation: StyledToastAnimation.slideFromTopFade,
+                                      reverseAnimation: StyledToastAnimation.slideFromTopFade,
+                                      context: context,
+                                  );
+                                    print("ID or Secret invalid!");
+                                }
                             },
                             child: Container(
                               width: 100,

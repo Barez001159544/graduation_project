@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:easy_splash_screen/easy_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graduation_project/controllers/get_payment.dart';
 import 'package:graduation_project/controllers/get_token.dart';
@@ -116,12 +117,14 @@ class MyHomePage extends StatefulWidget {
 }
 class _MyHomePageState extends State<MyHomePage> {
   getToken() async {
+    final storage = new FlutterSecureStorage();
     String? rToken= await TokenManager().readToken();
+    String? firstTime= await storage.read(key: "firstTime");
     // print(rToken);
     Timer(Duration(seconds: 1),
       ()=>Navigator.of(context, rootNavigator: false).pushReplacement(MaterialPageRoute(builder:
           (context,) =>
-      rToken==null?FIBLogin():PaymentScannerScreen(),
+      firstTime=="Yes"?(rToken==null?LoginScreen():PaymentScreen()):OnboardingScreen(),
         // OnboardingScreen(),
       ),),
       //     ()=>Navigator.pushReplacement(context,
@@ -140,6 +143,8 @@ class _MyHomePageState extends State<MyHomePage> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<ThemeChanger>(context, listen: false).getDefaultTheme();
       Provider.of<LanguageChanger>(context, listen: false).readJson();
+      Provider.of<GetToken>(context, listen: false).readToken();
+      // print(">>>>>>>>>>>>>>>${Provider.of<GetToken>(context, listen: false).dToken}");
       // Provider.of<GetToken>(context, listen: false).readToken();
       // Map<String, dynamic> decodedToken = {};
       // Map<String, dynamic> jwtToken;

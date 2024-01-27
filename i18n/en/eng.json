@@ -60,7 +60,7 @@
     {
       "title": "Scan QR Code",
       "subtitle": "Lorem ipsum is simply a dummy text for your\nweb design and mobile app development",
-      "btn": "Save",
+      "btn": "Done",
       "sideBtn": "Enter Manually"
     },
     {
@@ -88,6 +88,25 @@
       "title": "Taxi is needed for:",
       "name": "Name",
       "location": "Location"
+    },
+    {
+      "title": "Community"
+    },
+    {
+      "title": "Login to your\nFIB Account",
+      "ph1": "Username",
+      "ph2": "Password",
+      "btn": "Login",
+      "fbtn": "Create an account"
+    },
+    {
+      "title": "Repair",
+      "subtitle": "Lorem ipsum is simply a dummy text for your web design and mobile app development",
+      "btn": "send",
+      "popTitle": "Title",
+      "popSubtitle": "Message should be showed here as a 2 line text",
+      "agreeBtn": "Ok",
+      "declineBtn": "Decline"
     }
   ]
 }

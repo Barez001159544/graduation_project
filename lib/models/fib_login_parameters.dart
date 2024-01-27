@@ -5,9 +5,15 @@ class FIBLoginParameters{
 
   FIBLoginParameters(this.grantType, this.id, this.secret);
 
-  Map toJson()=>{
+  Map<String, dynamic> toJson() => {
     "grant_type": grantType,
     "client_id": id,
     "client_secret": secret,
   };
+
+  FIBLoginParameters.fromJson(Map<String, dynamic> json){
+    grantType= json["grant_type"];
+    id= json["client_id"];
+    secret= json["client_secret"];
+  }
 }
