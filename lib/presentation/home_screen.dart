@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:graduation_project/presentation/community_screen.dart';
 import 'package:graduation_project/presentation/fib_login.dart';
 import 'package:graduation_project/presentation/payment_screen.dart';
 import 'package:graduation_project/presentation/profile_screen.dart';
@@ -35,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     double wid = MediaQuery.of(context).size.width;
-    double hei = MediaQuery.of(context).size.height;
+    double hei = MediaQuery.of(context).size.height-24;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
     // bool or=MediaQuery.of(context).orientation==Orientation.landscape?true:false;
@@ -63,6 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: cTheme.backgroundColor,
               body: SafeArea(
                 child: SingleChildScrollView(
+                  physics:wid>600?NeverScrollableScrollPhysics():AlwaysScrollableScrollPhysics(),
                   scrollDirection: Axis.vertical,
                   child: Flex(
                     direction: Axis.vertical,
@@ -86,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       }));
                                     },
                                     child: Container(
-                                      padding: EdgeInsets.only(left: wid>600?10.sp:30.sp),
+                                      padding: EdgeInsets.only(left: languageChanger.selectedLanguage=="ENG"?10.sp:0, right: languageChanger.selectedLanguage=="ENG"?0:10.sp,),
                                       decoration: BoxDecoration(
                                         color: cTheme.primaryColorLight,
                                         borderRadius: BorderRadius.all(
@@ -96,24 +99,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
-                                          Hero(
-                                            tag: 1,
-                                            child: Container(
-                                              width: wid>600?40.sp:100.sp,
-                                              height: wid>600?40.sp:100.sp,
-                                              decoration: BoxDecoration(
+                                          Container(
+                                            width: wid>600?30.sp:100.sp,
+                                            height: wid>600?30.sp:100.sp,
+                                            decoration: BoxDecoration(
+                                              color: cTheme.primaryColor,
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(100.sp),
+                                              ),
+                                              image: DecorationImage(
+                                                image: AssetImage("images/007-boy-2.jpg"),
+                                                fit: BoxFit.cover,
+                                              ),
+                                              border: Border.all(
+                                                width: 4,
                                                 color: cTheme.primaryColor,
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(100.sp),
-                                                ),
-                                                image: DecorationImage(
-                                                  image: AssetImage("images/007-boy-2.jpg"),
-                                                  fit: BoxFit.cover,
-                                                ),
-                                                border: Border.all(
-                                                  width: 4,
-                                                  color: cTheme.primaryColor,
-                                                ),
                                               ),
                                             ),
                                           ),
@@ -126,15 +126,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                             children: [
                                               Text(
                                                 "John Doe",
-                                                  style: TextStyle(color: cTheme.primaryColorDark, fontWeight: FontWeight.bold, fontSize: wid>600?8.sp:16.sp,)
+                                                  style: TextStyle(color: cTheme.primaryColorDark, fontWeight: FontWeight.bold, fontSize: wid>600?7.sp:16.sp,)
                                               ),
                                               Text(
-                                                "example@gmail.com",
-                                                  style: TextStyle(color: Colors.grey, fontSize: wid>600?6.sp:14.sp)
+                                                  "0123 456 7890",
+                                                  style: TextStyle(color: Colors.grey, fontSize: wid>600?5.sp:14.sp)
                                               ),
                                               Text(
-                                                "0123 456 7890",
-                                                  style: TextStyle(color: Colors.grey, fontSize: wid>600?6.sp:14.sp)
+                                                  "B4:F4:R123",
+                                                  style: TextStyle(color: Colors.grey, fontSize: wid>600?5.sp:14.sp)
                                               ),
                                               // Flexible(child: Container(child: Text(overflow: TextOverflow.ellipsis,"John Doe", style: TextStyle(color: cTheme.primaryColorDark, fontWeight: FontWeight.bold, fontSize: 20,),))),
                                               // Flexible(child: Container(child: Text(overflow: TextOverflow.ellipsis,"example@gmail.com", style: TextStyle(color: Colors.grey, fontSize: 16),))),
@@ -158,6 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       }));
                                     },
                                     child: Container(
+                                      padding: EdgeInsets.symmetric(horizontal: 20),
                                       decoration: BoxDecoration(
                                         color: cTheme.primaryColorLight,
                                         borderRadius: BorderRadius.all(
@@ -175,8 +176,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                             children: List.generate(3, (index){
                                               return Container(
-                                                width: wid>600?29.sp:80.sp,
-                                                height: wid>600?29.sp:80.sp,
+                                                width: wid>600?23.sp:80.sp,
+                                                height: wid>600?23.sp:80.sp,
                                                 // margin: EdgeInsets.only(left: index==0?0:10),
                                                 decoration: BoxDecoration(
                                                   color: cTheme.primaryColor,
@@ -184,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     Radius.circular(100.sp),
                                                   ),
                                                 ),
-                                                child: Icon(index==0?Icons.edit_rounded:(index==1?Icons.question_mark_rounded:CupertinoIcons.arrow_up_right), color: Colors.white, size: wid>600?20.sp:46.sp,),
+                                                child: Icon(index==0?Icons.edit_rounded:(index==1?Icons.question_mark_rounded:CupertinoIcons.arrow_up_right), color: Colors.white, size: wid>600?15.sp:46.sp,),
                                               );
                                             }),
                                           ),
@@ -298,7 +299,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                        Text("14000\$/Month", style: TextStyle(fontFamily: "Roboto", fontSize: wid>600?12.sp:24.sp, color: Colors.white),),
+                                        Text("14000\$/Month", textDirection: TextDirection.ltr, style: TextStyle(fontFamily: "Roboto", fontSize: wid>600?12.sp:24.sp, color: Colors.white),),
                                         Container(
                                           width: wid>600?40.sp:80.sp,
                                           height: wid>600?40.sp:80.sp,
@@ -319,7 +320,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text("8 months = 112000\$", style: TextStyle(color: Colors.white, fontSize: wid>600?12.sp:24.sp, fontFamily: "Roboto"),),
+                                        Text("8 months = 112000\$", textDirection: TextDirection.ltr, style: TextStyle(color: Colors.white, fontSize: wid>600?12.sp:24.sp, fontFamily: "Roboto"),),
                                         SizedBox(
                                           height: wid>600?1.sp:10,
                                         ),
@@ -365,7 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             SizedBox(
                                               width: 10,
                                             ),
-                                            Text("8/10 mo", style: TextStyle(color: Colors.white, fontSize: wid>600?7.sp:10.sp, fontFamily: "Roboto"),),
+                                            Text("8/10 mo",textDirection: TextDirection.ltr, style: TextStyle(color: Colors.white, fontSize: wid>600?7.sp:10.sp, fontFamily: "Roboto"),),
                                           ],
                                         ),
                                       ],
@@ -400,7 +401,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   color: cTheme.primaryColorLight,
                                   image: DecorationImage(
-                                    image: AssetImage("images/city1.jpg"),
+                                    image: AssetImage("images/city1-removebg-preview.png"),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -444,7 +445,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.all(Radius.circular(wid>600?35:30.sp),),
                                       // color: Colors.red,
                                       image: DecorationImage(
-                                        alignment: Alignment.centerRight,
+                                        matchTextDirection: true,
+                                        alignment: languageChanger.selectedLanguage=="ENG"?Alignment.centerRight:Alignment.centerLeft,
                                         image: AssetImage("images/art 01.png"),
                                         opacity: wid>500?1:0,
                                         fit: BoxFit.fitHeight,
@@ -485,6 +487,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ), (){
                                     print("Community Engagement Functionality");
+                                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                                      return CommunityScreen();
+                                    }));
                                   },
                                 ),
                                 threeBtns(2000, wid>600?hei4/3-20:(hei4/2-60).sp, cTheme.primaryColorLight, null, languageChanger.selectedLanguage=="ENG"?EdgeInsets.only(left: wid>600?10.sp:30.sp, right: wid>600?10:0):EdgeInsets.only(right: wid>600?10.sp:30.sp, left: wid>600?10:0),

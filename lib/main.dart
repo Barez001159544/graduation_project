@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:easy_splash_screen/easy_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,6 +22,7 @@ import 'package:graduation_project/presentation/login_screen.dart';
 import 'package:graduation_project/presentation/onboarding_screen.dart';
 import 'package:graduation_project/presentation/home_screen.dart';
 import 'package:graduation_project/presentation/profile_screen.dart';
+import 'package:graduation_project/presentation/protest_screen.dart';
 import 'package:graduation_project/presentation/repair_screen.dart';
 import 'package:graduation_project/presentation/services_screen.dart';
 import 'package:graduation_project/presentation/services_screen.dart';
@@ -34,6 +34,7 @@ import 'package:graduation_project/presentation/taxi_onway.dart';
 import 'package:graduation_project/presentation/taxi_services.dart';
 import 'package:graduation_project/tokenManager.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(
@@ -52,56 +53,21 @@ void main() {
           create: (BuildContext context)=>GetPayment(),
         ),
       ],
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
 
-// class MyApp extends StatefulWidget {
-//   const MyApp({super.key});
-//
-//   @override
-//   State<MyApp> createState() => _MyAppState();
-// }
-//
-// class _MyAppState extends State<MyApp> {
-//   // Future<Widget> getToken() async {
-//   //   String? rToken= await Auth().ReadToken();
-//   //   return Future.value(rToken==null?Login():UserDetails());
-//   // }
-//   @override
-//   Widget build(BuildContext context) {
-//     // precacheImage(AssetImage("lib/images/007-boy-2.jpg"), context);
-//     // precacheImage(AssetImage("lib/images/10780304_19197030.png"), context);
-//     // precacheImage(AssetImage("lib/images/11667132_20943447.png"), context);
-//     // precacheImage(AssetImage("lib/images/11668286_20945170.png"), context);
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       home: Scaffold(
-//         body: SafeArea(
-//           child: EasySplashScreen(
-//             logo: Image.asset("lib/images/007-boy-2.jpg"),
-//             logoWidth: 40,
-//             backgroundColor: Color(0xff31344A),
-//             title: Text("Facebook", style: TextStyle(color: Colors.white, fontSize: 26, fontFamily: "NotoSans"),),
-//             navigator: OnboardingScreen(),
-//             durationInSeconds: 1,
-//             showLoader: false,
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
         minTextAdapt: true,
-        // Use builder only if you need to use library outside ScreenUtilInit context
         builder: (_ , child) {
-        return MaterialApp(
+        return const MaterialApp(
           locale: Locale("ar"),
           home: MyHomePage(),
           debugShowCheckedModeBanner: false,
@@ -112,30 +78,23 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 class _MyHomePageState extends State<MyHomePage> {
   getToken() async {
-    final storage = new FlutterSecureStorage();
-    String? rToken= await TokenManager().readToken();
-    String? firstTime= await storage.read(key: "firstTime");
-    // print(rToken);
-    Timer(Duration(seconds: 1),
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? firstTime= prefs.getBool('firstTime');
+    String? rToken= await TokenManager().readToken("accessToken");
+    Timer(const Duration(seconds: 1),
       ()=>Navigator.of(context, rootNavigator: false).pushReplacement(MaterialPageRoute(builder:
           (context,) =>
-      firstTime=="Yes"?(rToken==null?LoginScreen():PaymentScreen()):OnboardingScreen(),
-        // OnboardingScreen(),
+      // HomeScreen(),
+        firstTime==false?(rToken==null?const LoginScreen():const HomeScreen()):const OnboardingScreen(),
       ),),
-      //     ()=>Navigator.pushReplacement(context,
-      //   MaterialPageRoute(builder:
-      //       (context,) =>
-      //   getToken()==null?FIBLogin():HomeScreen(),
-      //     // OnboardingScreen(),
-      //   ),
-      // ),
     );
-    // print(rToken);
   }
   @override
   initState() {
@@ -143,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<ThemeChanger>(context, listen: false).getDefaultTheme();
       Provider.of<LanguageChanger>(context, listen: false).readJson();
-      Provider.of<GetToken>(context, listen: false).readToken();
+      Provider.of<GetToken>(context, listen: false).readToken("accessToken");
       // print(">>>>>>>>>>>>>>>${Provider.of<GetToken>(context, listen: false).dToken}");
       // Provider.of<GetToken>(context, listen: false).readToken();
       // Map<String, dynamic> decodedToken = {};
@@ -162,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
                 Color(0xff155E7D),
@@ -180,8 +139,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   Container(
                     width: 70,
                     height: 70,
-                    padding: EdgeInsets.only(top: 10),
-                    decoration: BoxDecoration(
+                    padding: const EdgeInsets.only(top: 10),
+                    decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(
                         Radius.circular(5),
@@ -194,10 +153,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         semanticsLabel: 'App logo'
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Text("Facebook", style: TextStyle(color: Colors.white, fontSize: 26, fontFamily: "NotoSans"),),
+                  const Text("Facebook", style: TextStyle(color: Colors.white, fontSize: 26, fontFamily: "NotoSans"),),
                 ],
               ),
             ),

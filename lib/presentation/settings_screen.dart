@@ -1,12 +1,15 @@
 import 'dart:convert';
 
 import 'package:f_toggle_button/f_toggle_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/controllers/language_changer.dart';
 import 'package:graduation_project/controllers/theme_changer.dart';
+import 'package:graduation_project/presentation/about_app.dart';
 import 'package:graduation_project/presentation/forgot_password_reset.dart';
 import 'package:graduation_project/presentation/profile_screen.dart';
 import 'package:provider/provider.dart';
@@ -146,7 +149,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 borderColorEnable: Colors.transparent,
                                 borderColorDisEnable: Colors.transparent,
                               ),),
-                              settings(lChanger.data[0]["lang"], cTheme.primaryColorDark, wid, customDropDownMenu(100, 30, ["KRD", "ARB", "ENG"], "KRD", (val) {
+                              settings(lChanger.data[0]["lang"], cTheme.primaryColorDark, wid, customDropDownMenu(100, 30, cTheme.primaryColorLight, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], lChanger.selectedLanguage, (val) {
                                 print(val);
                                 lChanger.changeLanguage(val);
                               })),
@@ -155,7 +158,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 onChangeStatus: (bool val) {},
                                 bgCircleEnable: Colors.white,
                                 bgCircleDisable: Color(0xff5CD254),
-                                bgDisable: Color(0xffCBCBCB),
+                                bgDisable: tChanger.isDark?cTheme.primaryColorLight:Color(0xffCBCBCB),
                                 borderColorEnable: Colors.transparent,
                                 borderColorDisEnable: Colors.transparent,
                               ),),
@@ -164,7 +167,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 onChangeStatus: (bool val) {},
                                 bgCircleEnable: Colors.white,
                                 bgCircleDisable: Color(0xff5CD254),
-                                bgDisable: Color(0xffCBCBCB),
+                                bgDisable: tChanger.isDark?cTheme.primaryColorLight:Color(0xffCBCBCB),
                                 borderColorEnable: Colors.transparent,
                                 borderColorDisEnable: Colors.transparent,
                               ),),
@@ -173,7 +176,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 onChangeStatus: (bool val) {},
                                 bgCircleEnable: Colors.white,
                                 bgCircleDisable: Color(0xff5CD254),
-                                bgDisable: Color(0xffCBCBCB),
+                                bgDisable: tChanger.isDark?cTheme.primaryColorLight:Color(0xffCBCBCB),
                                 borderColorEnable: Colors.transparent,
                                 borderColorDisEnable: Colors.transparent,
                               ),),
@@ -182,19 +185,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 onChangeStatus: (bool val) {},
                                 bgCircleEnable: Colors.white,
                                 bgCircleDisable: Color(0xff5CD254),
-                                bgDisable: Color(0xffCBCBCB),
+                                bgDisable: tChanger.isDark?cTheme.primaryColorLight:Color(0xffCBCBCB),
                                 borderColorEnable: Colors.transparent,
                                 borderColorDisEnable: Colors.transparent,
                               ),),
-                              settings("More", cTheme.primaryColorDark, wid, FToggleButton(
-                                isEnable: false,
-                                onChangeStatus: (bool val) {},
-                                bgCircleEnable: Colors.white,
-                                bgCircleDisable: Color(0xff5CD254),
-                                bgDisable: Color(0xffCBCBCB),
-                                borderColorEnable: Colors.transparent,
-                                borderColorDisEnable: Colors.transparent,
-                              ),),
+                              GestureDetector(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context){
+                                    return AboutApp();
+                                  }));
+                                },
+                                  child: settings("About App", cTheme.primaryColorDark, wid, SizedBox(),)),
                             ],
                           ),
                         ),

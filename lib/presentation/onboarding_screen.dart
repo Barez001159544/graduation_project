@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:graduation_project/presentation/login_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
 import '../controllers/theme_changer.dart';
@@ -144,8 +145,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
                               animationController.forward();
                             });
                           }else{
-                            final storage = new FlutterSecureStorage();
-                            await storage.write(key: "firstTime", value: "Yes");
+                            // final storage = new FlutterSecureStorage();
+                            // await storage.write(key: "firstTime", value: "Yes");
+                            final SharedPreferences prefs = await SharedPreferences.getInstance();
+                            await prefs.setBool('firstTime', false);
                             Navigator.pushReplacement(context,
                               MaterialPageRoute(builder:
                                   (context) => LoginScreen(),

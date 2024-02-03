@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:graduation_project/presentation/payment_screen.dart';
 
 Widget mainBtn(double wid, double hei, color, String text, void onTapFunction()){
@@ -27,29 +29,29 @@ Widget mainBtn(double wid, double hei, color, String text, void onTapFunction())
   );
 }
 
-Widget customDropDownMenu(double wid, double height, List<String>? items, String? value, void onChange(val),) {
+Widget customDropDownMenu(double wid, double height, Color ddmColor, Color txtColor, List<String>? items, String? value, void onChange(val),) {
   return Container(
     width: wid,
     height: height,
     padding: EdgeInsets.symmetric(horizontal: 5),
     decoration: BoxDecoration(
-      color: Color(0xfff8f8f8),
+      color: ddmColor,
       borderRadius: BorderRadius.all(
         Radius.circular(5),
       ),
     ),
     child: DropdownButtonHideUnderline(
       child: DropdownButton(
-        dropdownColor: Color(0xfff8f8f8),
+        dropdownColor: ddmColor,
         isExpanded: true,
         disabledHint: Text("Code", style: TextStyle(fontFamily: "NotoSans"),),
         hint: Text("Code", style: TextStyle(fontFamily: "NotoSans"),),
         value: value != null ? value : null,
-        style: TextStyle(color: Colors.black),
+        style: TextStyle(color: txtColor),
         icon: Icon(
           Icons.arrow_drop_down_rounded,
           size: 30,
-          color: Colors.black54,
+          color: Colors.grey,
         ),
         items: List<String>.from(items as Iterable)
             .map((String itemss) {
@@ -77,6 +79,11 @@ Widget loginFields(TextEditingController controller, bool isShown, String hint, 
     obscureText: isShown,
     cursorColor: primaryColor,
     textAlignVertical: TextAlignVertical.bottom,
+    inputFormatters: hint=="### ####"?<TextInputFormatter>[
+      FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+      FilteringTextInputFormatter.digitsOnly
+    ]:<TextInputFormatter>[],
+    keyboardType: hint=="### ####"?TextInputType.number:TextInputType.emailAddress,
     style: TextStyle(
       color: primaryColor,
       fontSize: hint=="### ####"?24:16,
@@ -126,7 +133,7 @@ Widget loadingIndicator(){
       height: 30,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(100),),
-        color: Colors.white,
+        color: cTheme.backgroundColor,
       ),
       child: Center(
         child: Container(
@@ -190,7 +197,7 @@ Future cofirmationCustomAlertDialog(
           GestureDetector(
             onTap: () {
               onGotIt();
-              // Navigator.of(ctx).pop();
+              Navigator.of(contex).pop();
             },
             child: Container(
               height: 40,
@@ -212,7 +219,7 @@ Future cofirmationCustomAlertDialog(
           GestureDetector(
             onTap: () {
               onDecline();
-              // Navigator.of(ctx).pop();
+              Navigator.of(contex).pop();
             },
             child: Container(
               height: 40,
@@ -238,3 +245,58 @@ Future cofirmationCustomAlertDialog(
   );});
 }
 
+Widget customTextFields(TextEditingController controller, String hint, Color primaryColor, Color textColor, Color bgColor, double radius, int? maxLines){
+  return TextField(
+    maxLines: maxLines,
+    expands: maxLines==null?true:false,
+    controller: controller,
+    cursorColor: primaryColor,
+    textAlignVertical: maxLines==null?TextAlignVertical.top:TextAlignVertical.center,
+    style: TextStyle(
+      color: primaryColor,
+      fontSize: 16,
+    ),
+    decoration: InputDecoration(
+      hintText: "$hint",
+      hintStyle: TextStyle(
+        color: Colors.grey,
+        fontSize: 14,
+      ),
+      border: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(radius),
+      ),
+      filled: true,
+      fillColor: bgColor,
+    ),
+  );
+}
+
+ToastFuture customToastNotification(BuildContext context, Icon icon, String message){
+  return showToastWidget(
+    Align(
+      alignment: Alignment.topCenter,
+      child: Container(
+        margin: EdgeInsets.only(top: 10),
+        padding: EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          color: cTheme.primaryColorLight,
+          borderRadius: BorderRadius.all(Radius.circular(15),),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            //Icon(Icons.error_outline_rounded, color: Colors.red,),
+            icon,
+            SizedBox(width: 15,),
+            Text(message),
+          ],
+        ),
+      ),
+    ),
+    duration: Duration(seconds: 5),
+    animation: StyledToastAnimation.slideFromTopFade,
+    reverseAnimation: StyledToastAnimation.slideFromTopFade,
+    context: context,
+  );
+}

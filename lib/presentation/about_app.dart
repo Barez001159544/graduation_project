@@ -1,6 +1,8 @@
+import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
+import "package:flutter/widgets.dart";
+import "package:glowy_borders/glowy_borders.dart";
 import "package:graduation_project/constants.dart";
-import "package:parallax_rain/parallax_rain.dart";
 import "package:provider/provider.dart";
 
 import "../controllers/language_changer.dart";
@@ -28,120 +30,86 @@ class _AboutAppState extends State<AboutApp> {
       home: Consumer<LanguageChanger>(
           builder: (_, languageChanger, __) {
             lChanger= languageChanger.data;
-          return Scaffold(
-            backgroundColor: Colors.black,
-            body: Container(
-              width: wid,
-              height: hei,
-              child: Center(
-                child: ParallaxRain(
-                  dropColors: [
-                    cTheme.primaryColor,
-                  ],
-                  numberOfDrops: 80,
-                  trail: true,
-                  trailStartFraction: 0.1,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Column(
-                        children: [
-                          Container(
-                            width: 50,
-                            height: 50,
+            print(languageChanger.selectedLanguage);
+          return Directionality(
+            textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
+            child: Scaffold(
+              backgroundColor: cTheme.backgroundColor,
+              body: Center(
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        AnimatedGradientBorder(
+                          gradientColors: [
+                            cTheme.primaryColor,
+                            cTheme.primaryColor.withOpacity(0.6),
+                          ],
+                          borderSize: 1,
+                          glowSize: 10,
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          animationTime: 2,
+                          child: Container(
+                            width: 200,
+                            height: 200,
                             decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.all(Radius.circular(5),),
+                              gradient: LinearGradient(
+                                colors: [
+                                  cTheme.primaryColor.withOpacity(0.5),
+                                  cTheme.primaryColor,
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              borderRadius: BorderRadius.all(Radius.circular(25)),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black45,
+                                    offset: Offset(2, 2),
+                                    blurRadius: 5,
+                                    spreadRadius: 0.5
+                                ),
+                              ],
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "Facebook",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            "Multicolor",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          Text(
-                            "Multicolor",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          Text(
-                            "Multicolor",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 25,
-                                height: 25,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.all(Radius.circular(5),),
-                                ),
-                                child: Icon(
-                                  Icons.facebook,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                width: 25,
-                                height: 25,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.all(Radius.circular(5),),
-                                ),
-                                child: Icon(
-                                  Icons.facebook,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                width: 25,
-                                height: 25,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.all(Radius.circular(5),),
-                                ),
-                                child: Icon(
-                                  Icons.facebook,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-
-                      Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.all(Radius.circular(100),),
-                          border: Border.all(
-                            width: 1,
-                            color: Colors.red,
+                            child: Icon(Icons.home_max_rounded, size: 100, color: Colors.white,),
                           ),
                         ),
-                        child: Icon(Icons.arrow_back_rounded, color: Colors.white,),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List.generate(3, (index) => Text(
+                            "2.0",
+                            style: TextStyle(color: cTheme.primaryColorDark, fontSize: 20),
+                          ),),
+                        ),
+                        SizedBox(
+                          height: 50,
+                        ),
+                      ],
+                    ),
+                    Positioned(
+                      bottom: 50,
+                      child: GestureDetector(
+                        onTap: (){
+                          Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          width: 60,
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.all(Radius.circular(100),),
+                            border: Border.all(
+                              width: 1,
+                              color: cTheme.primaryColorDark,
+                            ),
+                          ),
+                          child: Icon(Icons.arrow_back_rounded, color: cTheme.primaryColorDark,),
+                        ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -151,3 +119,6 @@ class _AboutAppState extends State<AboutApp> {
     );
   }
 }
+
+
+

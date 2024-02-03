@@ -5,17 +5,35 @@ import '../models/fib_login_parameters.dart';
 
 class GetToken extends ChangeNotifier{
 
+  TokenManager tokenManager= TokenManager();
+
   late String _dToken;
   String get dToken=> _dToken;
   bool isLoading=false;
 
-  void readToken() async{
+  void readToken(String tokenKey) async{
     isLoading=true;
     notifyListeners();
 
-    TokenManager tokenManager= TokenManager();
-    _dToken = (await tokenManager.readToken())!;
-    print(_dToken);
+    _dToken = (await tokenManager.readToken(tokenKey))!;
+    isLoading=false;
+    notifyListeners();
+  }
+
+  void writeToken(String tokenKey) async{
+    isLoading=true;
+    notifyListeners();
+
+    await tokenManager.saveToken(tokenKey, "token value here");
+    isLoading=false;
+    notifyListeners();
+  }
+
+  void deleteToken(String tokenKey) async{
+    isLoading=true;
+    notifyListeners();
+
+    await tokenManager.deleteToken(tokenKey);
     isLoading=false;
     notifyListeners();
   }

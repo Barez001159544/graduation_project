@@ -101,7 +101,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(100),
                                         ),
-                                        color: cTheme.backgroundColor,
+                                        color: Colors.grey.shade300,
                                       ),
                                     ),
                                     Container(
@@ -152,31 +152,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 if(logSuccess!=null){
                                   await getPayment.getPaymentInformation(logSuccess.accessToken);
                                   if(getPayment.createPaymentResponse?.qrCode==null){
-                                    showToastWidget(
-                                      Align(
-                                        alignment: Alignment.topCenter,
-                                        child: Container(
-                                          margin: EdgeInsets.only(top: 10),
-                                          padding: EdgeInsets.all(15),
-                                          decoration: BoxDecoration(
-                                            color: cTheme.primaryColorLight,
-                                            borderRadius: BorderRadius.all(Radius.circular(15),),
-                                          ),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Icon(Icons.error_outline_rounded, color: Colors.red,),
-                                              SizedBox(width: 15,),
-                                              Text('An Error Occured'),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      duration: Duration(seconds: 5),
-                                      animation: StyledToastAnimation.slideFromTopFade,
-                                      reverseAnimation: StyledToastAnimation.slideFromTopFade,
-                                      context: context,
-                                    );
+                                    customToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred");
                                     print("ID or Secret invalid!: 2");
                                   }else{
                                     Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
@@ -184,31 +160,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                     }));
                                   }
                                 }else{
-                                  showToastWidget(
-                                      Align(
-                                        alignment: Alignment.topCenter,
-                                        child: Container(
-                                          margin: EdgeInsets.only(top: 10),
-                                          padding: EdgeInsets.all(15),
-                                          decoration: BoxDecoration(
-                                            color: cTheme.primaryColorLight,
-                                            borderRadius: BorderRadius.all(Radius.circular(15),),
-                                          ),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Icon(Icons.error_outline_rounded, color: Colors.red,),
-                                                SizedBox(width: 15,),
-                                                Text('An Error Occured'),
-                                              ],
-                                            ),
-                                        ),
-                                      ),
-                                      duration: Duration(seconds: 5),
-                                      animation: StyledToastAnimation.slideFromTopFade,
-                                      reverseAnimation: StyledToastAnimation.slideFromTopFade,
-                                      context: context,
-                                  );
+                                  customToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred");
                                     print("ID or Secret invalid!");
                                 }
                             },

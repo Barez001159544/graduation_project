@@ -107,6 +107,17 @@
       "popSubtitle": "Message should be showed here as a 2 line text",
       "agreeBtn": "Ok",
       "declineBtn": "Decline"
+    },
+    {
+      "title": "Protest",
+      "subtitle": "Here you can declare\nyour complaint",
+      "btn": "Send",
+      "ph1": "Title",
+      "ph2": "Core of your compliance",
+      "popTitle": "Title",
+      "popSubtitle": "Message should be showed here as a 2 line text",
+      "agreeBtn": "Ok",
+      "declineBtn": "Decline"
     }
   ]
 }

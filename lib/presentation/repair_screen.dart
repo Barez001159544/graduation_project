@@ -55,7 +55,7 @@ class _RepairScreenState extends State<RepairScreen> {
                               shrinkWrap: true,
                               physics: ScrollPhysics(),
                             padding: EdgeInsets.all(10),
-                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: or?3:(wid>500?3:2), mainAxisSpacing: 10, crossAxisSpacing: 10,), itemCount: 18, itemBuilder: (BuildContext contex, index){
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: or?4:(wid>500?4:2), mainAxisSpacing: 10, crossAxisSpacing: 10,), itemCount: 18, itemBuilder: (BuildContext contex, index){
                             return Container(
                               width: wid/3,
                               height: 200,
@@ -82,7 +82,7 @@ class _RepairScreenState extends State<RepairScreen> {
                                         },
                                         bgCircleEnable: Colors.white,
                                         bgCircleDisable: Color(0xff5CD254),
-                                        bgDisable: Color(0xffCBCBCB),
+                                        bgDisable: tChanger.isDark?cTheme.backgroundColor:Color(0xffCBCBCB),
                                         borderColorEnable: Colors.transparent,
                                         borderColorDisEnable: Colors.transparent,
                                       ),
@@ -101,7 +101,7 @@ class _RepairScreenState extends State<RepairScreen> {
                       child: Align(
                         alignment: Alignment.centerRight,
                         child: mainBtn(wid>500?wid*0.35-80:wid-40, wid>500?62.0:72.0, cTheme.primaryColor, lChanger[15]["btn"], () {
-                          cofirmationCustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, lChanger[15]["popTitle"], lChanger[15]["popSubtitle"], lChanger[15]["agreeBtn"], lChanger[15]["declineBtn"], context, (){Navigator.pop(context);}, (){Navigator.pop(context);});
+                          cofirmationCustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, lChanger[15]["popTitle"], lChanger[15]["popSubtitle"], lChanger[15]["agreeBtn"], lChanger[15]["declineBtn"], context, (){}, (){});
                         }),
                       ),
                     ),

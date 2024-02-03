@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:graduation_project/controllers/get_payment.dart';
 import 'package:provider/provider.dart';
 import 'package:timer_count_down/timer_count_down.dart';
@@ -76,7 +78,7 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                             width: or?wid/2:wid,
                             margin: EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              // color: Colors.white,
                               borderRadius: BorderRadius.all(Radius.circular(50),),
                             ),
                             child: Center(
@@ -87,7 +89,13 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                               //Icon(Icons.qr_code_2_rounded, size: 100, color: Colors.white,),
                             ),
                           ),
-                          SelectableText(getPayment.createPaymentResponse!.readableCode, style: TextStyle(fontSize: 18),),
+                          GestureDetector(
+                            onLongPress: (){
+                              Clipboard.setData(ClipboardData(text: getPayment.createPaymentResponse!.readableCode));
+                              customToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), "Copied to clipboard");
+                            },
+                              child: Text(getPayment.createPaymentResponse!.readableCode, style: TextStyle(fontSize: 18, color: cTheme.primaryColorDark),),
+                          ),
                           Tooltip(
                             message: "Valid Until",
                             triggerMode: TooltipTriggerMode.tap,
@@ -120,7 +128,7 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                           // Text(lChanger[8]["subtitle"], style: TextStyle(color: Colors.grey.shade600, fontSize: 14), textAlign: TextAlign.center,),
                           Column(
                             children: [
-                              Text("Koya University", style: TextStyle(fontSize: 28,),),
+                              Text("Koya University", style: TextStyle(fontSize: 28, color: cTheme.primaryColorDark),),
                               SizedBox(height: 5,),
                               Icon(Icons.arrow_upward_rounded, color: Colors.grey,),
                               SizedBox(height: 5,),
@@ -129,8 +137,8 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.baseline,
                                 textBaseline: TextBaseline.alphabetic,
                                 children: [
-                                  Text("500,000", style: TextStyle(fontSize: 28,),),
-                                  Text(" IQD",),
+                                  Text("500,000", style: TextStyle(fontSize: 28, color: cTheme.primaryColorDark),),
+                                  Text(" IQD", style: TextStyle(color: cTheme.primaryColorDark),),
                                 ],
                               ),
                             ],
