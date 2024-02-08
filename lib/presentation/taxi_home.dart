@@ -25,13 +25,8 @@ class _TaxiHomeScreenState extends State<TaxiHomeScreen> {
     bool or=MediaQuery.of(context).orientation==Orientation.landscape?true:false;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
-    return Consumer<ThemeChanger>(
-      builder: (context, tChanger, child) {
-        return MaterialApp(
-          theme: cTheme,
-          debugShowCheckedModeBanner: false,
-          home: Consumer<LanguageChanger>(
-              builder: (_, languageChanger, __) {
+    return Consumer2<LanguageChanger, ThemeChanger>(
+              builder: (_, languageChanger, tChanger, __) {
                 lChanger= languageChanger.data;
                 return Directionality(
                   textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
@@ -54,6 +49,10 @@ class _TaxiHomeScreenState extends State<TaxiHomeScreen> {
                       },
                     ),
                     actions: [
+                      customDropDownMenu(80, 30, cTheme.backgroundColor, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], languageChanger.selectedLanguage, (val) {
+                        print(val);
+                        languageChanger.changeLanguage(val);
+                      }),
                       Builder(
                         builder: (BuildContext){
                           return IconButton(onPressed: (){
@@ -199,9 +198,6 @@ class _TaxiHomeScreenState extends State<TaxiHomeScreen> {
                                 ),
                 );
             }
-          ),
-        );
-      }
-    );
+          );
   }
 }

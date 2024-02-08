@@ -1,6 +1,8 @@
+import "package:device_info_plus/device_info_plus.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
+import "package:flutter_app_info/flutter_app_info.dart";
 import "package:glowy_borders/glowy_borders.dart";
 import "package:graduation_project/constants.dart";
 import "package:provider/provider.dart";
@@ -17,17 +19,20 @@ class AboutApp extends StatefulWidget {
 }
 
 class _AboutAppState extends State<AboutApp> {
+  List appInfo=[];
+
   @override
   Widget build(BuildContext context) {
+    final info = AppInfo.of(context);
+    appInfo.add(info.package.appName);
+    appInfo.add(info.package.version);
+
     double wid = MediaQuery.of(context).size.width;
     double hei = MediaQuery.of(context).size.height;
     bool or=MediaQuery.of(context).orientation==Orientation.landscape?true:false;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
-    return MaterialApp(
-      theme: cTheme,
-      debugShowCheckedModeBanner: false,
-      home: Consumer<LanguageChanger>(
+    return Consumer<LanguageChanger>(
           builder: (_, languageChanger, __) {
             lChanger= languageChanger.data;
             print(languageChanger.selectedLanguage);
@@ -78,8 +83,8 @@ class _AboutAppState extends State<AboutApp> {
                         ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: List.generate(3, (index) => Text(
-                            "2.0",
+                          children: List.generate(appInfo.length, (index) => Text(
+                            "${appInfo[index]}",
                             style: TextStyle(color: cTheme.primaryColorDark, fontSize: 20),
                           ),),
                         ),
@@ -115,8 +120,7 @@ class _AboutAppState extends State<AboutApp> {
             ),
           );
         }
-      ),
-    );
+      );
   }
 }
 

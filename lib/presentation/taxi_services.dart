@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
@@ -24,10 +26,7 @@ class _TaxiServicesState extends State<TaxiServices> {
     bool or=MediaQuery.of(context).orientation==Orientation.landscape?true:false;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
-    return MaterialApp(
-      theme: cTheme,
-      debugShowCheckedModeBanner: false,
-      home: Consumer<LanguageChanger>(
+    return Consumer<LanguageChanger>(
           builder: (_, languageChanger, __) {
             lChanger= languageChanger.data;
             return Directionality(
@@ -42,17 +41,9 @@ class _TaxiServicesState extends State<TaxiServices> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.all(wid>480?0:50),
-                          width: wid>480?400:wid,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage("images/car-taxi.png"),
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
+                      Padding(
+                        padding: const EdgeInsets.all(50.0),
+                        child: Image.asset("images/car-taxi.png", fit: BoxFit.contain,),
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -95,7 +86,6 @@ class _TaxiServicesState extends State<TaxiServices> {
                         ),
             );
         }
-      ),
-    );
+      );
   }
 }

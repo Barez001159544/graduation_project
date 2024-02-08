@@ -34,10 +34,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     bool or=MediaQuery.of(context).orientation==Orientation.landscape?true:false;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
-    return MaterialApp(
-      theme: cTheme,
-      debugShowCheckedModeBanner: false,
-      home: Consumer3<LanguageChanger, GetPayment, GetToken>(
+    return Consumer3<LanguageChanger, GetPayment, GetToken>(
           builder: (_, languageChanger, getPayment, getToken, __) {
             lChanger= languageChanger.data;
             return Directionality(
@@ -86,7 +83,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("8/10 months", style: TextStyle(color: or?Colors.white:Colors.black, fontSize: 16,),),
+                                Text("8/10 months", textDirection: TextDirection.ltr, style: TextStyle(color: or?Colors.white:Colors.black, fontSize: 16,),),
                                 SizedBox(
                                   height: 10,
                                 ),
@@ -188,7 +185,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         ),
             );
         }
-      ),
-    );
+      );
   }
 }

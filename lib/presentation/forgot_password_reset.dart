@@ -29,10 +29,7 @@ class _ForgotPasswordResetState extends State<ForgotPasswordReset> {
     double hei = MediaQuery.of(context).size.height;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: cTheme,
-      home: Consumer<LanguageChanger>(
+    return Consumer<LanguageChanger>(
           builder: (_, languageChanger, __) {
             lChanger= languageChanger.data;
             return Directionality(
@@ -120,7 +117,6 @@ class _ForgotPasswordResetState extends State<ForgotPasswordReset> {
                         ),
             );
         }
-      ),
-    );
+      );
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:easy_splash_screen/easy_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_info/flutter_app_info.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
@@ -36,24 +37,27 @@ import 'package:graduation_project/tokenManager.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+Future<void> main() async {
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (BuildContext context) =>ThemeChanger(),
-        ),
-        ChangeNotifierProvider(
-          create: (BuildContext context)=>LanguageChanger(),
-        ),
-        ChangeNotifierProvider(
-          create: (BuildContext context)=>GetToken(),
-        ),
-        ChangeNotifierProvider(
-          create: (BuildContext context)=>GetPayment(),
-        ),
-      ],
-      child: const MyApp(),
+    AppInfo(
+      data: await AppInfoData.get(),
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (BuildContext context) =>ThemeChanger(),
+          ),
+          ChangeNotifierProvider(
+            create: (BuildContext context)=>LanguageChanger(),
+          ),
+          ChangeNotifierProvider(
+            create: (BuildContext context)=>GetToken(),
+          ),
+          ChangeNotifierProvider(
+            create: (BuildContext context)=>GetPayment(),
+          ),
+        ],
+        child: const MyApp(),
+      ),
     ),
   );
 }
@@ -64,12 +68,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     return ScreenUtilInit(
         minTextAdapt: true,
         builder: (_ , child) {
-        return const MaterialApp(
-          locale: Locale("ar"),
-          home: MyHomePage(),
+        return MaterialApp(
+          theme: cTheme,
+          locale: const Locale("ar"),
+          home: const MyHomePage(),
           debugShowCheckedModeBanner: false,
         );
       }
@@ -91,8 +97,8 @@ class _MyHomePageState extends State<MyHomePage> {
     Timer(const Duration(seconds: 1),
       ()=>Navigator.of(context, rootNavigator: false).pushReplacement(MaterialPageRoute(builder:
           (context,) =>
-      // HomeScreen(),
-        firstTime==false?(rToken==null?const LoginScreen():const HomeScreen()):const OnboardingScreen(),
+      HomeScreen(),
+        // firstTime==false?(rToken==null?const LoginScreen():const HomeScreen()):const OnboardingScreen(),
       ),),
     );
   }

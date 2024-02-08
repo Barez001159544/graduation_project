@@ -26,10 +26,7 @@ class _RepairScreenState extends State<RepairScreen> {
     bool or=MediaQuery.of(context).orientation==Orientation.landscape?true:false;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
-    return MaterialApp(
-      theme: cTheme,
-      debugShowCheckedModeBanner: false,
-      home: Consumer2<ThemeChanger, LanguageChanger>(
+    return Consumer2<ThemeChanger, LanguageChanger>(
           builder: (_, tChanger, languageChanger, child) {
             lChanger=languageChanger.data;
           return Directionality(
@@ -44,9 +41,9 @@ class _RepairScreenState extends State<RepairScreen> {
                       child: ListView(
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(top: 20, left: 20),
+                            padding: EdgeInsets.only(top: 20, left: languageChanger.selectedLanguage=="ENG"?20:0, right: languageChanger.selectedLanguage=="ENG"?0:20),
                             child: Align(
-                              alignment: Alignment.centerLeft,
+                              alignment: languageChanger.selectedLanguage=="ENG"?Alignment.centerLeft:Alignment.centerRight,
                               child: Text(lChanger[15]["subtitle"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 18),),),),
                           SizedBox(
                             height: 20,
@@ -72,20 +69,25 @@ class _RepairScreenState extends State<RepairScreen> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Icon(Icons.tv_rounded, color: cTheme.primaryColorDark, size: 70,),
-                                      FToggleButton(
-                                        isEnable: false,
-                                        onChangeStatus: (bool val) {
-                                          setState(() {
-                                            print(val);
-                                            val?indexes.add(index):indexes.remove(index);
-                                          });
-                                        },
-                                        bgCircleEnable: Colors.white,
-                                        bgCircleDisable: Color(0xff5CD254),
-                                        bgDisable: tChanger.isDark?cTheme.backgroundColor:Color(0xffCBCBCB),
-                                        borderColorEnable: Colors.transparent,
-                                        borderColorDisEnable: Colors.transparent,
-                                      ),
+                                      customSwitchBtn(indexes.contains(index), cTheme.backgroundColor, (val) {
+                                        setState(() {
+                                          val?indexes.add(index):indexes.remove(index);
+                                        });
+                                      })
+                                      // FToggleButton(
+                                      //   isEnable: false,
+                                      //   onChangeStatus: (bool val) {
+                                      //     setState(() {
+                                      //       print(val);
+                                      //       val?indexes.add(index):indexes.remove(index);
+                                      //     });
+                                      //   },
+                                      //   bgCircleEnable: Colors.white,
+                                      //   bgCircleDisable: Color(0xff5CD254),
+                                      //   bgDisable: tChanger.isDark?cTheme.backgroundColor:Color(0xffCBCBCB),
+                                      //   borderColorEnable: Colors.transparent,
+                                      //   borderColorDisEnable: Colors.transparent,
+                                      // ),
                                     ],
                                   ),
                                   Text("TV", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 18),),
@@ -111,8 +113,7 @@ class _RepairScreenState extends State<RepairScreen> {
             ),
           );
         }
-      ),
-    );
+      );
   }
 }
 

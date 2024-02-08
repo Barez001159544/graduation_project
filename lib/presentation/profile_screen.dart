@@ -24,10 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     bool or=MediaQuery.of(context).orientation==Orientation.landscape?true:false;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: cTheme,
-      home: Consumer<LanguageChanger>(
+    return Consumer<LanguageChanger>(
           builder: (_, languageChanger, __) {
             lChanger= languageChanger.data;
             return Directionality(
@@ -133,8 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                            ),
             );
              }
-           ),
-    );
+           );
   }
 }
 

@@ -197,7 +197,7 @@ Future cofirmationCustomAlertDialog(
           GestureDetector(
             onTap: () {
               onGotIt();
-              Navigator.of(contex).pop();
+              // Navigator.of(contex).pop();
             },
             child: Container(
               height: 40,
@@ -298,5 +298,27 @@ ToastFuture customToastNotification(BuildContext context, Icon icon, String mess
     animation: StyledToastAnimation.slideFromTopFade,
     reverseAnimation: StyledToastAnimation.slideFromTopFade,
     context: context,
+  );
+}
+
+Widget customSwitchBtn(bool value, Color inactiveTrackColor, void doFunction(value)){
+  return Switch(
+    value: value,
+    activeColor: Colors.white,
+    activeTrackColor: Colors.green,
+    inactiveThumbColor: Colors.grey,
+    inactiveTrackColor: inactiveTrackColor,
+    hoverColor: Colors.transparent,
+    trackOutlineColor: MaterialStateProperty.resolveWith(
+          (final Set<MaterialState> states) {
+        if (states.contains(MaterialState.selected)) {
+          return null;
+        }
+        return inactiveTrackColor;
+      },
+    ),
+    onChanged: (bool value) {
+      doFunction(value);
+    },
   );
 }

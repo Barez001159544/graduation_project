@@ -3,14 +3,17 @@ import 'dart:convert';
 import 'package:f_toggle_button/f_toggle_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:graduation_project/constants.dart';
+import 'package:graduation_project/controllers/get_token.dart';
 import 'package:graduation_project/controllers/language_changer.dart';
 import 'package:graduation_project/controllers/theme_changer.dart';
 import 'package:graduation_project/presentation/about_app.dart';
 import 'package:graduation_project/presentation/forgot_password_reset.dart';
+import 'package:graduation_project/presentation/login_screen.dart';
 import 'package:graduation_project/presentation/profile_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -33,169 +36,187 @@ class _SettingsScreenState extends State<SettingsScreen> {
     double hei = MediaQuery.of(context).size.height;
     bool or=MediaQuery.of(context).orientation==Orientation.landscape?true:false;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
-    return MaterialApp(
-      theme: cTheme,
-      debugShowCheckedModeBanner: false,
-      home: Consumer2<ThemeChanger, LanguageChanger>(
-        builder: (_, tChanger, lChanger, child) {
+    return Consumer3<ThemeChanger, LanguageChanger, GetToken>(
+        builder: (_, tChanger, lChanger, getToken, child) {
           return Directionality(
             textDirection: lChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
             child: Scaffold(
               appBar: customAppbar(or?cTheme.backgroundColor:cTheme.primaryColor, lChanger.data[0]["title"], or?cTheme.primaryColorDark:Colors.white, context),
               backgroundColor: cTheme.backgroundColor,
               body: SafeArea(
-                child: Flex(
-                  direction: or?Axis.horizontal:Axis.vertical,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Stack(
+                  alignment: Alignment.center,
                   children: [
-                    Expanded(
-                      flex: or?2:1,
-                      child: Container(
-                        width: 2000,
-                        decoration: BoxDecoration(
-                          color: cTheme.primaryColor,
-                          borderRadius: or?BorderRadius.all(
-                            Radius.circular(or?25:0),
-                          ):BorderRadius.vertical(
-                            bottom: Radius.circular(50),
+                    Flex(
+                      direction: or?Axis.horizontal:Axis.vertical,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: or?2:1,
+                          child: Container(
+                            width: 2000,
+                            decoration: BoxDecoration(
+                              color: cTheme.primaryColor,
+                              borderRadius: or?BorderRadius.all(
+                                Radius.circular(or?25:0),
+                              ):BorderRadius.vertical(
+                                bottom: Radius.circular(50),
+                              ),
+                            ),
+                            margin: EdgeInsets.symmetric(horizontal: or?20:0, vertical: or?20:0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: or?120:90,
+                                  height: or?120:90,
+                                  decoration: BoxDecoration(
+                                    color: cTheme.primaryColor,
+                                    image: DecorationImage(
+                                      image: AssetImage("images/007-boy-2.jpg"),
+                                    ),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(100),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                GestureDetector(
+                                  onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                                      return ProfileScreen();
+                                    }));
+                                  },
+                                  child: Container(
+                                    width: 150,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(100),
+                                      ),
+                                      border: Border.all(
+                                        width: 2,
+                                        color: Colors.blue,
+                                        style: BorderStyle.solid,
+                                      ),
+                                      color: Colors.transparent,
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        lChanger.data[0]["gotoProfile"],
+                                        style: TextStyle(color: Colors.grey),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                        margin: EdgeInsets.symmetric(horizontal: or?20:0, vertical: or?20:0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Hero(
-                              tag: 1,
-                              child: Container(
-                                width: or?120:90,
-                                height: or?120:90,
-                                decoration: BoxDecoration(
-                                  color: cTheme.primaryColor,
-                                  image: DecorationImage(
-                                    image: AssetImage("images/007-boy-2.jpg"),
+                        Expanded(
+                          flex: 3,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                            // color: Colors.yellow,
+                            width: wid,
+                            child: SingleChildScrollView(
+                              child: Column(
+                                mainAxisAlignment: or?MainAxisAlignment.center:MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: 50,
                                   ),
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(100),
+                                  settings(lChanger.data[0]["theme"], cTheme.primaryColorDark,wid,
+                                    customSwitchBtn(tChanger.isDark, cTheme.primaryColorLight, (val) { tChanger.changeTheme();})
+
+                                  //   FToggleButton(
+                                  //   isEnable: tChanger.isDark,
+                                  //   onChangeStatus: (bool val) {
+                                  //     // setState(() {
+                                  //     //   print(val);
+                                  //     //   // tChanger.isDark=!tChanger.isDark;
+                                  //     //   if(tChanger.isDark){
+                                  //     //     cTheme=darkTheme;
+                                  //     //   }else{
+                                  //     //     cTheme=lightTheme;
+                                  //     //   }
+                                  //     // });
+                                  //     tChanger.changeTheme();
+                                  //   },
+                                  //   bgCircleEnable: Colors.white,
+                                  //   bgCircleDisable: Color(0xff5CD254),
+                                  //   bgDisable: Color(0xffCBCBCB),
+                                  //   borderColorEnable: Colors.transparent,
+                                  //   borderColorDisEnable: Colors.transparent,
+                                  // ),
                                   ),
-                                ),
+                                  settings(lChanger.data[0]["lang"], cTheme.primaryColorDark, wid, customDropDownMenu(100, 30, cTheme.primaryColorLight, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], lChanger.selectedLanguage, (val) {
+                                    print(val);
+                                    lChanger.changeLanguage(val);
+                                  })),
+                                  // settings("More", cTheme.primaryColorDark, wid, FToggleButton(
+                                  //   isEnable: false,
+                                  //   onChangeStatus: (bool val) {},
+                                  //   bgCircleEnable: Colors.white,
+                                  //   bgCircleDisable: Color(0xff5CD254),
+                                  //   bgDisable: tChanger.isDark?cTheme.primaryColorLight:Color(0xffCBCBCB),
+                                  //   borderColorEnable: Colors.transparent,
+                                  //   borderColorDisEnable: Colors.transparent,
+                                  // ),),
+                                  // settings("More", cTheme.primaryColorDark, wid, FToggleButton(
+                                  //   isEnable: false,
+                                  //   onChangeStatus: (bool val) {},
+                                  //   bgCircleEnable: Colors.white,
+                                  //   bgCircleDisable: Color(0xff5CD254),
+                                  //   bgDisable: tChanger.isDark?cTheme.primaryColorLight:Color(0xffCBCBCB),
+                                  //   borderColorEnable: Colors.transparent,
+                                  //   borderColorDisEnable: Colors.transparent,
+                                  // ),),
+                                  GestureDetector(
+                                    onTap: (){
+                                      Navigator.push(context, MaterialPageRoute(builder: (context){
+                                        return AboutApp();
+                                      }));
+                                    },
+                                      child: settings(lChanger.data[0]["about"], cTheme.primaryColorDark, wid, SizedBox(),)),
+                                ],
                               ),
                             ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            GestureDetector(
-                              onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context){
-                                  return ProfileScreen();
-                                }));
-                              },
-                              child: Container(
-                                width: 150,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(100),
-                                  ),
-                                  border: Border.all(
-                                    width: 2,
-                                    color: Colors.blue,
-                                    style: BorderStyle.solid,
-                                  ),
-                                  color: Colors.transparent,
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    lChanger.data[0]["gotoProfile"],
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                    Expanded(
-                      flex: 3,
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                        // color: Colors.yellow,
-                        width: wid,
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisAlignment: or?MainAxisAlignment.center:MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                    Positioned(
+                      bottom: 20,
+                      child: GestureDetector(
+                        onTap: (){
+                          print("Log Out");
+                          cofirmationCustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, lChanger.data[16]["popTitle"], lChanger.data[16]["popSubtitle"], lChanger.data[16]["agreeBtn"], lChanger.data[16]["declineBtn"], context, (){
+                            getToken.deleteToken("accessToken");
+                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
+                              return LoginScreen();
+                            }), (route) => false);
+                          }, (){});
+                        },
+                        child: Container(
+                          height: 40,
+                          // width: 80,
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: cTheme.primaryColorLight,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              SizedBox(
-                                height: 50,
-                              ),
-                              settings(lChanger.data[0]["theme"], cTheme.primaryColorDark,wid, FToggleButton(
-                                isEnable: tChanger.isDark,
-                                onChangeStatus: (bool val) {
-                                  // setState(() {
-                                  //   print(val);
-                                  //   // tChanger.isDark=!tChanger.isDark;
-                                  //   if(tChanger.isDark){
-                                  //     cTheme=darkTheme;
-                                  //   }else{
-                                  //     cTheme=lightTheme;
-                                  //   }
-                                  // });
-                                  tChanger.changeTheme();
-                                },
-                                bgCircleEnable: Colors.white,
-                                bgCircleDisable: Color(0xff5CD254),
-                                bgDisable: Color(0xffCBCBCB),
-                                borderColorEnable: Colors.transparent,
-                                borderColorDisEnable: Colors.transparent,
-                              ),),
-                              settings(lChanger.data[0]["lang"], cTheme.primaryColorDark, wid, customDropDownMenu(100, 30, cTheme.primaryColorLight, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], lChanger.selectedLanguage, (val) {
-                                print(val);
-                                lChanger.changeLanguage(val);
-                              })),
-                              settings(lChanger.data[0]["notification"], cTheme.primaryColorDark, wid, FToggleButton(
-                                isEnable: false,
-                                onChangeStatus: (bool val) {},
-                                bgCircleEnable: Colors.white,
-                                bgCircleDisable: Color(0xff5CD254),
-                                bgDisable: tChanger.isDark?cTheme.primaryColorLight:Color(0xffCBCBCB),
-                                borderColorEnable: Colors.transparent,
-                                borderColorDisEnable: Colors.transparent,
-                              ),),
-                              settings("More", cTheme.primaryColorDark, wid, FToggleButton(
-                                isEnable: false,
-                                onChangeStatus: (bool val) {},
-                                bgCircleEnable: Colors.white,
-                                bgCircleDisable: Color(0xff5CD254),
-                                bgDisable: tChanger.isDark?cTheme.primaryColorLight:Color(0xffCBCBCB),
-                                borderColorEnable: Colors.transparent,
-                                borderColorDisEnable: Colors.transparent,
-                              ),),
-                              settings("More", cTheme.primaryColorDark, wid, FToggleButton(
-                                isEnable: false,
-                                onChangeStatus: (bool val) {},
-                                bgCircleEnable: Colors.white,
-                                bgCircleDisable: Color(0xff5CD254),
-                                bgDisable: tChanger.isDark?cTheme.primaryColorLight:Color(0xffCBCBCB),
-                                borderColorEnable: Colors.transparent,
-                                borderColorDisEnable: Colors.transparent,
-                              ),),
-                              settings("More", cTheme.primaryColorDark, wid, FToggleButton(
-                                isEnable: false,
-                                onChangeStatus: (bool val) {},
-                                bgCircleEnable: Colors.white,
-                                bgCircleDisable: Color(0xff5CD254),
-                                bgDisable: tChanger.isDark?cTheme.primaryColorLight:Color(0xffCBCBCB),
-                                borderColorEnable: Colors.transparent,
-                                borderColorDisEnable: Colors.transparent,
-                              ),),
-                              GestureDetector(
-                                onTap: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context){
-                                    return AboutApp();
-                                  }));
-                                },
-                                  child: settings("About App", cTheme.primaryColorDark, wid, SizedBox(),)),
+                              RotatedBox(
+                                  child: Icon(Icons.logout_rounded, color: Colors.red,),
+                                  quarterTurns: lChanger.selectedLanguage=="ENG"?90:0),
+                              SizedBox(width: 10,),
+                              Text(lChanger.data[0]["out"], style: TextStyle(color: Colors.red),),
                             ],
                           ),
                         ),
@@ -207,8 +228,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           );
         }
-      ),
-    );
+      );
   }
 }
 

@@ -51,6 +51,7 @@ dependencies:
   flutter_styled_toast: ^2.2.1
   timer_count_down: ^2.2.2
   glowy_borders: ^1.0.2
+  flutter_app_info: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -79,6 +80,7 @@ flutter:
     - images/
     - i18n/en/eng.json
     - i18n/kr/krd.json
+    - i18n/ar/arb.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

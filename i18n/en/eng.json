@@ -5,7 +5,9 @@
       "gotoProfile": "Edit Profile",
       "theme": "Dark Mode",
       "lang": "Language",
-      "notification": "Notification"
+      "notification": "Notification",
+      "about": "About App",
+      "out": "Log Out"
     },
     {
       "title": "Profile",

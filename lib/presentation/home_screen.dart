@@ -53,10 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
       wid>600?DeviceOrientation.landscapeLeft:DeviceOrientation.portraitUp,
       wid>600?DeviceOrientation.landscapeRight:DeviceOrientation.portraitUp,
     ]);
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: cTheme,
-      home: Consumer2<LanguageChanger, GetToken>(
+    return Consumer2<LanguageChanger, GetToken>(
         builder: (_, languageChanger, getToken, __) {
           lChanger= languageChanger.data;
           return Directionality(
@@ -560,8 +557,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           );
         }
-      ),
-    );
+      );
   }
 }
 

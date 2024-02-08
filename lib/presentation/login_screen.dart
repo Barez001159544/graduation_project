@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/presentation/forgot_password_screen.dart';
@@ -31,23 +32,25 @@ class _LoginScreenState extends State<LoginScreen> {
     double hei = MediaQuery.of(context).size.height;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: cTheme,
-      home: Consumer<LanguageChanger>(
+    SystemChrome.setPreferredOrientations([
+      wid>600?DeviceOrientation.landscapeLeft:DeviceOrientation.portraitUp,
+      wid>600?DeviceOrientation.landscapeRight:DeviceOrientation.portraitUp,
+    ]);
+    return Consumer<LanguageChanger>(
           builder: (_, languageChanger, __) {
             lChanger= languageChanger.data;
             return Directionality(
               textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
               child: Scaffold(
+                resizeToAvoidBottomInset: false,
               backgroundColor: cTheme.backgroundColor,//Color(0xff155E7D),
               body: SafeArea(
                 child: Stack(
                   children: [
                     Center(
                       child: Container(
-                          width: wid>600?wid*0.35:wid,
-                          height: wid>600?wid*0.4:hei,
+                          width: wid>600?wid*0.4:wid,
+                          height: wid>600?wid*0.45:hei,
                           padding: EdgeInsets.symmetric(vertical: 20),
                           decoration: BoxDecoration(
                             color: cTheme.primaryColorLight,
@@ -174,8 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
             );
         }
-      ),
-    );
+      );
   }
 }
 

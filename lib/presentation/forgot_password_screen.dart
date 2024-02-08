@@ -66,10 +66,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     double hei = MediaQuery.of(context).size.height;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: cTheme,
-      home: Consumer<LanguageChanger>(
+    return Consumer<LanguageChanger>(
           builder: (_, languageChanger, __) {
             lChanger= languageChanger.data;
             List views=[
@@ -287,8 +284,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               ),
             );
         }
-      ),
-    );
+      );
   }
 }
 

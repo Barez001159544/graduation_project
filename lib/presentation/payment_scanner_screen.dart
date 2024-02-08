@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:graduation_project/controllers/get_payment.dart';
 import 'package:provider/provider.dart';
@@ -53,10 +55,7 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
     bool or=MediaQuery.of(context).orientation==Orientation.landscape?true:false;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
-    return MaterialApp(
-      theme: cTheme,
-      debugShowCheckedModeBanner: false,
-      home: Consumer2<LanguageChanger, GetPayment>(
+    return Consumer2<LanguageChanger, GetPayment>(
           builder: (_, languageChanger, getPayment, __) {
             lChanger= languageChanger.data;
             return Directionality(
@@ -75,11 +74,12 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            width: or?wid/2:wid,
+                            width: or?wid/2:wid*0.6,
+                            height: or?wid/2:wid*0.6,
                             margin: EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              // color: Colors.white,
-                              borderRadius: BorderRadius.all(Radius.circular(50),),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(Radius.circular(20),),
                             ),
                             child: Center(
                               child: Image.memory(
@@ -172,7 +172,6 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                         ),
             );
         }
-      ),
-    );
+      );
   }
 }

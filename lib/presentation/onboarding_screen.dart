@@ -55,10 +55,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
     double wid = MediaQuery.of(context).size.width;
     double hei = MediaQuery.of(context).size.height;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
-    return MaterialApp(
-      theme: cTheme,
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         body: SafeArea(
           child: Container(
             color: Color(0xffFFFFFF),
@@ -163,7 +160,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }

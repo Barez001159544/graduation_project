@@ -24,10 +24,7 @@ class _TaxiOnWayState extends State<TaxiOnWay> {
     bool or=MediaQuery.of(context).orientation==Orientation.landscape?true:false;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
-    return MaterialApp(
-      theme: cTheme,
-      debugShowCheckedModeBanner: false,
-      home: Consumer<LanguageChanger>(
+    return Consumer<LanguageChanger>(
           builder: (_, languageChanger, __) {
             lChanger= languageChanger.data;
             return Directionality(
@@ -110,7 +107,6 @@ class _TaxiOnWayState extends State<TaxiOnWay> {
                         ),
             );
         }
-      ),
-    );
+      );
   }
 }
