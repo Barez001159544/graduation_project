@@ -4,6 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
+import '../constants/custom_appbar.dart';
+import '../constants/main_btn.dart';
 import '../controllers/language_changer.dart';
 import '../controllers/theme_changer.dart';
 import '../custom theme data/themes.dart';
@@ -33,7 +35,7 @@ class _TaxiServicesState extends State<TaxiServices> {
               textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
               child: Scaffold(
               backgroundColor: cTheme.backgroundColor,
-              appBar: customAppbar(cTheme.backgroundColor, lChanger[10]["title"], cTheme.primaryColorDark, context),
+              appBar: CustomAppBar(cTheme.backgroundColor, lChanger[10]["title"], cTheme.primaryColorDark, context),
               body: SafeArea(
                 child: Center(
                   child: Flex(
@@ -69,7 +71,7 @@ class _TaxiServicesState extends State<TaxiServices> {
                           SizedBox(
                             height: 30,
                           ),
-                          mainBtn(wid>600?wid*0.35-80:wid-40, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[10]["btn"], () {
+                          MainBtn(wid>600?wid*0.35-80:wid-40, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[10]["btn"], () {
                             setState(() {
                               //
                             });

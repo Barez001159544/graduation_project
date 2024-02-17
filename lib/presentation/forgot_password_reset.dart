@@ -3,6 +3,8 @@ import 'package:graduation_project/presentation/forgot_password_success.dart';
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
+import '../constants/login_fields.dart';
+import '../constants/main_btn.dart';
 import '../controllers/language_changer.dart';
 import '../controllers/theme_changer.dart';
 import '../custom theme data/themes.dart';
@@ -53,7 +55,7 @@ class _ForgotPasswordResetState extends State<ForgotPasswordReset> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Expanded(
-                              child: loginFields(resetPassword1, isShown1, lChanger[4]["ph1"], cTheme.primaryColorDark, cTheme.primaryColorDark),
+                              child: LoginFields(resetPassword1, isShown1, lChanger[4]["ph1"], cTheme.primaryColorDark, cTheme.primaryColorDark),
                             ),
                             GestureDetector(
                               onTap: (){
@@ -80,7 +82,7 @@ class _ForgotPasswordResetState extends State<ForgotPasswordReset> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Expanded(
-                              child: loginFields(resetPassword2, isShown2, lChanger[4]["ph2"], cTheme.primaryColorDark, cTheme.primaryColorDark),
+                              child: LoginFields(resetPassword2, isShown2, lChanger[4]["ph2"], cTheme.primaryColorDark, cTheme.primaryColorDark),
                             ),
                             GestureDetector(
                               onTap: (){
@@ -105,7 +107,7 @@ class _ForgotPasswordResetState extends State<ForgotPasswordReset> {
                         padding: EdgeInsets.symmetric(vertical: 15),
                         child: Text("$errorMessage", style: TextStyle(fontSize: 10, color: Colors.red),),
                       ),
-                      mainBtn(wid>500?wid*0.35-80:wid-40, wid>500?62.0:72.0, cTheme.primaryColor, lChanger[4]["btn"], () {
+                      MainBtn(wid>500?wid*0.35-80:wid-40, wid>500?62.0:72.0, cTheme.primaryColor, lChanger[4]["btn"], () {
                         Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
                           return ForgotPasswordSuccess();
                         }));

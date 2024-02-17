@@ -4,6 +4,7 @@ import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/presentation/login_screen.dart';
 import 'package:provider/provider.dart';
 
+import '../constants/main_btn.dart';
 import '../controllers/language_changer.dart';
 import '../controllers/theme_changer.dart';
 import '../custom theme data/themes.dart';
@@ -51,7 +52,7 @@ class ForgotPasswordSuccess extends StatelessWidget {
                   SizedBox(
                     height: 30,
                   ),
-                  mainBtn(wid>500?wid*0.35-80:wid-40, wid>500?62.0:72.0, cTheme.primaryColor, lChanger[5]["btn"], () {
+                  MainBtn(wid>500?wid*0.35-80:wid-40, wid>500?62.0:72.0, cTheme.primaryColor, lChanger[5]["btn"], () {
                     Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
                       return LoginScreen();
                     }));

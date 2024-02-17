@@ -44,11 +44,11 @@ class _HomeScreenState extends State<HomeScreen> {
     double wid1=wid>600?hei/2:wid;
     double hei1=wid>600?hei/2:wid;
     double wid2=wid>600?(wid-(hei/2)):wid;
-    double hei2=wid>600?hei/2:300;
+    double hei2=wid>600?hei/2:280.sp;//300;
     double wid3=wid>600?hei/2:wid;
     double hei3=wid>600?hei/2:wid;
     double wid4=wid>600?(wid-(hei/2)):wid;
-    double hei4=wid>600?hei/2:hei*0.6;
+    double hei4=wid>600?hei/2:450;
     SystemChrome.setPreferredOrientations([
       wid>600?DeviceOrientation.landscapeLeft:DeviceOrientation.portraitUp,
       wid>600?DeviceOrientation.landscapeRight:DeviceOrientation.portraitUp,
@@ -436,7 +436,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             // color: Colors.deepPurple,
                             child: Column(
                               children: [
-                                threeBtns(2000, wid>600?hei4/3-20:(hei4/4).sp, cTheme.primaryColorLight, null, languageChanger.selectedLanguage=="ENG"?EdgeInsets.only(left: wid>600?10.sp:30.sp,):EdgeInsets.only(right: wid>600?10.sp:30.sp),
+                                threeBtns(2000, wid>600?hei4/3-20:(hei4/4).sp-5, cTheme.primaryColorLight, null, languageChanger.selectedLanguage=="ENG"?EdgeInsets.only(left: wid>600?10.sp:30.sp,):EdgeInsets.only(right: wid>600?10.sp:30.sp),
                                   Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.all(Radius.circular(wid>600?35:30.sp),),
@@ -445,7 +445,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         matchTextDirection: true,
                                         alignment: languageChanger.selectedLanguage=="ENG"?Alignment.centerRight:Alignment.centerLeft,
                                         image: AssetImage("images/art 01.png"),
-                                        opacity: wid>500?1:0,
+                                        opacity: wid>600?1:0,
                                         fit: BoxFit.fitHeight,
                                       ),
                                     ),
@@ -489,7 +489,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     }));
                                   },
                                 ),
-                                threeBtns(2000, wid>600?hei4/3-20:(hei4/2-60).sp, cTheme.primaryColorLight, null, languageChanger.selectedLanguage=="ENG"?EdgeInsets.only(left: wid>600?10.sp:30.sp, right: wid>600?10:0):EdgeInsets.only(right: wid>600?10.sp:30.sp, left: wid>600?10:0),
+                                threeBtns(2000, wid>600?hei4/3-20:(hei4/2-60).sp-5, cTheme.primaryColorLight, null, languageChanger.selectedLanguage=="ENG"?EdgeInsets.only(left: wid>600?10.sp:30.sp, right: wid>600?10:0):EdgeInsets.only(right: wid>600?10.sp:30.sp, left: wid>600?10:0),
                                   Flex(
                                     direction: wid>600?Axis.horizontal:Axis.vertical,
                                     mainAxisAlignment: wid>600?MainAxisAlignment.spaceBetween:MainAxisAlignment.center,
@@ -504,7 +504,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ],
                                       ),
                                       SizedBox(
-                                        height: 20,
+                                        height: 20.sp,
                                       ),
                                       Row(
                                         mainAxisAlignment: wid>600?MainAxisAlignment.spaceAround:MainAxisAlignment.start,
@@ -531,7 +531,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     }));
                                   },
                                 ),
-                                threeBtns(2000, wid>600?hei4/3-20:(hei4/4).sp, cTheme.primaryColor, LinearGradient(
+                                threeBtns(2000, wid>600?hei4/3-20:(hei4/4).sp-5, cTheme.primaryColor, LinearGradient(
                                   colors: [
                                     cTheme.primaryColor,
                                     Color(0xff7895a6),

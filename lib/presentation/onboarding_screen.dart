@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
+import '../constants/main_btn.dart';
 import '../controllers/theme_changer.dart';
 import '../custom theme data/themes.dart';
 
@@ -134,7 +135,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
                     ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 50),
-                      child: mainBtn(wid>600?wid*0.35-80:wid-40, wid>600?62.0:72.0, cTheme.primaryColor, "CONTINUE", () async {
+                      child: MainBtn(wid>600?wid*0.35-80:wid-40, wid>600?62.0:72.0, cTheme.primaryColor, "CONTINUE", () async {
                           if(ind!=2){
                             setState(() {
                               ind++;

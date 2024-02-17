@@ -4,6 +4,8 @@ import "package:graduation_project/controllers/theme_changer.dart";
 import "package:provider/provider.dart";
 
 import "../constants.dart";
+import "../constants/custom_dropdown_menu.dart";
+import "../constants/main_btn.dart";
 import "../controllers/language_changer.dart";
 import "../custom theme data/themes.dart";
 
@@ -36,7 +38,6 @@ class _TaxiHomeScreenState extends State<TaxiHomeScreen> {
                     backgroundColor: cTheme.primaryColorLight,
                     scrolledUnderElevation: 0,
                     title: Text(lChanger[11]["title"], style: TextStyle(color: cTheme.primaryColorDark),),
-                    centerTitle: true,
                     leading: Builder(
                       builder: (BuildContext){
                         return IconButton(onPressed: (){
@@ -49,7 +50,7 @@ class _TaxiHomeScreenState extends State<TaxiHomeScreen> {
                       },
                     ),
                     actions: [
-                      customDropDownMenu(80, 30, cTheme.backgroundColor, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], languageChanger.selectedLanguage, (val) {
+                      CustomDropDownMenu("Lang", 80, 30, 5, cTheme.backgroundColor, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], languageChanger.selectedLanguage, (val) {
                         print(val);
                         languageChanger.changeLanguage(val);
                       }),
@@ -65,7 +66,7 @@ class _TaxiHomeScreenState extends State<TaxiHomeScreen> {
                             // });
                             tChanger.changeTheme();
                           },
-                            icon: Icon(tChanger.isDark==true?Icons.light_mode_rounded:Icons.dark_mode_rounded, color: cTheme.primaryColorDark,),
+                            icon: Icon(tChanger.isDark?Icons.dark_mode_rounded:Icons.light_mode_rounded, color: cTheme.primaryColorDark,),
                           );
                         },
                       ),
@@ -183,7 +184,7 @@ class _TaxiHomeScreenState extends State<TaxiHomeScreen> {
                               ),
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: wid>600?20:0),
-                                child: mainBtn(wid>600?wid*0.35-80:wid-120, wid>600?62.0:72.0, Colors.green, lChanger[11]["btnYes"], () {
+                                child: MainBtn(wid>600?wid*0.35-80:wid-120, wid>600?62.0:72.0, Colors.green, lChanger[11]["btnYes"], () {
                                   setState(() {
                                     //
                                   });

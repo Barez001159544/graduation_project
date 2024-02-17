@@ -85,7 +85,7 @@ class _AboutAppState extends State<AboutApp> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: List.generate(appInfo.length, (index) => Text(
                             "${appInfo[index]}",
-                            style: TextStyle(color: cTheme.primaryColorDark, fontSize: 20),
+                            style: TextStyle(color: Colors.grey, fontSize: 14),
                           ),),
                         ),
                         SizedBox(
@@ -107,10 +107,10 @@ class _AboutAppState extends State<AboutApp> {
                             borderRadius: BorderRadius.all(Radius.circular(100),),
                             border: Border.all(
                               width: 1,
-                              color: cTheme.primaryColorDark,
+                              color: Colors.grey,
                             ),
                           ),
-                          child: Icon(Icons.arrow_back_rounded, color: cTheme.primaryColorDark,),
+                          child: Icon(Icons.arrow_back_rounded, color: Colors.grey,),
                         ),
                       ),
                     ),

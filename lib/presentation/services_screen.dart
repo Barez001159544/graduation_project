@@ -2,11 +2,13 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:graduation_project/constants.dart';
+import 'package:graduation_project/presentation/maintenance_screen.dart';
 import 'package:graduation_project/presentation/protest_screen.dart';
 import 'package:graduation_project/presentation/repair_screen.dart';
 import 'package:graduation_project/presentation/taxi_home.dart';
 import 'package:graduation_project/presentation/taxi_services.dart';
 import 'package:provider/provider.dart';
+import '../constants/custom_appbar.dart';
 import '../controllers/language_changer.dart';
 import '../controllers/theme_changer.dart';
 import '../custom theme data/themes.dart';
@@ -21,14 +23,14 @@ class ServicesScreen extends StatefulWidget {
 List services=[
   "Taxi",
   "Fixation",
-  "Support Center",
+  // "Support Center",
   "Maintenance",
   "Protest",
 ];
 List servicesIcons=[
   Icons.local_taxi_rounded,
   Icons.handyman_rounded,
-  Icons.chat_rounded,
+  // Icons.chat_rounded,
   Icons.cleaning_services_rounded,
   Icons.note_alt_outlined,
 ];
@@ -49,7 +51,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                 textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
                 child: Scaffold(
                   backgroundColor: cTheme.backgroundColor,
-                  appBar: customAppbar(cTheme.backgroundColor, lChanger[9]["title"], cTheme.primaryColorDark, context),
+                  appBar: CustomAppBar(cTheme.backgroundColor, lChanger[9]["title"], cTheme.primaryColorDark, context),
                 body: SafeArea(
                     child: ListView(
                       children: [
@@ -83,7 +85,11 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                     Navigator.push(context, MaterialPageRoute(builder: (context){
                                       return RepairScreen();
                                     }));
-                                  }else if(index==4){
+                                  }else if(index==2){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                                      return MaintenanceScreen();
+                                    }));
+                                  }else if(index==3){
                                     Navigator.push(context, MaterialPageRoute(builder: (context){
                                       return ProtestScreen();
                                     }));

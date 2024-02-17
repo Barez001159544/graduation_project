@@ -1,9 +1,13 @@
-import "package:f_toggle_button/f_toggle_button.dart";
+
 import "package:flutter/material.dart";
 import "package:graduation_project/presentation/payment_screen.dart";
 import "package:provider/provider.dart";
 
 import "../constants.dart";
+import "../constants/confirmation_custom_alert_dialog.dart";
+import "../constants/custom_appbar.dart";
+import "../constants/custom_switch_notification.dart";
+import "../constants/main_btn.dart";
 import "../controllers/language_changer.dart";
 import "../controllers/theme_changer.dart";
 import "../custom theme data/themes.dart";
@@ -33,7 +37,7 @@ class _RepairScreenState extends State<RepairScreen> {
             textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
             child: Scaffold(
               backgroundColor: cTheme.backgroundColor,
-              appBar: customAppbar(cTheme.backgroundColor, lChanger[15]["title"], cTheme.primaryColorDark, context),
+              appBar: CustomAppBar(cTheme.backgroundColor, lChanger[15]["title"], cTheme.primaryColorDark, context),
               body: SafeArea(
                 child: Column(
                   children: [
@@ -69,7 +73,7 @@ class _RepairScreenState extends State<RepairScreen> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Icon(Icons.tv_rounded, color: cTheme.primaryColorDark, size: 70,),
-                                      customSwitchBtn(indexes.contains(index), cTheme.backgroundColor, (val) {
+                                      CustomSwitchBtn(indexes.contains(index), cTheme.backgroundColor, (val) {
                                         setState(() {
                                           val?indexes.add(index):indexes.remove(index);
                                         });
@@ -102,8 +106,8 @@ class _RepairScreenState extends State<RepairScreen> {
                       padding: const EdgeInsets.only(top: 20, bottom: 20, right: 20),
                       child: Align(
                         alignment: Alignment.centerRight,
-                        child: mainBtn(wid>500?wid*0.35-80:wid-40, wid>500?62.0:72.0, cTheme.primaryColor, lChanger[15]["btn"], () {
-                          cofirmationCustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, lChanger[15]["popTitle"], lChanger[15]["popSubtitle"], lChanger[15]["agreeBtn"], lChanger[15]["declineBtn"], context, (){}, (){});
+                        child: MainBtn(wid>500?wid*0.35-80:wid-40, wid>500?62.0:72.0, cTheme.primaryColor, lChanger[15]["btn"], () {
+                          ConfirmationCustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, lChanger[15]["popTitle"], lChanger[15]["popSubtitle"], lChanger[15]["agreeBtn"], lChanger[15]["declineBtn"], context, (){}, (){}, cTheme.primaryColor);
                         }),
                       ),
                     ),

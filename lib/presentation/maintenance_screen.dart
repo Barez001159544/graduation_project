@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../constants/confirmation_custom_alert_dialog.dart';
+import '../constants/custom_dropdown_menu.dart';
 import '../constants/custom_textfields.dart';
 import '../constants/custom_appbar.dart';
 import '../constants/main_btn.dart';
@@ -12,16 +13,17 @@ import '../controllers/language_changer.dart';
 import '../controllers/theme_changer.dart';
 import '../custom theme data/themes.dart';
 
-class ProtestScreen extends StatefulWidget {
-  const ProtestScreen({super.key});
+class MaintenanceScreen extends StatefulWidget {
+  const MaintenanceScreen({super.key});
 
   @override
-  State<ProtestScreen> createState() => _ProtestScreenState();
+  State<MaintenanceScreen> createState() => _MaintenanceScreenState();
 }
 
-class _ProtestScreenState extends State<ProtestScreen> {
+class _MaintenanceScreenState extends State<MaintenanceScreen> {
   TextEditingController titleController = TextEditingController();
   TextEditingController coreController = TextEditingController();
+  String? maintainType=null;
   @override
   Widget build(BuildContext context) {
     double wid = MediaQuery.of(context).size.width;
@@ -30,14 +32,14 @@ class _ProtestScreenState extends State<ProtestScreen> {
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
     return Consumer2<ThemeChanger, LanguageChanger>(
-          builder: (_, tChanger, languageChanger, child) {
-            lChanger=languageChanger.data;
+        builder: (_, tChanger, languageChanger, child) {
+          lChanger=languageChanger.data;
           return Directionality(
             textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
             child: Scaffold(
               resizeToAvoidBottomInset: false,
               backgroundColor: cTheme.backgroundColor,
-              appBar: CustomAppBar(cTheme.backgroundColor, lChanger[16]["title"], cTheme.primaryColorDark, context),
+              appBar: CustomAppBar(cTheme.backgroundColor, "Maintenance", cTheme.primaryColorDark, context),
               body: SafeArea(
                 child: Padding(
                   padding: EdgeInsets.all(10),
@@ -58,12 +60,18 @@ class _ProtestScreenState extends State<ProtestScreen> {
                               Container(
                                 width: wid,
                                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                                  child: Text(lChanger[16]["subtitle"], style: TextStyle(fontSize: 25, color: Colors.grey.shade700),),
+                                child: Text(lChanger[16]["subtitle"], style: TextStyle(fontSize: 25, color: Colors.grey.shade700),),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
-                              CustomTextFields(titleController, lChanger[16]["ph1"], cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.backgroundColor, 25, 1),
+                              // CustomTextFields(titleController, lChanger[16]["ph1"], cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.backgroundColor, 25, 1),
+                              CustomDropDownMenu("what exactly do you require?", wid, 50, 25, cTheme.backgroundColor, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], maintainType, (val){
+                                setState(() {
+                                  maintainType=val;
+                                  print(val);
+                                });
+                              }),
                               SizedBox(
                                 height: 10,
                               ),
@@ -78,7 +86,7 @@ class _ProtestScreenState extends State<ProtestScreen> {
                       MainBtn(wid>600?wid*0.35-80:wid-40, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[16]["btn"], () {
                         // Navigator.of(context).pop();
                         ConfirmationCustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, lChanger[16]["popTitle"], lChanger[16]["popSubtitle"], lChanger[16]["agreeBtn"], lChanger[16]["declineBtn"], context, (){}, (){}, cTheme.primaryColor);
-                        }),
+                      }),
                     ],
                   ),
                 ),
@@ -86,6 +94,6 @@ class _ProtestScreenState extends State<ProtestScreen> {
             ),
           );
         }
-      );
+    );
   }
 }

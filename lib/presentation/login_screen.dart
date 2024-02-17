@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graduation_project/constants.dart';
+import 'package:graduation_project/constants/main_btn.dart';
 import 'package:graduation_project/presentation/forgot_password_screen.dart';
 import 'package:graduation_project/presentation/home_screen.dart';
 import 'package:graduation_project/presentation/taxi_home.dart';
+import 'package:graduation_project/test.dart';
 import 'package:provider/provider.dart';
 
+import '../constants/custom_dropdown_menu.dart';
+import '../constants/login_fields.dart';
 import '../controllers/language_changer.dart';
 import '../controllers/theme_changer.dart';
 import '../custom theme data/themes.dart';
@@ -36,8 +40,8 @@ class _LoginScreenState extends State<LoginScreen> {
       wid>600?DeviceOrientation.landscapeLeft:DeviceOrientation.portraitUp,
       wid>600?DeviceOrientation.landscapeRight:DeviceOrientation.portraitUp,
     ]);
-    return Consumer<LanguageChanger>(
-          builder: (_, languageChanger, __) {
+    return Consumer2<LanguageChanger, ThemeChanger>(
+          builder: (_, languageChanger, tChanger, __) {
             lChanger= languageChanger.data;
             return Directionality(
               textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
@@ -63,19 +67,20 @@ class _LoginScreenState extends State<LoginScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Text(wid>600?lChanger[2]["title1"]:lChanger[2]["title2"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 36), textAlign: TextAlign.center,),
+                              // Icon(Icons.login_rounded, size: 46, color: cTheme.primaryColorDark.withOpacity(0.6),),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                                      child: loginFields(username, false, lChanger[2]["ph1"], cTheme.primaryColorDark, cTheme.primaryColorDark)),
+                                      child: LoginFields(username, false, lChanger[2]["ph1"], cTheme.primaryColorDark, cTheme.primaryColorDark)),
                                   Padding(
                                     padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.end,
                                       children: [
                                         Expanded(
-                                          child: loginFields(password, isShown, lChanger[2]["ph2"], cTheme.primaryColorDark, cTheme.primaryColorDark),
+                                          child: LoginFields(password, isShown, lChanger[2]["ph2"], cTheme.primaryColorDark, cTheme.primaryColorDark),
                                         ),
                                         GestureDetector(
                                           onTap: (){
@@ -102,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ],
                               ),
-                              mainBtn(wid>600?wid*0.35-80:wid-80, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[2]["btn"], () {
+                              MainBtn(wid>600?wid*0.35-80:wid-80, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[2]["btn"], () {
                                 setState(() {
                                   if(username.text.isEmpty || password.text.isEmpty){
                                     errorMessage="leave no field empty";
@@ -112,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     }));
                                   }else if(username.text=="john" && password.text=="res"){
                                     Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
-                                      return HomeScreen();
+                                      return Test();
                                     }));
                                   }else{
                                     errorMessage="username or password incorrect";
@@ -145,31 +150,49 @@ class _LoginScreenState extends State<LoginScreen> {
                     Positioned(
                       bottom: 10,
                       left: 10,
-                      child: GestureDetector(
-                        onTap: (){
-                          // setState(() {
-                          //   cTheme = cTheme==lightTheme?darkTheme:lightTheme;
-                          //   print(isDark);
-                          // });
-                        },
-                        child: Container(
-                          width: 70,
-                          height: 70,
-                          padding: EdgeInsets.only(top: 10),
-                          decoration: BoxDecoration(
-                            color: Colors.yellow,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5),
+                      child: SizedBox(
+                        width: wid-20,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            IconButton(onPressed: (){
+                              tChanger.changeTheme();
+                            },
+                              icon: Icon(tChanger.isDark?Icons.dark_mode_rounded:Icons.light_mode_rounded, color: cTheme.primaryColorDark,),
                             ),
-                          ),
-                          child: SvgPicture.asset(
-                              height: 40,
-                              width: 40,
-                              "images/007-boy-2.svg",
-                              semanticsLabel: 'App logo'
-                          ),
+                            //
+                            CustomDropDownMenu("Lang", 80, 30, 5, cTheme.backgroundColor, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], languageChanger.selectedLanguage, (val) {
+                              print(val);
+                              languageChanger.changeLanguage(val);
+                            }),
+                          ],
                         ),
                       ),
+                      // GestureDetector(
+                      //   onTap: (){
+                      //     // setState(() {
+                      //     //   cTheme = cTheme==lightTheme?darkTheme:lightTheme;
+                      //     //   print(isDark);
+                      //     // });
+                      //   },
+                      //   child: Container(
+                      //     width: 70,
+                      //     height: 70,
+                      //     padding: EdgeInsets.only(top: 10),
+                      //     decoration: BoxDecoration(
+                      //       color: Colors.yellow,
+                      //       borderRadius: BorderRadius.all(
+                      //         Radius.circular(5),
+                      //       ),
+                      //     ),
+                      //     child: SvgPicture.asset(
+                      //         height: 40,
+                      //         width: 40,
+                      //         "images/007-boy-2.svg",
+                      //         semanticsLabel: 'App logo'
+                      //     ),
+                      //   ),
+                      // ),
                     ),
                   ],
                 ),

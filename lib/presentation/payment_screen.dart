@@ -11,6 +11,8 @@ import "package:graduation_project/presentation/payment_scanner_screen.dart";
 import "package:provider/provider.dart";
 
 import "../constants.dart";
+import "../constants/custom_appbar.dart";
+import "../constants/custom_toast_notification.dart";
 import "../controllers/language_changer.dart";
 import "../controllers/theme_changer.dart";
 import "../custom theme data/themes.dart";
@@ -41,7 +43,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
               child: Scaffold(
               backgroundColor: Color(0xff08A99F),
-              appBar: customAppbar(Color(0xff08A99F), lChanger[7]["title"], Colors.white, context),
+              appBar: CustomAppBar(Color(0xff08A99F), lChanger[7]["title"], Colors.white, context),
               body: SafeArea(
                 child: Flex(
                   direction: or?Axis.horizontal:Axis.vertical,
@@ -149,7 +151,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 if(logSuccess!=null){
                                   await getPayment.getPaymentInformation(logSuccess.accessToken);
                                   if(getPayment.createPaymentResponse?.qrCode==null){
-                                    customToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred");
+                                    CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred", cTheme.primaryColorLight, cTheme.primaryColorDark);
                                     print("ID or Secret invalid!: 2");
                                   }else{
                                     Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
@@ -157,7 +159,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                     }));
                                   }
                                 }else{
-                                  customToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred");
+                                  CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred", cTheme.primaryColorLight, cTheme.primaryColorDark);
                                     print("ID or Secret invalid!");
                                 }
                             },

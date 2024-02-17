@@ -18,8 +18,8 @@
       "btn": "Save"
     },
     {
-      "title1": "Welcome Back!",
-      "title2": "Welcome\nBack!",
+      "title1": "Login",
+      "title2": "Login",
       "ph1": "Username",
       "ph2": "Password",
       "btn": "Login",
@@ -46,15 +46,12 @@
       "btn": "LOGIN"
     },
     {
-      "settings": "Settings",
-      "area": "View Your Area",
+      "faq": "Learn More - ",
+      "area": "Your Area",
       "welcome": "Welcome Back",
-      "comTitle": "Your Community",
-      "comSubtitle": "Find out what is new in you community",
-      "serTitle": "Whatever you need",
-      "serSubtitle": "Support, Taxi, Fixation and more",
-      "bigBtn1": "Some Large Heading Here",
-      "bigBtn2": "Some Large\nHeading Here"
+      "services": "Services",
+      "community": "Your Community",
+      "chat": "Support Center"
     },
     {
       "title": "FIB Payment"
@@ -112,7 +109,7 @@
     },
     {
       "title": "Protest",
-      "subtitle": "Here you can declare\nyour complaint",
+      "subtitle": "Here you can declare your complaint",
       "btn": "Send",
       "ph1": "Title",
       "ph2": "Core of your compliance",
@@ -120,6 +117,10 @@
       "popSubtitle": "Message should be showed here as a 2 line text",
       "agreeBtn": "Ok",
       "declineBtn": "Decline"
+    },
+    {
+      "title": "Support Center",
+      "ph": "Type something..."
     }
   ]
 }

@@ -4,6 +4,7 @@ import "package:flutter/widgets.dart";
 import "package:provider/provider.dart";
 
 import "../constants.dart";
+import "../constants/custom_appbar.dart";
 import "../controllers/language_changer.dart";
 import "../controllers/theme_changer.dart";
 import "../custom theme data/themes.dart";
@@ -32,7 +33,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
             textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
             child: Scaffold(
               backgroundColor: cTheme.backgroundColor,
-              appBar: customAppbar(cTheme.backgroundColor, lChanger[13]["title"], cTheme.primaryColorDark, context),
+              appBar: CustomAppBar(cTheme.backgroundColor, lChanger[13]["title"], cTheme.primaryColorDark, context),
               body: SafeArea(
                 child: ListView.builder(
                   itemCount: 5,
@@ -73,7 +74,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
+                                index!=1?Container(
                                   width: wid>600?300:wid,
                                   height: wid>600?300:wid-150,
                                   decoration: BoxDecoration(
@@ -84,25 +85,22 @@ class _CommunityScreenState extends State<CommunityScreen> {
                                     ),
                                     borderRadius: BorderRadius.all(Radius.circular(wid>600?50:35),),
                                   ),
-                                ),
-                                // SizedBox(
-                                //   height: 15,
-                                // ),
-                                SizedBox(
+                                ):SizedBox(),
+                                index!=1?SizedBox(
                                   width: 10,
                                   height: 10,
-                                ),
+                                ):SizedBox(),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
-                                      width: wid>600?wid-610:wid-80,
+                                      width: wid>600?(index==1?wid-240:wid-610):wid-80,
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
                                           Flexible(
                                             child: Text(
-                                              "Title of the post", style: TextStyle(color: cTheme.primaryColorDark, fontSize: wid>600?24:18, fontWeight: FontWeight.bold),
+                                              "Title of the post", style: TextStyle(color: cTheme.primaryColorDark, fontSize: wid>600?16:16, fontWeight: FontWeight.bold),
                                               softWrap: false,
                                               maxLines: 1,
                                               overflow: TextOverflow.fade, // new
@@ -123,7 +121,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                                         });
                                       },
                                       child: Container(
-                                        width: wid>600?wid-610:wid-80,
+                                        width: wid>600?(index==1?wid-240:wid-610):wid-80,
                                         // height: wid>500?wid-200:50,
                                         // color: Colors.green,
                                         child: Row(
@@ -131,9 +129,9 @@ class _CommunityScreenState extends State<CommunityScreen> {
                                           children: [
                                             Flexible(
                                               child: Text(
-                                                txts[index], style: TextStyle(color: cTheme.primaryColorDark, fontSize: wid>600?18:12,),
+                                                txts[index], style: TextStyle(color: cTheme.primaryColorDark, fontSize: wid>600?14:12,),
                                                 softWrap: true,
-                                                maxLines: wid>600?(boolies[index]?100:9):(boolies[index]?100:2),
+                                                maxLines: wid>600?(boolies[index]?100:13):(boolies[index]?100:2),
                                                 overflow: TextOverflow.ellipsis, // new
                                               ),
                                             ),

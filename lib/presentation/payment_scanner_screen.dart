@@ -12,6 +12,10 @@ import 'package:provider/provider.dart';
 import 'package:timer_count_down/timer_count_down.dart';
 
 import '../constants.dart';
+import '../constants/custom_appbar.dart';
+import '../constants/custom_toast_notification.dart';
+import '../constants/loading_indicator.dart';
+import '../constants/main_btn.dart';
 import '../controllers/language_changer.dart';
 import '../controllers/theme_changer.dart';
 import '../custom theme data/themes.dart';
@@ -62,10 +66,10 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
               textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
               child: Scaffold(
               backgroundColor: cTheme.primaryColorLight,
-              appBar: customAppbar(cTheme.primaryColorLight, lChanger[8]["title"], cTheme.primaryColorDark, context),
+              appBar: CustomAppBar(cTheme.primaryColorLight, lChanger[8]["title"], cTheme.primaryColorDark, context),
               body: SafeArea(
                 child: getPayment.isLoading?Center(
-                  child: loadingIndicator(),
+                  child: LoadingIndicator(cTheme.backgroundColor),
                 ):Flex(
                   direction: or?Axis.horizontal:Axis.vertical,
                   children: [
@@ -74,8 +78,8 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            width: or?wid/2:wid*0.6,
-                            height: or?wid/2:wid*0.6,
+                            width: or?wid/5:wid*0.6,
+                            height: or?wid/5:wid*0.6,
                             margin: EdgeInsets.all(10),
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -92,7 +96,7 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                           GestureDetector(
                             onLongPress: (){
                               Clipboard.setData(ClipboardData(text: getPayment.createPaymentResponse!.readableCode));
-                              customToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), "Copied to clipboard");
+                              CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), "Copied to clipboard", cTheme.backgroundColor, cTheme.primaryColorDark);
                             },
                               child: Text(getPayment.createPaymentResponse!.readableCode, style: TextStyle(fontSize: 18, color: cTheme.primaryColorDark),),
                           ),
@@ -146,7 +150,7 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                           SizedBox(
                             height: 30,
                           ),
-                          mainBtn(wid>600?wid*0.35-80:wid-40, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[8]["btn"], () {
+                          MainBtn(wid>600?wid*0.35-80:wid-40, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[8]["btn"], () {
                             Navigator.of(context).pop();
                           }),
                           // SizedBox(

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/constants/pick_media.dart';
 import 'package:graduation_project/controllers/theme_changer.dart';
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
+import '../constants/custom_appbar.dart';
+import '../constants/main_btn.dart';
 import '../controllers/language_changer.dart';
 import '../custom theme data/themes.dart';
 
@@ -32,7 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Scaffold(
                   resizeToAvoidBottomInset: false,
                   backgroundColor: cTheme.backgroundColor,
-                  appBar: customAppbar(cTheme.primaryColorLight, lChanger[1]["title"], cTheme.primaryColorDark, context),
+                  appBar: CustomAppBar(cTheme.primaryColorLight, lChanger[1]["title"], cTheme.primaryColorDark, context),
                   body: SafeArea(
                     child: Column(
                       children: [
@@ -62,18 +65,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     // color: Colors.yellow,
                                     child: Align(
                                       alignment: or?Alignment.centerLeft:Alignment.center,
-                                      child: Container(
-                                        width: wid>500?hei/3:wid/2,
-                                        height: wid>500?hei/3:wid/2,
-                                        decoration: BoxDecoration(
-                                          color: cTheme.primaryColor,
-                                          image: DecorationImage(
-                                            image: AssetImage("images/007-boy-2.jpg"),
+                                      child: GestureDetector(
+                                        onTap: ()async{
+                                          await pickImage();
+                                          setState((){
+                                            print(">>>>>>>>>>$file");
+                                          });
+                                        },
+                                        child: file==null?Container(
+                                          width: wid>500?hei/3:wid/2,
+                                          height: wid>500?hei/3:wid/2,
+                                          decoration: BoxDecoration(
+                                            color: cTheme.primaryColor,
+                                            image: DecorationImage(
+                                              image: AssetImage("images/007-boy-2.jpg"),
+                                            ),
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(1000),
+                                            ),
                                           ),
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(1000),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.black.withOpacity(0.6),
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(1000),
+                                              ),
+                                            ),
+                                            child: Icon(Icons.edit, color: Colors.grey,),
                                           ),
-                                        ),
+                                        ):Container(
+                                            width: wid>500?hei/3:wid/2,
+                                            height: wid>500?hei/3:wid/2,
+                                            decoration: BoxDecoration(
+                                              color: cTheme.primaryColor,
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(1000),
+                                              ),
+                                            ),
+                                            child: Image.file(file!)),
                                       ),
                                     ),
                                   ),
@@ -118,7 +147,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             width: wid>500?500:wid,
                             height: or?100:120,
                             child: Center(
-                              child: mainBtn(wid>600?wid*0.35-80:wid-40, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[1]["btn"], () {
+                              child: MainBtn(wid>600?wid*0.35-80:wid-40, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[1]["btn"], () {
                                 print("SAVE");
                               }),
                             ),

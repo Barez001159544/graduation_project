@@ -7,6 +7,9 @@ import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/presentation/forgot_password_reset.dart';
 import 'package:provider/provider.dart';
 
+import '../constants/custom_appbar.dart';
+import '../constants/login_fields.dart';
+import '../constants/main_btn.dart';
 import '../controllers/language_changer.dart';
 import '../controllers/theme_changer.dart';
 import '../custom theme data/themes.dart';
@@ -113,6 +116,14 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               },
                               onOpen: (value) {},
                               resultOptions: ResultOptions(
+                                boxDecoration: BoxDecoration(
+                                  color: cTheme.primaryColorLight,
+                                  borderRadius: BorderRadius.all(Radius.circular(10),),
+                                ),
+                                openBoxDecoration: BoxDecoration(
+                                  color: cTheme.primaryColorLight,
+                                  borderRadius: BorderRadius.all(Radius.circular(10),),
+                                ),
                                 padding: EdgeInsets.symmetric(horizontal: 10),
                                 width: 70,
                                 icon: SizedBox(
@@ -130,11 +141,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                   top: 20,
                                   height: hei/2-50,
                                   width: 200,
+                                  color: cTheme.primaryColorLight,
                                   gap: DropdownGap.all(5),
-                                  borderSide: BorderSide(width: 1, color: Colors.green),
-                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  borderSide: BorderSide.none,
+                                  padding: EdgeInsets.symmetric(horizontal: 5),
                                   align: languageChanger.selectedLanguage=="ENG"?DropdownAlign.left:DropdownAlign.right,
-                                  animationType: DropdownAnimationType.size),
+                                  animationType: DropdownAnimationType.size,
+                              ),
                               dropdownTriangleOptions: DropdownTriangleOptions(
                                 width: 20,
                                 height: 10,
@@ -149,13 +162,16 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                 height: 50,
                                 alignment: languageChanger.selectedLanguage=="ENG"?Alignment.centerLeft:Alignment.centerRight,
                                 selectedBoxDecoration: BoxDecoration(
-                                  color: Colors.green.withOpacity(0.3),
+                                  color: cTheme.primaryColor.withOpacity(0.3),
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(10),
                                   ),
                                 ),
+                                textStyle: TextStyle(
+                                    color: cTheme.primaryColorDark, fontSize: 16, fontWeight: FontWeight.w400
+                                ),
                                 selectedTextStyle: TextStyle(
-                                    color: Colors.black, fontSize: 16, fontWeight: FontWeight.w400
+                                    color: cTheme.primaryColorDark, fontSize: 16, fontWeight: FontWeight.w400
                                 ),
                               ),
                             ),
@@ -164,14 +180,14 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               width: 10,
                             ),
                             Expanded(
-                              child: loginFields(TextEditingController(), false, "### ####", cTheme.primaryColorDark, cTheme.primaryColorDark),
+                              child: LoginFields(TextEditingController(), false, "### ####", cTheme.primaryColorDark, cTheme.primaryColorDark),
                             ),
                           ],
                         ),
                         SizedBox(
                           height: 60,
                         ),
-                        mainBtn(wid>500?wid*0.35-80:wid-40, wid>500?62.0:72.0, cTheme.primaryColor, lChanger[3]["btn"], () {
+                        MainBtn(wid>500?wid*0.35-80:wid-40, wid>500?62.0:72.0, cTheme.primaryColor, lChanger[3]["btn"], () {
                           Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
                             return ForgotPasswordReset();
                           }));
@@ -248,12 +264,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               height: 10,
                             ),
                             Flexible(
-                              child: loginFields(TextEditingController(), false, lChanger[3]["ph"], cTheme.primaryColorDark, cTheme.primaryColorDark),
+                              child: LoginFields(TextEditingController(), false, lChanger[3]["ph"], cTheme.primaryColorDark, cTheme.primaryColorDark),
                             ),
                             SizedBox(
                               height: 60,
                             ),
-                            mainBtn(wid>500?wid*0.35-80:wid-40, wid>500?62.0:72.0, cTheme.primaryColor, lChanger[3]["btn"], () {
+                            MainBtn(wid>500?wid*0.35-80:wid-40, wid>500?62.0:72.0, cTheme.primaryColor, lChanger[3]["btn"], () {
                               Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
                                 return ForgotPasswordReset();
                               }));
@@ -269,7 +285,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             return Directionality(
               textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
               child: Scaffold(
-                appBar: customAppbar(cTheme.backgroundColor, "", cTheme.primaryColorDark, context),
+                appBar: CustomAppBar(cTheme.backgroundColor, "", cTheme.primaryColorDark, context),
                 backgroundColor: cTheme.backgroundColor,
                 body: SafeArea(
                   child: PageView.builder(

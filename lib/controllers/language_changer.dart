@@ -6,9 +6,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LanguageChanger extends ChangeNotifier{
   String selectedLanguage= "ENG";
-  String krdPath= "i18n/kr/krd.json";
-  String engPath= "i18n/en/eng.json";
-  String arbPath= "i18n/ar/arb.json";
+  String krdPath= "i18n/krd.json";
+  String engPath= "i18n/eng.json";
+  String arbPath= "i18n/arb.json";
   List data=[];
   void readJson() async {
     var prefs= await SharedPreferences.getInstance();

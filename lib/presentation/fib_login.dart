@@ -7,6 +7,8 @@ import 'package:graduation_project/presentation/taxi_home.dart';
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
+import '../constants/login_fields.dart';
+import '../constants/main_btn.dart';
 import '../controllers/language_changer.dart';
 import '../controllers/theme_changer.dart';
 import '../custom theme data/themes.dart';
@@ -76,14 +78,14 @@ class _FIBLoginState extends State<FIBLogin> {
                                 children: [
                                   Padding(
                                       padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                                      child: loginFields(id, false, lChanger[14]["ph1"], cTheme.primaryColorDark, cTheme.primaryColorDark)),
+                                      child: LoginFields(id, false, lChanger[14]["ph1"], cTheme.primaryColorDark, cTheme.primaryColorDark)),
                                   Padding(
                                     padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.end,
                                       children: [
                                         Expanded(
-                                          child: loginFields(secret, isShown, lChanger[14]["ph2"], cTheme.primaryColorDark, cTheme.primaryColorDark),
+                                          child: LoginFields(secret, isShown, lChanger[14]["ph2"], cTheme.primaryColorDark, cTheme.primaryColorDark),
                                         ),
                                         GestureDetector(
                                           onTap: (){
@@ -110,7 +112,7 @@ class _FIBLoginState extends State<FIBLogin> {
                                   ),
                                 ],
                               ),
-                              mainBtn(wid>600?wid*0.35-80:wid-80, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[14]["btn"], () async {
+                              MainBtn(wid>600?wid*0.35-80:wid-80, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[14]["btn"], () async {
                                   if(id.text.isEmpty || secret.text.isEmpty){
                                     setState(() {
                                       errorMessage="leave no field empty";

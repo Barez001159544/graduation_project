@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:f_toggle_button/f_toggle_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -17,6 +16,10 @@ import 'package:graduation_project/presentation/login_screen.dart';
 import 'package:graduation_project/presentation/profile_screen.dart';
 import 'package:provider/provider.dart';
 
+import '../constants/confirmation_custom_alert_dialog.dart';
+import '../constants/custom_appbar.dart';
+import '../constants/custom_dropdown_menu.dart';
+import '../constants/custom_switch_notification.dart';
 import '../custom theme data/themes.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -41,7 +44,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           return Directionality(
             textDirection: lChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
             child: Scaffold(
-              appBar: customAppbar(or?cTheme.backgroundColor:cTheme.primaryColor, lChanger.data[0]["title"], or?cTheme.primaryColorDark:Colors.white, context),
+              appBar: CustomAppBar(or?cTheme.backgroundColor:cTheme.primaryColor, lChanger.data[0]["title"], or?cTheme.primaryColorDark:Colors.white, context),
               backgroundColor: cTheme.backgroundColor,
               body: SafeArea(
                 child: Stack(
@@ -130,7 +133,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     height: 50,
                                   ),
                                   settings(lChanger.data[0]["theme"], cTheme.primaryColorDark,wid,
-                                    customSwitchBtn(tChanger.isDark, cTheme.primaryColorLight, (val) { tChanger.changeTheme();})
+                                    CustomSwitchBtn(tChanger.isDark, cTheme.primaryColorLight, (val) {
+                                      tChanger.changeTheme();
+                                    })
 
                                   //   FToggleButton(
                                   //   isEnable: tChanger.isDark,
@@ -153,7 +158,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   //   borderColorDisEnable: Colors.transparent,
                                   // ),
                                   ),
-                                  settings(lChanger.data[0]["lang"], cTheme.primaryColorDark, wid, customDropDownMenu(100, 30, cTheme.primaryColorLight, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], lChanger.selectedLanguage, (val) {
+                                  settings(lChanger.data[0]["lang"], cTheme.primaryColorDark, wid, CustomDropDownMenu("Lang", 100, 30, 5, cTheme.primaryColorLight, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], lChanger.selectedLanguage, (val) {
                                     print(val);
                                     lChanger.changeLanguage(val);
                                   })),
@@ -194,15 +199,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       child: GestureDetector(
                         onTap: (){
                           print("Log Out");
-                          cofirmationCustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, lChanger.data[16]["popTitle"], lChanger.data[16]["popSubtitle"], lChanger.data[16]["agreeBtn"], lChanger.data[16]["declineBtn"], context, (){
+                          ConfirmationCustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, lChanger.data[16]["popTitle"], lChanger.data[16]["popSubtitle"], lChanger.data[16]["agreeBtn"], lChanger.data[16]["declineBtn"], context, (){
                             getToken.deleteToken("accessToken");
                             Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
                               return LoginScreen();
                             }), (route) => false);
-                          }, (){});
+                          }, (){}, cTheme.primaryColor);
                         },
                         child: Container(
-                          height: 40,
+                          height: 50,
                           // width: 80,
                           padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
