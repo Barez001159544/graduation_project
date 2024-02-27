@@ -48,7 +48,7 @@ class _ProtestScreenState extends State<ProtestScreen> {
                         child: Container(
                           width: wid,
                           padding: EdgeInsets.all(10),
-                          margin: wid>600?EdgeInsets.symmetric(horizontal: wid*0.1, vertical: hei*0.1):null,
+                          margin: wid>600?EdgeInsets.symmetric(horizontal: wid*0.1, vertical: hei*0.1):EdgeInsets.symmetric(horizontal: wid*0.05, vertical: hei*0.1),
                           decoration: BoxDecoration(
                             color: cTheme.primaryColorLight,
                             borderRadius: BorderRadius.all(Radius.circular(35),),
@@ -58,7 +58,7 @@ class _ProtestScreenState extends State<ProtestScreen> {
                               Container(
                                 width: wid,
                                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                                  child: Text(lChanger[16]["subtitle"], style: TextStyle(fontSize: 25, color: Colors.grey.shade700),),
+                                  child: Text(lChanger[16]["subtitle"], style: TextStyle(fontSize: 20, color: Colors.grey.shade700),),
                               ),
                               SizedBox(
                                 height: 10,

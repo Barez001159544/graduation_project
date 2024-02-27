@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../constants/main_btn.dart';
 import '../controllers/language_changer.dart';
 import '../controllers/theme_changer.dart';
 import '../custom theme data/themes.dart';
@@ -48,7 +49,7 @@ class _TaxiOnWayState extends State<TaxiOnWay> {
                         height: 80,
                         color: Colors.green,
                         child: Center(
-                          child: Text(lChanger[12]["title"], style: TextStyle(fontSize: wid>500?12.sp:24.sp, color: Colors.white, fontWeight: FontWeight.bold),),
+                          child: Text(lChanger[12]["title"], style: TextStyle(fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),),
                         ),
                       ),
                       Column(
@@ -76,8 +77,8 @@ class _TaxiOnWayState extends State<TaxiOnWay> {
                           ),
                           Column(
                             children: [
-                              Text(lChanger[12]["name"], style: TextStyle(color: Colors.white, fontSize: wid>500?10.sp:20.sp,),),
-                              Text("John Doe", style: TextStyle(color: Colors.white, fontSize: wid>500?12.sp:24.sp, fontWeight: FontWeight.bold),),
+                              Text(lChanger[12]["name"], style: TextStyle(color: Colors.white, fontSize: 12,),),
+                              Text("John Doe", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
                             ],
                           ),
                           SizedBox(
@@ -85,21 +86,20 @@ class _TaxiOnWayState extends State<TaxiOnWay> {
                           ),
                           Column(
                             children: [
-                              Text(lChanger[12]["location"], style: TextStyle(color: Colors.white, fontSize: wid>500?10.sp:20.sp,),),
-                              Text("B4:F4:R123", style: TextStyle(color: Colors.white, fontSize: wid>500?12.sp:24.sp, fontWeight: FontWeight.bold),),
+                              Text(lChanger[12]["location"], style: TextStyle(color: Colors.white, fontSize: 12,),),
+                              Text("B4:F4:R123", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
                             ],
                           ),
                         ],
                       ),
-                      Container(
-                        width: wid>600?62.0:72.0,
-                        height: wid>600?62.0:72.0,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(100),),
-                          color: Colors.white,
-                        ),
-                        child: Icon(Icons.qr_code_rounded, color: Colors.black, size: 40,),
-                      ),
+                      // SizedBox(),
+                      MainBtn(wid>600?wid*0.35-80:wid-40, wid>600?62.0:72.0, Colors.green, "Done", () {
+                        setState(() {
+                          // isAvailable=!isAvailable;
+                        });
+                      }),
+                      // SizedBox(height: 20,),
+                      // Text("Tap DONE when you finish, and close other wise to quit", style: TextStyle(color: Colors.grey, fontSize: 12, height: 1),),
                     ],
                   ),
                 ),

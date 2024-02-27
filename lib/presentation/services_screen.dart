@@ -1,5 +1,7 @@
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/presentation/maintenance_screen.dart';
@@ -8,6 +10,7 @@ import 'package:graduation_project/presentation/repair_screen.dart';
 import 'package:graduation_project/presentation/taxi_home.dart';
 import 'package:graduation_project/presentation/taxi_services.dart';
 import 'package:provider/provider.dart';
+import 'package:typethis/typethis.dart';
 import '../constants/custom_appbar.dart';
 import '../controllers/language_changer.dart';
 import '../controllers/theme_changer.dart';
@@ -60,8 +63,22 @@ class _ServicesScreenState extends State<ServicesScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(lChanger[9]["subtitle"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 24),),
-                              Text("John?", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 24, fontWeight: FontWeight.bold),),
+                            TypeThis(
+                            string: lChanger[9]["subtitle"] + "John?",
+                            style: TextStyle(color: cTheme.primaryColorDark, fontSize: 20),
+                            richTextMatchers: const [
+                              TypeThisMatcher(
+                                'John',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                              showBlinkingCursor: false,
+                              speed: 80,
+                          ),
+                              // Text(lChanger[9]["subtitle"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 20),),
+                              // Text("John?", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 20, fontWeight: FontWeight.bold),),
                             ],
                           ),
                         ),
@@ -71,7 +88,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                             physics: ScrollPhysics(),
                             itemCount: services.length,
                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: wid>500?2:1, crossAxisSpacing: 15, mainAxisSpacing: 15, childAspectRatio: 2.3),
-                            padding: EdgeInsets.symmetric(horizontal: wid>500?50:10),
+                            padding: EdgeInsets.symmetric(horizontal: wid>500?100:10, vertical: 10),
                             // physics: NeverScrollableScrollPhysics(),
                             primary: true,
                             itemBuilder: (BuildContext context, int index){
@@ -101,6 +118,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                   padding: EdgeInsets.all(15),
                                   decoration: BoxDecoration(
                                     color: cTheme.primaryColorLight,
+                                    // color: Colors.green,
                                     borderRadius: BorderRadius.all(
                                       Radius.circular(wid>500?25.sp:50.sp),
                                     ),
@@ -134,19 +152,18 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Flexible(
-                                              child: Text(lChanger[9]["taxiTitle"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: wid>500?8.sp:18.sp),),
+                                              child: Text(lChanger[9]["taxiTitle"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: wid>500?20:16),),
                                             ),
-                                            Expanded(
+                                            Flexible(
                                               child: Container(
                                                 width: wid>500?hei*0.29:wid*0.43,
-                                                height: 0,
-                                                // color: Colors.green,
+                                                // color: Colors.red,
                                                 child: Row(
                                                   mainAxisAlignment: MainAxisAlignment.start,
                                                   children: [
                                                     Expanded(
                                                       child: Text(
-                                                        lChanger[9]["taxiSubtitle"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: wid>500?5.sp:11.sp,),
+                                                        lChanger[9]["taxiSubtitle"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: wid>500?16:12,),
                                                         softWrap: false,
                                                         maxLines: 3,
                                                         overflow: TextOverflow.ellipsis, // new

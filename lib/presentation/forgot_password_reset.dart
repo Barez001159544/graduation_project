@@ -47,7 +47,7 @@ class _ForgotPasswordResetState extends State<ForgotPasswordReset> {
                     children: [
                       Container(
                         width: wid,
-                        child: Text(lChanger[4]["title"], style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: cTheme.primaryColorDark),),
+                        child: Text(lChanger[4]["title"], style: TextStyle(fontSize: 20, color: cTheme.primaryColorDark),),
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 10),

@@ -109,7 +109,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     child: Center(
                                       child: Text(
                                         lChanger.data[0]["gotoProfile"],
-                                        style: TextStyle(color: Colors.grey),
+                                        style: TextStyle(color: Colors.grey, fontSize: 16),
                                       ),
                                     ),
                                   ),

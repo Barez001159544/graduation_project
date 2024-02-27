@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:device_preview/device_preview.dart';
 import 'package:easy_splash_screen/easy_splash_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_app_info/flutter_app_info.dart';
@@ -24,6 +26,7 @@ import 'package:graduation_project/presentation/home_screen.dart';
 import 'package:graduation_project/presentation/login_screen.dart';
 import 'package:graduation_project/presentation/onboarding_screen.dart';
 import 'package:graduation_project/presentation/home_screen.dart';
+import 'package:graduation_project/presentation/payment_test.dart';
 import 'package:graduation_project/presentation/profile_screen.dart';
 import 'package:graduation_project/presentation/protest_screen.dart';
 import 'package:graduation_project/presentation/repair_screen.dart';
@@ -48,42 +51,47 @@ Future<void> main() async {
       child: MultiProvider(
         providers: [
           ChangeNotifierProvider(
-            create: (BuildContext context) =>ThemeChanger(),
+            create: (BuildContext context) => ThemeChanger(),
           ),
           ChangeNotifierProvider(
-            create: (BuildContext context)=>LanguageChanger(),
+            create: (BuildContext context) => LanguageChanger(),
           ),
           ChangeNotifierProvider(
-            create: (BuildContext context)=>GetToken(),
+            create: (BuildContext context) => GetToken(),
           ),
           ChangeNotifierProvider(
-            create: (BuildContext context)=>GetPayment(),
+            create: (BuildContext context) => GetPayment(),
           ),
         ],
-        child: const MyApp(),
+        child: DevicePreview(
+          enabled: !kReleaseMode,
+          tools: [
+            ...DevicePreview.defaultTools
+          ],
+          builder: (context)=>const MyApp(),
+        ),
       ),
     ),
   );
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
+    ThemeData cTheme =
+        Provider.of<ThemeChanger>(context).isDark ? darkTheme : lightTheme;
     return ScreenUtilInit(
         minTextAdapt: true,
-        builder: (_ , child) {
-        return MaterialApp(
-          theme: cTheme,
-          locale: const Locale("ar"),
-          home: const MyHomePage(),
-          debugShowCheckedModeBanner: false,
-        );
-      }
-    );
+        builder: (_, child) {
+          return MaterialApp(
+            theme: cTheme,
+            locale: const Locale("ar"),
+            home: const MyHomePage(),
+            debugShowCheckedModeBanner: false,
+          );
+        });
   }
 }
 
@@ -93,19 +101,26 @@ class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
+
 class _MyHomePageState extends State<MyHomePage> {
   getToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool? firstTime= prefs.getBool('firstTime');
-    String? rToken= await TokenManager().readToken("accessToken");
-    Timer(const Duration(seconds: 1),
-      ()=>Navigator.of(context, rootNavigator: false).pushReplacement(MaterialPageRoute(builder:
-          (context,) =>
-      // TaxiHomeScreen(),
-        firstTime==false?(rToken==null?const LoginScreen():const Test()):const OnboardingScreen(),
-      ),),
+    bool? firstTime = prefs.getBool('firstTime');
+    String? rToken = await TokenManager().readToken("accessToken");
+    Timer(
+      const Duration(seconds: 1),
+      () => Navigator.of(context, rootNavigator: false).pushReplacement(
+        MaterialPageRoute(
+          builder: (
+            context,
+          ) =>
+              // const ServicesScreen(),
+          firstTime==false?(rToken==null?const LoginScreen():const Test()):const OnboardingScreen(),
+        ),
+      ),
     );
   }
+
   @override
   initState() {
     super.initState();
@@ -127,9 +142,10 @@ class _MyHomePageState extends State<MyHomePage> {
     });
     getToken();
   }
+
   @override
   Widget build(BuildContext context) {
-    return SplashWidget();
+    return const SplashWidget();
   }
 }
 
@@ -144,47 +160,37 @@ class _SplashWidgetState extends State<SplashWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          // gradient: LinearGradient(
-          //   colors: [
-          //     Color(0xff155E7D),
-          //     Color(0xff0B2F3F),
-          //   ],
-          //   begin: Alignment.topCenter,
-          //   end: Alignment.bottomCenter,
-          // ),
-          color: Color(0xff155E7D),
-        ),
-        child: SafeArea(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 70,
-                  height: 70,
-                  padding: const EdgeInsets.only(top: 10),
-                  decoration: const BoxDecoration(
-                    // color: Colors.white,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                  ),
-                  child: SvgPicture.asset(
-                      height: 40,
-                      width: 40,
-                      "images/007-boy-2.svg",
-                      semanticsLabel: 'App logo'
-                  ),
-                ).animate().shimmer(duration: 3.seconds, curve: Curves.easeOut),
-                const SizedBox(
-                  height: 10,
+      backgroundColor: const Color(0xff155E7D),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox(),
+            Container(
+              width: 70,
+              height: 70,
+              padding: const EdgeInsets.only(top: 10),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
                 ),
-                const Text("Facebook", style: TextStyle(color: Colors.white, fontSize: 26, fontFamily: "NotoSans"),).animate().fadeIn(duration: 4.seconds, curve: Curves.easeInOut),
-              ],
+              ),
+              child: SvgPicture.asset(
+                  height: 40,
+                  width: 40,
+                  "images/007-boy-2.svg",
+                  semanticsLabel: 'App logo'),
+            ).animate().shimmer(duration: 3.seconds, curve: Curves.easeOut),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 20),
+              child: Text(
+                "RCMS",
+                style: TextStyle(
+                    color: Colors.white, fontSize: 20, fontFamily: "NotoSans"),
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

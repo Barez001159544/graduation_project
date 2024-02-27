@@ -20,6 +20,7 @@ class TaxiHomeScreen extends StatefulWidget {
 // ThemeData cTheme = isDark ? lightTheme : darkTheme;
 
 class _TaxiHomeScreenState extends State<TaxiHomeScreen> {
+  bool isAvailable=false;
   @override
   Widget build(BuildContext context) {
     double wid = MediaQuery.of(context).size.width;
@@ -153,7 +154,7 @@ class _TaxiHomeScreenState extends State<TaxiHomeScreen> {
                                       width: 20,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.all(Radius.circular(100),),
-                                        color: Colors.green,
+                                        color: isAvailable?Colors.green:Colors.red,
                                       ),
                                     ),
                                     SizedBox(
@@ -166,32 +167,13 @@ class _TaxiHomeScreenState extends State<TaxiHomeScreen> {
                             ),
                           ),
                         ),
-                        Container(
-                          width: wid,
-                          height: 110,
-                          // color: Colors.blue,
-                          child: Row(
-                            mainAxisAlignment: wid>600?MainAxisAlignment.end:MainAxisAlignment.spaceAround,
-                            children: [
-                              Container(
-                                width: wid>600?62.0:72.0,
-                                height: wid>600?62.0:72.0,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(100),),
-                                  color: cTheme.primaryColorLight,
-                                ),
-                                child: Icon(Icons.qr_code_rounded, color: cTheme.primaryColorDark, size: 40,),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: wid>600?20:0),
-                                child: MainBtn(wid>600?wid*0.35-80:wid-120, wid>600?62.0:72.0, Colors.green, lChanger[11]["btnYes"], () {
-                                  setState(() {
-                                    //
-                                  });
-                                }),
-                              ),
-                            ],
-                          ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: wid>600?20:0, vertical: 10),
+                          child: MainBtn(wid>600?wid*0.35-80:wid-40, wid>600?62.0:72.0, isAvailable?Colors.red:Colors.green, lChanger[11]["btnYes"], () {
+                            setState(() {
+                              isAvailable=!isAvailable;
+                            });
+                          }),
                         ),
                       ],
                     ),

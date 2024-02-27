@@ -125,32 +125,81 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                     Container(
                       width: or?wid/2-20:wid,
                       height: or?hei:300,
-                      // color: Colors.white,
+                      // color: Colors.blue,
                       child: Column(
                         mainAxisAlignment: or?MainAxisAlignment.center:MainAxisAlignment.end,
                         children: [
                           // Text(lChanger[8]["subtitle"], style: TextStyle(color: Colors.grey.shade600, fontSize: 14), textAlign: TextAlign.center,),
-                          Column(
-                            children: [
-                              Text("Koya University", style: TextStyle(fontSize: 28, color: cTheme.primaryColorDark),),
-                              SizedBox(height: 5,),
-                              Icon(Icons.arrow_upward_rounded, color: Colors.grey,),
-                              SizedBox(height: 5,),
-                              Row(
+                          FittedBox(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade200,
+                                borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+                              ),
+                              child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.baseline,
                                 textBaseline: TextBaseline.alphabetic,
                                 children: [
-                                  Text("500,000", style: TextStyle(fontSize: 28, color: cTheme.primaryColorDark),),
-                                  Text(" IQD", style: TextStyle(color: cTheme.primaryColorDark),),
+                                  Text("500,000", style: TextStyle(fontSize: 24, color: Colors.grey.shade700),),
+                                  Text(" IQD", style: TextStyle(color: Colors.grey),),
                                 ],
                               ),
-                            ],
+                            ),
+                          ),
+                          Container(
+                            width: wid>600?wid*0.4:wid-40,
+                            padding: EdgeInsets.all(10),
+                            margin: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              borderRadius: BorderRadius.all(Radius.circular(15)),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    // crossAxisAlignment: CrossAxisAlignment.baseline,
+                                    // textBaseline: TextBaseline.alphabetic,
+                                    children: [
+                                      Text("from", style: TextStyle(color: cTheme.primaryColorDark),),
+                                      Text("You", style: TextStyle(fontSize: 20, color: cTheme.primaryColorDark),),
+                                    ],
+                                  ),
+                                ),
+                                                  SizedBox(height: 5,),
+                                                  Container(
+                                                    padding: EdgeInsets.all(10),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.black,
+                                                      borderRadius: BorderRadius.all(Radius.circular(100)),
+                                                    ),
+                                                      child: Icon(Icons.arrow_forward_rounded, color: Colors.white,)),
+                                                  SizedBox(height: 5,),
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    // crossAxisAlignment: CrossAxisAlignment.baseline,
+                                    // textBaseline: TextBaseline.alphabetic,
+                                    children: [
+                                      Text("to", style: TextStyle(color: cTheme.primaryColorDark),),
+                                      Text("MRF", style: TextStyle(fontSize: 20, color: cTheme.primaryColorDark),),
+                                    ],
+                                  ),
+                                ),
+
+                              ],
+                            ),
                           ),
                           SizedBox(
-                            height: 30,
+                            height: 10,
                           ),
-                          MainBtn(wid>600?wid*0.35-80:wid-40, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[8]["btn"], () {
+                          MainBtn(wid>600?wid*0.4:wid-40, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[8]["btn"], () {
                             Navigator.of(context).pop();
                           }),
                           // SizedBox(

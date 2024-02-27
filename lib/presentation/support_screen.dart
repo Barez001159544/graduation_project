@@ -129,7 +129,7 @@ class _SupportCenterState extends State<SupportCenter>  with SingleTickerProvide
                                       alignment: (messages[index].messageType == "receiver"?Alignment.topLeft:Alignment.topRight),
                                       child: index==0?AnimatedContainer(
                                         // width: wid*0.8,
-                                        margin: EdgeInsets.only(bottom: index==0?(isLow?61:141):10, left: (messages[index].messageType  == "receiver"?0:wid*0.1), right: (messages[index].messageType  == "receiver"?wid*0.1:0)),
+                                        margin: EdgeInsets.only(bottom: index==0?(isLow?61:151):10, left: (messages[index].messageType  == "receiver"?0:wid*0.1), right: (messages[index].messageType  == "receiver"?wid*0.1:0)),
                                         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                                         decoration: BoxDecoration(
                                           color: (messages[index].messageType  == "receiver"?cTheme.primaryColorLight:cTheme.primaryColor.withOpacity(0.9)),
@@ -167,7 +167,7 @@ class _SupportCenterState extends State<SupportCenter>  with SingleTickerProvide
                     ],
                   ),
                   AnimatedPositioned(
-                    bottom: isLow?-80:0,
+                    bottom: isLow?-90:0,
                     duration: Duration(milliseconds: 500),
                     curve: Curves.decelerate,
                     child: Container(
@@ -182,7 +182,6 @@ class _SupportCenterState extends State<SupportCenter>  with SingleTickerProvide
                       ),
                       child: Container(
                         width: wid-20,
-                        height: 121,
                         padding: EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           color: cTheme.primaryColor,
@@ -213,7 +212,7 @@ class _SupportCenterState extends State<SupportCenter>  with SingleTickerProvide
                                       isLow=!isLow;
                                     });
                                   },
-                                  icon: Icon(isLow?Icons.open_in_full_rounded:Icons.close, color: Colors.white,),
+                                  icon: Icon(isLow?Icons.keyboard_arrow_up_rounded:Icons.keyboard_arrow_down_rounded, color: Colors.white,),
                                 ),
                               ],
                             ),

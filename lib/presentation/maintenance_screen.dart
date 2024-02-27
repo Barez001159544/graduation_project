@@ -50,7 +50,7 @@ class _MaintenanceScreenState extends State<MaintenanceScreen> {
                         child: Container(
                           width: wid,
                           padding: EdgeInsets.all(10),
-                          margin: wid>600?EdgeInsets.symmetric(horizontal: wid*0.1, vertical: hei*0.1):null,
+                          margin: wid>600?EdgeInsets.symmetric(horizontal: wid*0.1, vertical: hei*0.1):EdgeInsets.symmetric(horizontal: wid*0.05, vertical: hei*0.1),
                           decoration: BoxDecoration(
                             color: cTheme.primaryColorLight,
                             borderRadius: BorderRadius.all(Radius.circular(35),),
@@ -60,13 +60,13 @@ class _MaintenanceScreenState extends State<MaintenanceScreen> {
                               Container(
                                 width: wid,
                                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                                child: Text(lChanger[16]["subtitle"], style: TextStyle(fontSize: 25, color: Colors.grey.shade700),),
+                                child: Text(lChanger[16]["subtitle"], style: TextStyle(fontSize: 20, color: Colors.grey.shade700),),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
                               // CustomTextFields(titleController, lChanger[16]["ph1"], cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.backgroundColor, 25, 1),
-                              CustomDropDownMenu("what exactly do you require?", wid, 50, 25, cTheme.backgroundColor, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], maintainType, (val){
+                              CustomDropDownMenu("What exactly do you require?", wid, 50, 25, cTheme.backgroundColor, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], maintainType, (val){
                                 setState(() {
                                   maintainType=val;
                                   print(val);

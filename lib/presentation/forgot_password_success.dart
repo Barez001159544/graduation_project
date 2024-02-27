@@ -47,8 +47,11 @@ class ForgotPasswordSuccess extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(lChanger[5]["title"], style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: cTheme.primaryColorDark),),
-                  Text(lChanger[5]["subtitle"], textAlign: TextAlign.center, style: TextStyle(fontSize: 15, color: Colors.grey),),
+                  Text(lChanger[5]["title"], style: TextStyle(fontSize: 20, color: cTheme.primaryColorDark),),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(lChanger[5]["subtitle"], textAlign: TextAlign.center, style: TextStyle(fontSize: 16, color: Colors.grey),),
+                  ),
                   SizedBox(
                     height: 30,
                   ),

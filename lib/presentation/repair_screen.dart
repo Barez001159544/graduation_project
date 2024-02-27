@@ -48,7 +48,7 @@ class _RepairScreenState extends State<RepairScreen> {
                             padding: EdgeInsets.only(top: 20, left: languageChanger.selectedLanguage=="ENG"?20:0, right: languageChanger.selectedLanguage=="ENG"?0:20),
                             child: Align(
                               alignment: languageChanger.selectedLanguage=="ENG"?Alignment.centerLeft:Alignment.centerRight,
-                              child: Text(lChanger[15]["subtitle"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 18),),),),
+                              child: Text(lChanger[15]["subtitle"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 20),),),),
                           SizedBox(
                             height: 20,
                           ),
@@ -56,7 +56,7 @@ class _RepairScreenState extends State<RepairScreen> {
                               shrinkWrap: true,
                               physics: ScrollPhysics(),
                             padding: EdgeInsets.all(10),
-                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: or?4:(wid>500?4:2), mainAxisSpacing: 10, crossAxisSpacing: 10,), itemCount: 18, itemBuilder: (BuildContext contex, index){
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: or?5:(wid>500?4:2), mainAxisSpacing: 10, crossAxisSpacing: 10,), itemCount: 18, itemBuilder: (BuildContext contex, index){
                             return Container(
                               width: wid/3,
                               height: 200,
@@ -94,7 +94,7 @@ class _RepairScreenState extends State<RepairScreen> {
                                       // ),
                                     ],
                                   ),
-                                  Text("TV", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 18),),
+                                  Text("TV", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
                                 ],
                               ),
                             );

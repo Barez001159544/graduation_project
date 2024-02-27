@@ -50,20 +50,20 @@ class _TaxiServicesState extends State<TaxiServices> {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            width: 100,
-                            height: 10,
-                            decoration: BoxDecoration(
-                              color: cTheme.primaryColor,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(50),
-                              ),
-                            ),
-                          ),
+                          // Container(
+                          //   width: 100,
+                          //   height: 10,
+                          //   decoration: BoxDecoration(
+                          //     color: cTheme.primaryColor,
+                          //     borderRadius: BorderRadius.all(
+                          //       Radius.circular(50),
+                          //     ),
+                          //   ),
+                          // ),
                           SizedBox(
                             height: 20,
                           ),
-                          Text(lChanger[10]["subtitle"], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: cTheme.primaryColorDark),),
+                          Text(lChanger[10]["subtitle"], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: cTheme.primaryColorDark),),
                           SizedBox(
                             height: 10,
                           ),

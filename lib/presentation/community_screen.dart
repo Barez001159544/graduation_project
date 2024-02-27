@@ -18,7 +18,7 @@ class CommunityScreen extends StatefulWidget {
 
 class _CommunityScreenState extends State<CommunityScreen> {
   bool showAll=false;
-  List txts= List.generate(5, (index) => "Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development");
+  List txts= List.generate(5, (index) => "Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development Lorem ipsum is simply a dummy text for your web design and mobile app development");
   List boolies= List.generate(5, (index) => false);
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                           child: Container(
                             // height: wid>500?250:wid-40,
                             width: wid,
-                            margin: wid>600?EdgeInsets.symmetric(horizontal: 80, vertical: 20):EdgeInsets.all(20),
+                            margin: wid>600?EdgeInsets.symmetric(horizontal: 80, vertical: 20):EdgeInsets.all(10),
                             padding: EdgeInsets.all(20),
                             decoration: BoxDecoration(
                               color: cTheme.primaryColorLight,
@@ -100,7 +100,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                                         children: [
                                           Flexible(
                                             child: Text(
-                                              "Title of the post", style: TextStyle(color: cTheme.primaryColorDark, fontSize: wid>600?16:16, fontWeight: FontWeight.bold),
+                                              "Title of the post", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16, fontWeight: FontWeight.bold),
                                               softWrap: false,
                                               maxLines: 1,
                                               overflow: TextOverflow.fade, // new

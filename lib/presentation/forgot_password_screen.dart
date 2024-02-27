@@ -85,11 +85,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       children: [
                         Container(
                           width: wid,
-                          child: Text(lChanger[3]["title"], style: TextStyle(fontFamily: "NotoSans", fontSize: 28, color: cTheme.primaryColorDark),),
+                          child: Text(lChanger[3]["title"], style: TextStyle(fontFamily: "NotoSans", fontSize: 20, color: cTheme.primaryColorDark),),
                         ),
                         Container(
                           width: wid,
-                          child: Text(lChanger[3]["subtitle1"], style: TextStyle(fontFamily: "NotoSans", color: Colors.grey.shade700),),
+                          child: Text(lChanger[3]["subtitle1"], style: TextStyle(fontFamily: "NotoSans", fontSize: 16, color: Colors.grey.shade700),),
                         ),
                         SizedBox(
                           height: 10,
@@ -254,11 +254,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           children: [
                             Container(
                               width: wid,
-                              child: Text(lChanger[3]["title"], style: TextStyle(fontFamily: "NotoSans", fontSize: 28, color: cTheme.primaryColorDark),),
+                              child: Text(lChanger[3]["title"], style: TextStyle(fontFamily: "NotoSans", fontSize: 20, color: cTheme.primaryColorDark),),
                             ),
                             Container(
                               width: wid,
-                              child: Text(lChanger[3]["subtitle2"], style: TextStyle(fontFamily: "NotoSans", color: Colors.grey.shade700),),
+                              child: Text(lChanger[3]["subtitle2"], style: TextStyle(fontFamily: "NotoSans", fontSize: 16, color: Colors.grey.shade700),),
                             ),
                             SizedBox(
                               height: 10,

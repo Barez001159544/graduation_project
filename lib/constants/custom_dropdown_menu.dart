@@ -27,8 +27,8 @@ class CustomDropDownMenu extends StatelessWidget {
         child: DropdownButton(
           dropdownColor: ddmColor,
           isExpanded: true,
-          disabledHint: Text(hint, style: TextStyle(fontFamily: "NotoSans"),),
-          hint: Text(hint, style: TextStyle(fontFamily: "NotoSans"),),
+          disabledHint: Text(hint, style: TextStyle(fontFamily: "NotoSans", color: Colors.grey),),
+          hint: Text(hint, style: TextStyle(fontFamily: "NotoSans", color: Colors.grey),),
           value: value != null ? value : null,
           style: TextStyle(color: txtColor),
           icon: Icon(
