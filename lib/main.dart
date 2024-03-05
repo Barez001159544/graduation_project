@@ -8,15 +8,20 @@ import 'package:flutter_app_info/flutter_app_info.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:graduation_project/controllers/get_auth.dart';
 import 'package:graduation_project/controllers/get_payment.dart';
+import 'package:graduation_project/controllers/get_payment_status.dart';
 import 'package:graduation_project/controllers/get_token.dart';
 import 'package:graduation_project/controllers/language_changer.dart';
 import 'package:graduation_project/controllers/theme_changer.dart';
 import 'package:graduation_project/custom%20theme%20data/themes.dart';
+import 'package:graduation_project/models/auth_request.dart';
+import 'package:graduation_project/models/auth_response.dart';
 import 'package:graduation_project/presentation/about_app.dart';
 import 'package:graduation_project/presentation/community_screen.dart';
 import 'package:graduation_project/presentation/fib_login.dart';
 import 'package:graduation_project/presentation/maintenance_screen.dart';
+import 'package:graduation_project/presentation/new_protest.dart';
 import 'package:graduation_project/presentation/payment_scanner_screen.dart';
 import 'package:graduation_project/presentation/payment_screen.dart';
 import 'package:graduation_project/presentation/forgot_password_reset.dart';
@@ -28,6 +33,7 @@ import 'package:graduation_project/presentation/onboarding_screen.dart';
 import 'package:graduation_project/presentation/home_screen.dart';
 import 'package:graduation_project/presentation/payment_test.dart';
 import 'package:graduation_project/presentation/profile_screen.dart';
+import 'package:graduation_project/presentation/properties_screen.dart';
 import 'package:graduation_project/presentation/protest_screen.dart';
 import 'package:graduation_project/presentation/repair_screen.dart';
 import 'package:graduation_project/presentation/services_screen.dart';
@@ -39,6 +45,7 @@ import 'package:graduation_project/presentation/support_screen.dart';
 import 'package:graduation_project/presentation/taxi_home.dart';
 import 'package:graduation_project/presentation/taxi_onway.dart';
 import 'package:graduation_project/presentation/taxi_services.dart';
+import 'package:graduation_project/services/login/auth.dart';
 import 'package:graduation_project/test.dart';
 import 'package:graduation_project/tokenManager.dart';
 import 'package:provider/provider.dart';
@@ -61,6 +68,12 @@ Future<void> main() async {
           ),
           ChangeNotifierProvider(
             create: (BuildContext context) => GetPayment(),
+          ),
+          ChangeNotifierProvider(
+            create: (BuildContext context)=> GetAuth(),
+          ),
+          ChangeNotifierProvider(
+            create: (BuildContext context)=> GetPaymentStatus(),
           ),
         ],
         child: DevicePreview(
@@ -107,6 +120,10 @@ class _MyHomePageState extends State<MyHomePage> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? firstTime = prefs.getBool('firstTime');
     String? rToken = await TokenManager().readToken("accessToken");
+    ///---------------------------
+    // AuthResponse? forFun= await GetAuthentication().authenticate(AuthRequest("zhya@gmail.com", "abcdef"));
+    // print("$forFun<-------------");
+    /// -----------------
     Timer(
       const Duration(seconds: 1),
       () => Navigator.of(context, rootNavigator: false).pushReplacement(
@@ -114,8 +131,8 @@ class _MyHomePageState extends State<MyHomePage> {
           builder: (
             context,
           ) =>
-              // const ServicesScreen(),
-          firstTime==false?(rToken==null?const LoginScreen():const Test()):const OnboardingScreen(),
+              const Test(),
+          // firstTime==false?(rToken==null?const LoginScreen():const Test()):const OnboardingScreen(),
         ),
       ),
     );

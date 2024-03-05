@@ -1,18 +1,22 @@
 import "dart:convert";
-
+import 'package:flutter_svg/svg.dart';
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
 import "package:flutter_styled_toast/flutter_styled_toast.dart";
 import "package:graduation_project/controllers/get_payment.dart";
+import "package:graduation_project/controllers/get_payment_status.dart";
 import "package:graduation_project/controllers/get_token.dart";
+import "package:graduation_project/fib_create_payment/payment.dart";
 import "package:graduation_project/fib_login/return_info.dart";
 import "package:graduation_project/presentation/payment_scanner_screen.dart";
+import "package:graduation_project/tokenManager.dart";
 import "package:provider/provider.dart";
 
 import "../constants.dart";
 import "../constants/custom_appbar.dart";
 import "../constants/custom_toast_notification.dart";
+import "../constants/main_btn.dart";
 import "../controllers/language_changer.dart";
 import "../controllers/theme_changer.dart";
 import "../custom theme data/themes.dart";
@@ -42,146 +46,128 @@ class _PaymentScreenState extends State<PaymentScreen> {
             return Directionality(
               textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
               child: Scaffold(
-              backgroundColor: Color(0xff08A99F),
-              appBar: CustomAppBar(Color(0xff08A99F), lChanger[7]["title"], Colors.white, context),
+              backgroundColor: cTheme.backgroundColor,
+              appBar: CustomAppBar( cTheme.backgroundColor, lChanger[7]["title"], cTheme.primaryColorDark, context), ///Color(0xff08A99F)
               body: SafeArea(
-                child: Flex(
-                  direction: or?Axis.horizontal:Axis.vertical,
-                  children: [
-                    Expanded(
-                      child: Container(
-                        width: or?wid-400:wid,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            alignment: or?Alignment.center:Alignment.topCenter,
-                            image: AssetImage("images/fib-transparent.png"),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: or?400:wid,
-                      height: or?hei:300,
-                      decoration: BoxDecoration(
-                        gradient: or?null:LinearGradient(
-                          colors: [
-                            Color(0xffffff),
-                            // Color(0x9dffffff),
-                            Colors.white,
-                          ],
-                          begin: or?Alignment.centerLeft:Alignment.topCenter,
-                          end: or?Alignment.centerRight:Alignment.bottomCenter,
-                          stops: [
-                            0.05,
-                            // 0.2,
-                            0.2,
-                          ],
-                        ),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: or?MainAxisAlignment.center:MainAxisAlignment.end,
-                        children: [
-                          SizedBox(
-                            child: Column(
+                child: Center(
+                  child: SizedBox(
+                    width: wid>600?wid/2:wid-20,
+                    height: hei-100,
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            width: wid,
+                            height: wid,
+                            padding: EdgeInsets.all(40),
+                            decoration: BoxDecoration(
+                              color: cTheme.primaryColorLight,
+                              borderRadius: BorderRadius.all(Radius.circular(50)),
+                              image: DecorationImage(
+                                scale: 1.8,
+                                image: AssetImage("images/payment.png",),
+                              ),
+                            ),
+                            child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("8/10 months", textDirection: TextDirection.ltr, style: TextStyle(color: or?Colors.white:Colors.black, fontSize: 16,),),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Stack(
-                                  alignment: Alignment.centerLeft,
-                                  fit: StackFit.passthrough,
-                                  children: [
-                                    Container(
-                                      height: 30,
-                                      width: or?250:wid*0.8,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(100),
-                                        ),
-                                        color: Colors.grey.shade300,
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 30,
-                                      width: wid>500?(250)*(8/10):(wid*0.8)*(8/10),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(100),
-                                          topRight: Radius.circular(25),
-                                          bottomLeft: Radius.circular(100),
-                                          bottomRight: Radius.circular(25),
-                                        ),
-                                        gradient: LinearGradient(
-                                          colors: [
-                                            Colors.amberAccent,
-                                            Colors.green,
-                                          ],
-                                          begin: Alignment.centerLeft,
-                                          end: Alignment.centerRight,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+
                               ],
                             ),
                           ),
-                          SizedBox(
-                            height: 30,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          width: wid,
+                          padding: EdgeInsets.all(40),
+                          decoration: BoxDecoration(
+                            color: cTheme.primaryColorLight,
+                            borderRadius: BorderRadius.all(Radius.circular(50)),
                           ),
-                          GestureDetector(
-                            onTap: () async {
-                              // Navigator.push(context, MaterialPageRoute(builder: (context){
-                              //   return PaymentScannerScreen();
-                              // }));
-                              // getToken.readToken();
-                              // print("${getToken.dToken}----------------)");
-                              // final userMap = jsonDecode(getToken.dToken) as Map<String, dynamic>;
-                              // final user = FIBLoginParameters.fromJson(userMap);
-                              // print(user.id);
-                              // FIBLoginParameters flp= FIBLoginParameters(user.grantType, user.id, user.secret);
-                              // FIBLoginParameters fibLogin= FIBLoginParameters.fromJson(flp.toJson());
-                              // print("$fibLogin<><<<<<<<<<<>>>>>>");
-                                var request= FIBLoginParameters("client_credentials", "koya-uni", "1fb32463-c472-4572-8797-670b15be7e3c");
-                                ReturnInfo rInfo= ReturnInfo();
-                                var logSuccess= await rInfo.returnInfo(request);
-                                // print(logSuccess);
-                                if(logSuccess!=null){
-                                  await getPayment.getPaymentInformation(logSuccess.accessToken);
-                                  if(getPayment.createPaymentResponse?.qrCode==null){
-                                    CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred", cTheme.primaryColorLight, cTheme.primaryColorDark);
-                                    print("ID or Secret invalid!: 2");
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.baseline,
+                                textBaseline: TextBaseline.alphabetic,
+                                children: [
+                                  Text("8/10", style: TextStyle(fontSize: 32, color: cTheme.primaryColorDark),),
+                                  SizedBox(width: 10,),
+                                  Text("months paid", style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  SvgPicture.asset(
+                                      height: 70,
+                                      width: 70,
+                                      "images/fib-logo.svg",
+                                      color: cTheme.primaryColorDark,
+                                      semanticsLabel: 'FIB logo'),
+                                  Container(
+                                    width: 1,
+                                    height: 30,
+                                    color: cTheme.primaryColorDark,
+                                  ),
+                                  SvgPicture.asset(
+                                      height: 70,
+                                      width: 70,
+                                      "images/fib-logo.svg",
+                                      color: cTheme.primaryColorDark,
+                                      semanticsLabel: 'FIB logo'),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              MainBtn(wid, wid>600?62.0:72.0, cTheme.primaryColor, "Proceed",
+                                () async {
+                                  // Navigator.push(context, MaterialPageRoute(builder: (context){
+                                  //   return PaymentScannerScreen();
+                                  // }));
+                                  // getToken.readToken();
+                                  // print("${getToken.dToken}----------------)");
+                                  // final userMap = jsonDecode(getToken.dToken) as Map<String, dynamic>;
+                                  // final user = FIBLoginParameters.fromJson(userMap);
+                                  // print(user.id);
+                                  // FIBLoginParameters flp= FIBLoginParameters(user.grantType, user.id, user.secret);
+                                  // FIBLoginParameters fibLogin= FIBLoginParameters.fromJson(flp.toJson());
+                                  // print("$fibLogin<><<<<<<<<<<>>>>>>");
+                                  var request= FIBLoginParameters("client_credentials", "koya-uni", "1fb32463-c472-4572-8797-670b15be7e3c");
+                                  ReturnInfo rInfo= ReturnInfo();
+                                  var logSuccess= await rInfo.returnInfo(request);
+                                  // print(logSuccess);
+                                  if(logSuccess!=null){
+                                    print("--------------");
+                                    TokenManager().saveToken("FIBToken", logSuccess.accessToken);
+                                    print("--------------");
+                                    await getPayment.getPaymentInformation(logSuccess.accessToken, "2000");
+                                    if(getPayment.createPaymentResponse?.qrCode==null){
+                                      CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred", cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                      print("ID or Secret invalid!: 2");
+                                    }else{
+                                      Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
+                                        return PaymentScannerScreen();
+                                      }));
+                                    }
                                   }else{
-                                    Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
-                                      return PaymentScannerScreen();
-                                    }));
-                                  }
-                                }else{
-                                  CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred", cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                    CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred", cTheme.primaryColorLight, cTheme.primaryColorDark);
                                     print("ID or Secret invalid!");
-                                }
-                            },
-                            child: Container(
-                              width: 100,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                color: or?Colors.white:cTheme.primaryColor,
-                                borderRadius: BorderRadius.all(Radius.circular(100)),
+                                  }
+                                },
                               ),
-                              child: Center(
-                                child: Icon(Icons.arrow_forward_rounded, color: or?Colors.black:Colors.white, size: 40,),
-                              ),
-                            ),
+                            ],
                           ),
-                          SizedBox(
-                            height: or?0:30,
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
                         ),
@@ -190,3 +176,4 @@ class _PaymentScreenState extends State<PaymentScreen> {
       );
   }
 }
+

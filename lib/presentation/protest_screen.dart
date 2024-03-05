@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:graduation_project/presentation/new_protest.dart';
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
@@ -36,50 +38,114 @@ class _ProtestScreenState extends State<ProtestScreen> {
             textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
             child: Scaffold(
               resizeToAvoidBottomInset: false,
-              backgroundColor: cTheme.backgroundColor,
-              appBar: CustomAppBar(cTheme.backgroundColor, lChanger[16]["title"], cTheme.primaryColorDark, context),
+              backgroundColor: cTheme.primaryColorLight,
+              appBar: CustomAppBar(cTheme.primaryColorLight, lChanger[16]["title"], cTheme.primaryColorDark, context),
+              floatingActionButton: FloatingActionButton(
+                foregroundColor: cTheme.primaryColor,
+                backgroundColor: cTheme.primaryColor,
+                focusColor: cTheme.primaryColor,
+                tooltip: "Make new protest",
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                    return NewProtest();
+                  }));
+                },
+                child: Icon(Icons.edit_rounded, color: Colors.white,),
+              ),
+              floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
               body: SafeArea(
-                child: Padding(
-                  padding: EdgeInsets.all(10),
+                child: SingleChildScrollView(
                   child: Column(
-                    crossAxisAlignment: wid>500?CrossAxisAlignment.end:CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
+                    children: List.generate(30, (index){
+                      return Slidable(
+                        // Specify a key if the Slidable is dismissible.
+                        // key: const ValueKey(0),
+                  
+                        // The start action pane is the one at the left or the top side.
+                        // startActionPane: ActionPane(
+                        //   // A motion is a widget used to control how the pane animates.
+                        //   motion: const ScrollMotion(),
+                        //
+                        //   // A pane can dismiss the Slidable.
+                        //   dismissible: DismissiblePane(onDismissed: () {}),
+                        //
+                        //   // All actions are defined in the children parameter.
+                        //   // children: [
+                        //   //   // A SlidableAction can have an icon and/or a label.
+                        //   //   SlidableAction(
+                        //   //     backgroundColor: Color(0xFFFE4A49),
+                        //   //     foregroundColor: Colors.white,
+                        //   //     icon: Icons.delete,
+                        //   //     label: 'Delete', onPressed: (BuildContext context) {  },
+                        //   //   ),
+                        //   //   SlidableAction(
+                        //   //     backgroundColor: Color(0xFF21B7CA),
+                        //   //     foregroundColor: Colors.white,
+                        //   //     icon: Icons.share,
+                        //   //     label: 'Share', onPressed: (BuildContext context) {  },
+                        //   //   ),
+                        //   // ],
+                        // ),
+                  
+                        // The end action pane is the one at the right or the bottom side.
+                        endActionPane: ActionPane(
+                          motion: ScrollMotion(),
+                          children: [
+                            // A SlidableAction can have an icon and/or a label.
+                            SlidableAction(
+                              backgroundColor: Color(0xFFFE4A49),
+                              foregroundColor: Colors.white,
+                              icon: Icons.delete,
+                              label: 'Delete', onPressed: (BuildContext context) {  },
+                            ),
+                            // SlidableAction(
+                            //   backgroundColor: Color(0xFF21B7CA),
+                            //   foregroundColor: Colors.white,
+                            //   icon: Icons.share,
+                            //   label: 'Share', onPressed: (BuildContext context) {  },
+                            // ),
+                          ],
+                        ),
+                  
+                        // The child of the Slidable is what the user sees when the
+                        // component is not dragged.
                         child: Container(
-                          width: wid,
                           padding: EdgeInsets.all(10),
-                          margin: wid>600?EdgeInsets.symmetric(horizontal: wid*0.1, vertical: hei*0.1):EdgeInsets.symmetric(horizontal: wid*0.05, vertical: hei*0.1),
                           decoration: BoxDecoration(
                             color: cTheme.primaryColorLight,
-                            borderRadius: BorderRadius.all(Radius.circular(35),),
+                            border: Border(
+                              bottom: BorderSide(width: 10, color: cTheme.primaryColorLight),
+                            ),
                           ),
-                          child: Column(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+                              FittedBox(
+                                  child: Container(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text("Title of the protest", style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark),),
+                                          Text("10/10/2024", style: TextStyle(color: Colors.grey, fontSize: 12),),
+                                        ],
+                                      ))),
+                              SizedBox(
+                                width: 10,
+                              ),
                               Container(
-                                width: wid,
-                                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                                  child: Text(lChanger[16]["subtitle"], style: TextStyle(fontSize: 20, color: Colors.grey.shade700),),
+                                width: 60,
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  color: index%2==0?Colors.green.withOpacity(0.4):(index%3==0?Colors.yellow.withOpacity(0.4):Colors.red.withOpacity(0.4)),
+                                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                                ),
+                                child: Icon(Icons.check, color: Colors.white,),
                               ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              CustomTextFields(titleController, lChanger[16]["ph1"], cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.backgroundColor, 25, 1),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Expanded(child: CustomTextFields(coreController, lChanger[16]["ph2"], cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.backgroundColor, 25, null)),
                             ],
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      MainBtn(wid>600?wid*0.35-80:wid-40, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[16]["btn"], () {
-                        // Navigator.of(context).pop();
-                        ConfirmationCustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, lChanger[16]["popTitle"], lChanger[16]["popSubtitle"], lChanger[16]["agreeBtn"], lChanger[16]["declineBtn"], context, (){}, (){}, cTheme.primaryColor);
-                        }),
-                    ],
+                      );
+                    }),
                   ),
                 ),
               ),

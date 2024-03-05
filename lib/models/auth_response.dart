@@ -1,25 +1,18 @@
-class AuthResponse{
-  late String name;
-  late String email;
-  late String phoneNumber;
-  late String buildingNumber;
-  late String imgUrl;
 
-  AuthResponse(this.name, this.email, this.phoneNumber, this.buildingNumber, this.imgUrl);
+class AuthResponse{
+  late String status;
+  late String bearerToken;
+
+  AuthResponse(this.status, this.bearerToken);
 
   Map<String, dynamic> toJson()=>{
-    'name': name,
-    'email': email,
-    'phoneNumber': phoneNumber,
-    'buildingNumber': buildingNumber,
-    'imgUrl': imgUrl,
+    'status': status,
+    'bearer_token': bearerToken,
   };
   
   AuthResponse.fromJson(Map<String, dynamic> json){
-    name= json['name'];
-    email= json['email'];
-    phoneNumber= json['phoneNumber'];
-    buildingNumber= json['buildingNumber'];
-    imgUrl= json['imgUrl'];
+    status= json['status'];
+    bearerToken= json['bearer_token'];
   }
 }
+

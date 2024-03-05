@@ -162,6 +162,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     print(val);
                                     lChanger.changeLanguage(val);
                                   })),
+                                settings("Notifications", cTheme.primaryColorDark,wid,
+                                    CustomSwitchBtn(false, cTheme.primaryColorLight, (val) {
+                                      // tChanger.changeTheme();
+                                    })),
                                   // settings("More", cTheme.primaryColorDark, wid, FToggleButton(
                                   //   isEnable: false,
                                   //   onChangeStatus: (bool val) {},
@@ -186,6 +190,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                         return AboutApp();
                                       }));
                                     },
+                                      child: settings("FAQ", cTheme.primaryColorDark, wid, SizedBox(),)),
+                                  GestureDetector(
+                                      onTap: (){
+                                        Navigator.push(context, MaterialPageRoute(builder: (context){
+                                          return AboutApp();
+                                        }));
+                                      },
                                       child: settings(lChanger.data[0]["about"], cTheme.primaryColorDark, wid, SizedBox(),)),
                                 ],
                               ),

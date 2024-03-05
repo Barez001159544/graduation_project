@@ -10,12 +10,12 @@ class GetPayment extends ChangeNotifier{
   FIBCreatePaymentResponse? _createPaymentResponse=null;
   FIBCreatePaymentResponse? get createPaymentResponse=> _createPaymentResponse;
   
-  Future<void> getPaymentInformation(String token) async {
+  Future<void> getPaymentInformation(String token, String amount) async {
     isLoading=true;
     notifyListeners();
     
     final response= await service.paymentCreation(FIBCreatePaymentParameters(
-        MonetaryValue("500.00", "IQD"),
+        MonetaryValue(amount, "IQD"),
         "https://URL_TO_UPDATE_YOUR_PAYMENT_STATUS",
         "Lorem ipsum dolor sit amet.",
         "PT8H6M12.345S"), token);

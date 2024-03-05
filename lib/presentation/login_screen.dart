@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graduation_project/constants.dart';
+import 'package:graduation_project/constants/loading_indicator.dart';
 import 'package:graduation_project/constants/main_btn.dart';
+import 'package:graduation_project/controllers/get_auth.dart';
+import 'package:graduation_project/models/auth_request.dart';
 import 'package:graduation_project/presentation/forgot_password_screen.dart';
 import 'package:graduation_project/presentation/home_screen.dart';
 import 'package:graduation_project/presentation/taxi_home.dart';
 import 'package:graduation_project/test.dart';
+import 'package:graduation_project/tokenManager.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/custom_dropdown_menu.dart';
@@ -40,16 +44,16 @@ class _LoginScreenState extends State<LoginScreen> {
       wid>600?DeviceOrientation.landscapeLeft:DeviceOrientation.portraitUp,
       wid>600?DeviceOrientation.landscapeRight:DeviceOrientation.portraitUp,
     ]);
-    return Consumer2<LanguageChanger, ThemeChanger>(
-          builder: (_, languageChanger, tChanger, __) {
+    return Consumer3<LanguageChanger, ThemeChanger, GetAuth>(
+          builder: (_, languageChanger, tChanger, getAuth, __) {
             lChanger= languageChanger.data;
             return Directionality(
               textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
               child: Scaffold(
                 resizeToAvoidBottomInset: false,
-              backgroundColor: cTheme.backgroundColor,//Color(0xff155E7D),
+              backgroundColor: wid>600?cTheme.backgroundColor:cTheme.primaryColorLight,//Color(0xff155E7D),
               body: SafeArea(
-                child: Stack(
+                child: getAuth.isLoading?LoadingIndicator(cTheme.backgroundColor):Stack(
                   children: [
                     Center(
                       child: Container(
@@ -107,22 +111,44 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ],
                               ),
-                              MainBtn(wid>600?wid*0.35-80:wid-80, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[2]["btn"], () {
-                                setState(() {
+                              MainBtn(wid>600?wid*0.35-80:wid-80, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[2]["btn"], () async {
+                                // getAuth.isLoading?print("NABW"):print("BW");
                                   if(username.text.isEmpty || password.text.isEmpty){
-                                    errorMessage="leave no field empty";
-                                  }else if(username.text=="john" && password.text=="taxi"){
-                                    Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
-                                      return TaxiHomeScreen();
-                                    }));
-                                  }else if(username.text=="john" && password.text=="res"){
-                                    Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
-                                      return Test();
-                                    }));
-                                  }else{
-                                    errorMessage="username or password incorrect";
+                                    setState(() {
+                                      errorMessage="leave no field empty";
+                                    });
+                                  }else {
+                                    await getAuth.authwemailpass(AuthRequest(username.text, password.text));
+                                    if(getAuth.data?.status=="OK"){
+                                      TokenManager().saveToken("accessToken", getAuth.data!.bearerToken);
+                                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context){
+                                        return Test();
+                                      }), (route) => false);
+                                      setState(() {
+                                        errorMessage="Successful";
+                                      });
+                                    }else{
+                                      setState(() {
+                                        errorMessage="Invalid username or password";
+                                      });
+                                    }
+                                    print("**************");
+                                    print(getAuth.data?.status);
+                                    print("**************");
+                                    // TokenManager().saveToken("AuthenticationToken", getAuth.data as String);
                                   }
-                                });
+                                  // else if(username.text=="john" && password.text=="taxi"){
+                                  //   Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
+                                  //     return TaxiHomeScreen();
+                                  //   }));
+                                  // }else if(username.text=="john" && password.text=="res"){
+                                  //   Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
+                                  //     return Test();
+                                  //   }));
+                                  // }
+                                  // else{
+                                  //   errorMessage="username or password incorrect";
+                                  // }
 
                               }),
                               GestureDetector(

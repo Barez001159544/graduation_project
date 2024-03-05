@@ -6,13 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:graduation_project/presentation/community_screen.dart';
 import 'package:graduation_project/presentation/login_screen.dart';
 import 'package:graduation_project/presentation/payment_screen.dart';
 import 'package:graduation_project/presentation/profile_screen.dart';
+import 'package:graduation_project/presentation/properties_screen.dart';
 import 'package:graduation_project/presentation/services_screen.dart';
 import 'package:graduation_project/presentation/settings_screen.dart';
 import 'package:graduation_project/presentation/support_screen.dart';
+import 'package:graduation_project/presentation/taxi_services.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart' as badges;
 import 'constants/confirmation_custom_alert_dialog.dart';
@@ -86,7 +89,12 @@ class _TestState extends State<Test> {
                                     color: cTheme.primaryColorLight,
                                     borderRadius: BorderRadius.all(Radius.circular(17.sp),),
                                   ),
-                                  child: Image.asset("images/007-boy-2.jpg"),
+                                  child: SvgPicture.asset(
+                                      height: 70,
+                                      width: 70,
+                                      "images/fib-logo.svg",
+                                      color: cTheme.primaryColorDark,
+                                      semanticsLabel: 'App logo'),
                                   // RotatedBox(
                                   //   quarterTurns: languageChanger.selectedLanguage=="ENG"?90:0,
                                   //     child: Icon(Icons.logout_rounded, color: Colors.red, size: 13.sp,)),
@@ -143,6 +151,26 @@ class _TestState extends State<Test> {
                             ],
                           ):Row(
                             children: [
+                              Tooltip(
+                                message: "Host",
+                                child: Container(
+                                  width: 80,
+                                  height: 80,
+                                  decoration: BoxDecoration(
+                                    color: cTheme.primaryColorLight,
+                                    borderRadius: BorderRadius.all(Radius.circular(30),),
+                                  ),
+                                  padding: EdgeInsets.all(10),
+                                  // margin: EdgeInsets.all(10),
+                                  child: SvgPicture.asset(
+                                      height: 60,
+                                      width: 60,
+                                      "images/fib-logo.svg",
+                                      color: cTheme.primaryColorDark,
+                                      semanticsLabel: 'App logo'),
+                                ),
+                              ),
+                              SizedBox(width: 10,),
                               Container(
                                 width: wid-110,
                                 height: 80,
@@ -211,21 +239,6 @@ class _TestState extends State<Test> {
                                   ],
                                 ),
                               ),
-                              SizedBox(width: 10,),
-                              Tooltip(
-                                message: "Host",
-                                child: Container(
-                                  width: 80,
-                                  height: 80,
-                                  decoration: BoxDecoration(
-                                    color: cTheme.primaryColorLight,
-                                    borderRadius: BorderRadius.all(Radius.circular(30),),
-                                  ),
-                                  padding: EdgeInsets.all(10),
-                                  // margin: EdgeInsets.all(10),
-                                  child: Image.asset("images/007-boy-2.jpg"),
-                                ),
-                              ),
                             ],
                           ),
                           SizedBox(
@@ -234,196 +247,196 @@ class _TestState extends State<Test> {
                           Expanded(
                             child: GestureDetector(
                               onTap: (){
-                                // Navigator.push(context, MaterialPageRoute(builder: (context){
-                                //   return PaymentScreen();
-                                // }));
-                                showDialog(
-                                    context: context,
-                                    // barrierColor: cTheme.backgroundColor,
-                                    builder: (BuildContext context){
-                                  return BackdropFilter(
-                                    filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                                    child: AlertDialog(
-                                      actionsPadding: EdgeInsets.all(0),
-                                      contentPadding: EdgeInsets.all(5),
-                                      backgroundColor: Colors.transparent,
-                                      surfaceTintColor: Colors.transparent,
-                                      // shape: RoundedRectangleBorder(
-                                      //   borderRadius: BorderRadius.circular(45),
-                                      // ),
-                                      actions: [
-                                        Stack(
-                                          children: [
-                                            Column(
-                                              children: [
-                                                GestureDetector(
-                                                  onTap:(){
-                                                    setState(() {
-                                                      scrollController.page!=0?scrollController.previousPage(
-                                                        duration: Duration(milliseconds: 500),
-                                                        curve: Curves.easeInOut,
-                                                      ):print("END");
-                                                      // page--;
-                                                    });
-                                                    // print(scrollController.page);
-                                                      },
-                                                  child: Container(
-                                                    width: 50,
-                                                    height: 50,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.transparent,
-                                                      borderRadius: BorderRadius.all(Radius.circular(100)),
-                                                      border: Border.all(width: 1, color: Colors.white),
-                                                    ),
-                                                    child: Icon(Icons.keyboard_arrow_up_rounded, color: Colors.white,),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Container(
-                                                  width: wid>500?400:wid*0.7,
-                                                  height: wid>500?300:wid*0.7,
-                                                  child: PageView.builder(
-                                                      itemCount: 3,
-                                                      controller: scrollController,
-                                                      scrollDirection: Axis.vertical,
-                                                      physics: NeverScrollableScrollPhysics(),
-                                                      itemBuilder: (index, ctx){
-                                                        return GestureDetector(
-                                                          onTap: (){
-                                                            // print("SSS");
-                                                            Navigator.push(context, MaterialPageRoute(builder: (context){
-                                                              return PaymentScreen();
-                                                            }));
-                                                          },
-                                                          child: Container(
-                                                            width: wid>500?400:wid*0.7,
-                                                            height: wid>500?300:wid*0.7,
-                                                            // color: Colors.yellow.withOpacity(0.3),
-                                                            margin: EdgeInsets.symmetric(vertical: 5),
-                                                            decoration: BoxDecoration(
-                                                              color: Colors.white,
-                                                              borderRadius: BorderRadius.all(Radius.circular(45)),
-                                                            ),
-                                                            child: Stack(
-                                                              children: [
-                                                                Positioned(
-                                                                  right: 0,
-                                                                  child: Container(
-                                                                    width: 70,
-                                                                    height: 70,
-                                                                    decoration: BoxDecoration(
-                                                                      color: Color(0xff65CA9B),
-                                                                      borderRadius: BorderRadius.only(
-                                                                        topRight: Radius.circular(45),
-                                                                        bottomLeft: Radius.circular(15),
-                                                                      ),
-                                                                      image: DecorationImage(
-                                                                        image: AssetImage("images/fib-transparent.png"),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                Padding(
-                                                                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                                                                  child: Column(
-                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                                    children: [
-                                                                      Icon(Icons.electric_bolt_rounded, size: 70, color: cTheme.primaryColor,),
-                                                                      Column(
-                                                                        children: [
-                                                                          Row(
-                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                            children: [
-                                                                              Text("Electricity", style: TextStyle(fontSize: 20),),
-                                                                              Text("0/1", style: TextStyle(fontSize: 12),),
-                                                                            ],
-                                                                          ),
-                                                                          SizedBox(
-                                                                            height: 10,
-                                                                          ),
-                                                                          Stack(
-                                                                            alignment: Alignment.centerLeft,
-                                                                            fit: StackFit.passthrough,
-                                                                            children: [
-                                                                              Container(
-                                                                                height: 30,
-                                                                                width: wid>500?360:wid*0.7-40,
-                                                                                decoration: BoxDecoration(
-                                                                                  borderRadius: BorderRadius.all(
-                                                                                    Radius.circular(100),
-                                                                                  ),
-                                                                                  color: Colors.grey.shade300,
-                                                                                ),
-                                                                              ),
-                                                                              Container(
-                                                                                height: 30,
-                                                                                width: wid>500?360*(8/10):((wid*0.7)-40)*(8/10),
-                                                                                decoration: BoxDecoration(
-                                                                                    borderRadius: BorderRadius.only(
-                                                                                      topLeft: Radius.circular(100),
-                                                                                      topRight: Radius.circular(25),
-                                                                                      bottomLeft: Radius.circular(100),
-                                                                                      bottomRight: Radius.circular(25),
-                                                                                    ),
-                                                                                    color: cTheme.primaryColor
-                                                                                ),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        );
-                                                      }),
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                GestureDetector(
-                                                  onTap:(){
-                                                    setState(() {
-                                                      scrollController.page!=2?scrollController.nextPage(
-                                                        duration: Duration(milliseconds: 500),
-                                                        curve: Curves.easeInOut,
-                                                      ):print("END");
-                                                      // page++;
-                                                    });
-                                                  },
-                                                  child: Container(
-                                                    width: 50,
-                                                    height: 50,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.transparent,
-                                                      borderRadius: BorderRadius.all(Radius.circular(100)),
-                                                      border: Border.all(width: 1, color: Colors.white),
-                                                    ),
-                                                    child: Icon(Icons.keyboard_arrow_down_rounded, color: Colors.white,),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Positioned(
-                                              right: 0,
-                                              child: IconButton(
-                                                  onPressed: (){
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  icon: Icon(Icons.close_rounded, color: Colors.grey,),),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                });
+                                Navigator.push(context, MaterialPageRoute(builder: (context){
+                                  return PaymentScreen();
+                                }));
+                                // showDialog(
+                                //     context: context,
+                                //     // barrierColor: cTheme.backgroundColor,
+                                //     builder: (BuildContext context){
+                                //   return BackdropFilter(
+                                //     filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                                //     child: AlertDialog(
+                                //       actionsPadding: EdgeInsets.all(0),
+                                //       contentPadding: EdgeInsets.all(5),
+                                //       backgroundColor: Colors.transparent,
+                                //       surfaceTintColor: Colors.transparent,
+                                //       // shape: RoundedRectangleBorder(
+                                //       //   borderRadius: BorderRadius.circular(45),
+                                //       // ),
+                                //       actions: [
+                                //         Stack(
+                                //           children: [
+                                //             Column(
+                                //               children: [
+                                //                 GestureDetector(
+                                //                   onTap:(){
+                                //                     setState(() {
+                                //                       scrollController.page!=0?scrollController.previousPage(
+                                //                         duration: Duration(milliseconds: 500),
+                                //                         curve: Curves.easeInOut,
+                                //                       ):print("END");
+                                //                       // page--;
+                                //                     });
+                                //                     // print(scrollController.page);
+                                //                       },
+                                //                   child: Container(
+                                //                     width: 50,
+                                //                     height: 50,
+                                //                     decoration: BoxDecoration(
+                                //                       color: Colors.transparent,
+                                //                       borderRadius: BorderRadius.all(Radius.circular(100)),
+                                //                       border: Border.all(width: 1, color: Colors.white),
+                                //                     ),
+                                //                     child: Icon(Icons.keyboard_arrow_up_rounded, color: Colors.white,),
+                                //                   ),
+                                //                 ),
+                                //                 SizedBox(
+                                //                   height: 10,
+                                //                 ),
+                                //                 Container(
+                                //                   width: wid>500?400:wid*0.7,
+                                //                   height: wid>500?300:wid*0.7,
+                                //                   child: PageView.builder(
+                                //                       itemCount: 3,
+                                //                       controller: scrollController,
+                                //                       scrollDirection: Axis.vertical,
+                                //                       physics: NeverScrollableScrollPhysics(),
+                                //                       itemBuilder: (index, ctx){
+                                //                         return GestureDetector(
+                                //                           onTap: (){
+                                //                             // print("SSS");
+                                //                             Navigator.push(context, MaterialPageRoute(builder: (context){
+                                //                               return PaymentScreen();
+                                //                             }));
+                                //                           },
+                                //                           child: Container(
+                                //                             width: wid>500?400:wid*0.7,
+                                //                             height: wid>500?300:wid*0.7,
+                                //                             // color: Colors.yellow.withOpacity(0.3),
+                                //                             margin: EdgeInsets.symmetric(vertical: 5),
+                                //                             decoration: BoxDecoration(
+                                //                               color: Colors.white,
+                                //                               borderRadius: BorderRadius.all(Radius.circular(45)),
+                                //                             ),
+                                //                             child: Stack(
+                                //                               children: [
+                                //                                 Positioned(
+                                //                                   right: 0,
+                                //                                   child: Container(
+                                //                                     width: 70,
+                                //                                     height: 70,
+                                //                                     decoration: BoxDecoration(
+                                //                                       color: Color(0xff65CA9B),
+                                //                                       borderRadius: BorderRadius.only(
+                                //                                         topRight: Radius.circular(45),
+                                //                                         bottomLeft: Radius.circular(15),
+                                //                                       ),
+                                //                                       image: DecorationImage(
+                                //                                         image: AssetImage("images/fib-transparent.png"),
+                                //                                       ),
+                                //                                     ),
+                                //                                   ),
+                                //                                 ),
+                                //                                 Padding(
+                                //                                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                                //                                   child: Column(
+                                //                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                //                                     crossAxisAlignment: CrossAxisAlignment.start,
+                                //                                     children: [
+                                //                                       Icon(Icons.electric_bolt_rounded, size: 70, color: cTheme.primaryColor,),
+                                //                                       Column(
+                                //                                         children: [
+                                //                                           Row(
+                                //                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                //                                             children: [
+                                //                                               Text("Electricity", style: TextStyle(fontSize: 20),),
+                                //                                               Text("0/1", style: TextStyle(fontSize: 12),),
+                                //                                             ],
+                                //                                           ),
+                                //                                           SizedBox(
+                                //                                             height: 10,
+                                //                                           ),
+                                //                                           Stack(
+                                //                                             alignment: Alignment.centerLeft,
+                                //                                             fit: StackFit.passthrough,
+                                //                                             children: [
+                                //                                               Container(
+                                //                                                 height: 30,
+                                //                                                 width: wid>500?360:wid*0.7-40,
+                                //                                                 decoration: BoxDecoration(
+                                //                                                   borderRadius: BorderRadius.all(
+                                //                                                     Radius.circular(100),
+                                //                                                   ),
+                                //                                                   color: Colors.grey.shade300,
+                                //                                                 ),
+                                //                                               ),
+                                //                                               Container(
+                                //                                                 height: 30,
+                                //                                                 width: wid>500?360*(8/10):((wid*0.7)-40)*(8/10),
+                                //                                                 decoration: BoxDecoration(
+                                //                                                     borderRadius: BorderRadius.only(
+                                //                                                       topLeft: Radius.circular(100),
+                                //                                                       topRight: Radius.circular(25),
+                                //                                                       bottomLeft: Radius.circular(100),
+                                //                                                       bottomRight: Radius.circular(25),
+                                //                                                     ),
+                                //                                                     color: cTheme.primaryColor
+                                //                                                 ),
+                                //                                               ),
+                                //                                             ],
+                                //                                           ),
+                                //                                         ],
+                                //                                       ),
+                                //                                     ],
+                                //                                   ),
+                                //                                 ),
+                                //                               ],
+                                //                             ),
+                                //                           ),
+                                //                         );
+                                //                       }),
+                                //                 ),
+                                //                 SizedBox(
+                                //                   height: 10,
+                                //                 ),
+                                //                 GestureDetector(
+                                //                   onTap:(){
+                                //                     setState(() {
+                                //                       scrollController.page!=2?scrollController.nextPage(
+                                //                         duration: Duration(milliseconds: 500),
+                                //                         curve: Curves.easeInOut,
+                                //                       ):print("END");
+                                //                       // page++;
+                                //                     });
+                                //                   },
+                                //                   child: Container(
+                                //                     width: 50,
+                                //                     height: 50,
+                                //                     decoration: BoxDecoration(
+                                //                       color: Colors.transparent,
+                                //                       borderRadius: BorderRadius.all(Radius.circular(100)),
+                                //                       border: Border.all(width: 1, color: Colors.white),
+                                //                     ),
+                                //                     child: Icon(Icons.keyboard_arrow_down_rounded, color: Colors.white,),
+                                //                   ),
+                                //                 ),
+                                //               ],
+                                //             ),
+                                //             Positioned(
+                                //               right: 0,
+                                //               child: IconButton(
+                                //                   onPressed: (){
+                                //                     Navigator.of(context).pop();
+                                //                   },
+                                //                   icon: Icon(Icons.close_rounded, color: Colors.grey,),),
+                                //             ),
+                                //           ],
+                                //         ),
+                                //       ],
+                                //     ),
+                                //   );
+                                // });
                               },
                               child: Container(
                                   padding: EdgeInsets.all(20),
@@ -562,7 +575,7 @@ class _TestState extends State<Test> {
                             GestureDetector(
                               onTap: (){
                                 Navigator.push(context, MaterialPageRoute(builder: (context){
-                                  return CommunityScreen();
+                                  return TaxiServices();
                                 }));
                               },
                               child: badges.Badge(
@@ -578,9 +591,9 @@ class _TestState extends State<Test> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(CupertinoIcons.personalhotspot, color: cTheme.primaryColor, size: 40,),
+                                      Icon(Icons.local_taxi_rounded, color: cTheme.primaryColor, size: 40,),
                                       SizedBox(height: 10,),
-                                      Text(lChanger[6]["community"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
+                                      Text("Taxi", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
                                     ],
                                   ),
                                 ),
@@ -621,7 +634,7 @@ class _TestState extends State<Test> {
                             GestureDetector(
                               onTap: (){
                                 Navigator.push(context, MaterialPageRoute(builder: (context){
-                                  return SupportCenter();
+                                  return PropertiesScreen();
                                 }));
                               },
                               child: badges.Badge(
@@ -637,9 +650,9 @@ class _TestState extends State<Test> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(CupertinoIcons.chat_bubble_2, color: cTheme.primaryColor, size: 40,),
+                                      Icon(Icons.other_houses_rounded, color: cTheme.primaryColor, size: 40,),
                                       SizedBox(height: 10,),
-                                      Text(lChanger[6]["chat"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
+                                      Text("Your Properties", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
                                     ],
                                   ),
                                 ),

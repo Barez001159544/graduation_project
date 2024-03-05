@@ -1,6 +1,7 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:graduation_project/constants.dart';
@@ -12,6 +13,7 @@ import 'package:graduation_project/presentation/taxi_services.dart';
 import 'package:provider/provider.dart';
 import 'package:typethis/typethis.dart';
 import '../constants/custom_appbar.dart';
+import '../constants/main_btn.dart';
 import '../controllers/language_changer.dart';
 import '../controllers/theme_changer.dart';
 import '../custom theme data/themes.dart';
@@ -24,17 +26,17 @@ class ServicesScreen extends StatefulWidget {
 }
 
 List services=[
-  "Taxi",
-  "Fixation",
+  "Electricity",
+  "Repair & Maintenance",
   // "Support Center",
-  "Maintenance",
+  // "Maintenance",
   "Protest",
 ];
 List servicesIcons=[
-  Icons.local_taxi_rounded,
+  Icons.electric_bolt_rounded,
   Icons.handyman_rounded,
   // Icons.chat_rounded,
-  Icons.cleaning_services_rounded,
+  // Icons.cleaning_services_rounded,
   Icons.note_alt_outlined,
 ];
 // bool isDark=true;
@@ -82,105 +84,71 @@ class _ServicesScreenState extends State<ServicesScreen> {
                             ],
                           ),
                         ),
-                        //GridView
-                        GridView.builder(
-                            shrinkWrap: true,
-                            physics: ScrollPhysics(),
-                            itemCount: services.length,
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: wid>500?2:1, crossAxisSpacing: 15, mainAxisSpacing: 15, childAspectRatio: 2.3),
-                            padding: EdgeInsets.symmetric(horizontal: wid>500?100:10, vertical: 10),
-                            // physics: NeverScrollableScrollPhysics(),
-                            primary: true,
-                            itemBuilder: (BuildContext context, int index){
-                              return GestureDetector(
-                                onTap: (){
-                                  if(index==0){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context){
-                                      return TaxiServices();
-                                    }));
-                                  }else if(index==1){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context){
-                                      return RepairScreen();
-                                    }));
-                                  }else if(index==2){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context){
-                                      return MaintenanceScreen();
-                                    }));
-                                  }else if(index==3){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context){
-                                      return ProtestScreen();
-                                    }));
-                                  }else{
-                                    print("Not available for now");
-                                  }
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(15),
-                                  decoration: BoxDecoration(
-                                    color: cTheme.primaryColorLight,
-                                    // color: Colors.green,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(wid>500?25.sp:50.sp),
-                                    ),
-                                  ),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                        Flex(
+                          direction: wid>600?Axis.vertical:Axis.vertical,
+                          children: List.generate(services.length, (index){
+                            return Container(
+                              width: wid>600?wid/2:wid,
+                              margin: wid>600?EdgeInsets.only(top: 10, bottom: 50):EdgeInsets.all(10),
+                              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                              decoration: BoxDecoration(
+                                color: cTheme.primaryColorLight,
+                                borderRadius: BorderRadius.all(Radius.circular(35)),
+                              ),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      Expanded(
-                                        flex: 2,
-                                        child: Container(
-                                          // width: wid>500?170:140,
-                                          // height: wid>500?170:140,
-                                          decoration: BoxDecoration(
-                                            color: cTheme.primaryColor,
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(wid>500?20.sp:40.sp),
-                                            ),
-                                          ),
-                                          child: Center(
-                                            child: Icon(servicesIcons[index], color: Colors.white, size: wid>500?25.sp:50.sp,),
-                                          ),
-                                        ),
-                                      ),
+                                      Icon(servicesIcons[index], color: cTheme.primaryColor, size: 70,),
                                       SizedBox(
-                                        width: 15,
+                                        width: 10,
                                       ),
-                                      Expanded(
-                                        flex: 3,
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Flexible(
-                                              child: Text(lChanger[9]["taxiTitle"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: wid>500?20:16),),
-                                            ),
-                                            Flexible(
-                                              child: Container(
-                                                width: wid>500?hei*0.29:wid*0.43,
-                                                // color: Colors.red,
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Text(
-                                                        lChanger[9]["taxiSubtitle"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: wid>500?16:12,),
-                                                        softWrap: false,
-                                                        maxLines: 3,
-                                                        overflow: TextOverflow.ellipsis, // new
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(services[index], style: TextStyle(fontSize: 24, color: cTheme.primaryColorDark),),
+                                          Text("Payment", style: TextStyle(fontSize: 12, color: Colors.grey),),
+                                        ],
                                       ),
                                     ],
                                   ),
-                                ),
-                              );
-                            }),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(textAlign: TextAlign.center, "Reloaded 1 of 1971 libraries in 1,131ms (compile: 147 ms, reload: 424 ms, reassemble: 348 ms).", style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
+                                  ),
+                                  Divider(
+                                    height: 10,
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Row(
+                                        // crossAxisAlignment: CrossAxisAlignment.baseline,
+                                        // textBaseline: TextBaseline.ideographic,
+                                        children: [
+                                          Icon(Icons.star_rate_rounded, color: Colors.amber, size: 50,),
+                                          Text("x4", style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark),),
+                                        ],
+                                      ),
+                                      SizedBox(width: 20,),
+                                      Expanded(child: MainBtn(wid, wid>600?62.0:72.0, cTheme.primaryColor, "Proceed", () {
+                                          Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                                            return index==1?RepairScreen():ProtestScreen();
+                                          }));
+                                      })),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ).animate().slideY(begin: 1, curve: Curves.easeInOutQuad, duration: 1.5.seconds);
+                          }),
+                        ),
                       ],
                     ),
 

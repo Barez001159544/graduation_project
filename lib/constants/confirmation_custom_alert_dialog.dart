@@ -118,6 +118,7 @@ Future<dynamic> ConfirmationCustomAlertDialog(Color bgColor, Color txtColor, Str
             style: TextStyle(fontWeight: FontWeight.bold, color: txtColor),
           ),
           content: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Flexible(
                 child: Text(
