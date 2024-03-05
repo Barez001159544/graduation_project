@@ -3,7 +3,6 @@ import "package:flutter/material.dart";
 import "package:graduation_project/presentation/payment_screen.dart";
 import "package:provider/provider.dart";
 
-import "../constants.dart";
 import "../constants/confirmation_custom_alert_dialog.dart";
 import "../constants/custom_appbar.dart";
 import "../constants/custom_switch_notification.dart";
@@ -36,8 +35,8 @@ class _RepairScreenState extends State<RepairScreen> {
           return Directionality(
             textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
             child: Scaffold(
-              backgroundColor: cTheme.backgroundColor,
-              appBar: CustomAppBar(cTheme.backgroundColor, lChanger[15]["title"], cTheme.primaryColorDark, context),
+              backgroundColor: cTheme.scaffoldBackgroundColor,
+              appBar: CustomAppBar(cTheme.scaffoldBackgroundColor, lChanger[15]["title"], cTheme.primaryColorDark, context),
               body: SafeArea(
                 child: Column(
                   children: [
@@ -73,7 +72,7 @@ class _RepairScreenState extends State<RepairScreen> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Icon(Icons.tv_rounded, color: cTheme.primaryColorDark, size: 70,),
-                                      CustomSwitchBtn(indexes.contains(index), cTheme.backgroundColor, (val) {
+                                      CustomSwitchBtn(indexes.contains(index), cTheme.scaffoldBackgroundColor, (val) {
                                         setState(() {
                                           val?indexes.add(index):indexes.remove(index);
                                         });

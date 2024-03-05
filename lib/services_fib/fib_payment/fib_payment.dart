@@ -1,15 +1,16 @@
 import 'dart:convert';
-import 'package:graduation_project/fib_create_payment/i_payment.dart';
 import 'package:graduation_project/models/fib_check_payment_status_response.dart';
 import 'package:graduation_project/models/fib_create_payment_parameters.dart';
 import 'package:graduation_project/models/fib_create_payment_response.dart';
-import 'package:graduation_project/tokenManager.dart';
+import 'package:graduation_project/constants/tokenManager.dart';
 import 'package:http/http.dart' as http;
 
-class Payment implements IPayment{
+import 'i_fib_payment.dart';
+
+class FIBPayment implements IFIBPayment{
   // late String? _token=null;
   @override
-  Future<FIBCreatePaymentResponse?> paymentCreation(FIBCreatePaymentParameters fibCreatePaymentParameters, String token) async {
+  Future<FIBCreatePaymentResponse?> fibPaymentCreation(FIBCreatePaymentParameters fibCreatePaymentParameters, String token) async {
     // _token=await TokenManager().readToken();
     // print(_token);
     try{
@@ -36,7 +37,7 @@ class Payment implements IPayment{
 
   String? _token;
   @override
-  Future<FIBCheckPaymentStatusResponse?> checkPaymentStatus(String paymentId) async {
+  Future<FIBCheckPaymentStatusResponse?> fibCheckPaymentStatus(String paymentId) async {
     _token=await TokenManager().readToken("FIBToken");
     print(_token==null?"UNFORTUNETLY":"GREAT WORK");
     try{

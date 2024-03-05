@@ -3,7 +3,6 @@ import 'package:cool_dropdown/models/cool_dropdown_item.dart';
 import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/presentation/forgot_password_reset.dart';
 import 'package:provider/provider.dart';
 
@@ -285,8 +284,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             return Directionality(
               textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
               child: Scaffold(
-                appBar: CustomAppBar(cTheme.backgroundColor, "", cTheme.primaryColorDark, context),
-                backgroundColor: cTheme.backgroundColor,
+                appBar: CustomAppBar(cTheme.scaffoldBackgroundColor, "", cTheme.primaryColorDark, context),
+                backgroundColor: cTheme.scaffoldBackgroundColor,
                 body: SafeArea(
                   child: PageView.builder(
                     physics: NeverScrollableScrollPhysics(),

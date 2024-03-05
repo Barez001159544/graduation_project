@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/constants/loading_indicator.dart';
 import 'package:graduation_project/constants/main_btn.dart';
 import 'package:graduation_project/controllers/get_auth.dart';
+import 'package:graduation_project/controllers/get_token.dart';
 import 'package:graduation_project/models/auth_request.dart';
 import 'package:graduation_project/presentation/forgot_password_screen.dart';
 import 'package:graduation_project/presentation/home_screen.dart';
 import 'package:graduation_project/presentation/taxi_home.dart';
-import 'package:graduation_project/test.dart';
-import 'package:graduation_project/tokenManager.dart';
+import 'package:graduation_project/presentation/home_screen.dart';
+import 'package:graduation_project/constants/tokenManager.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/custom_dropdown_menu.dart';
@@ -44,16 +44,16 @@ class _LoginScreenState extends State<LoginScreen> {
       wid>600?DeviceOrientation.landscapeLeft:DeviceOrientation.portraitUp,
       wid>600?DeviceOrientation.landscapeRight:DeviceOrientation.portraitUp,
     ]);
-    return Consumer3<LanguageChanger, ThemeChanger, GetAuth>(
-          builder: (_, languageChanger, tChanger, getAuth, __) {
+    return Consumer4<LanguageChanger, ThemeChanger, GetToken, GetAuth>(
+          builder: (_, languageChanger, tChanger, getToken, getAuth, __) {
             lChanger= languageChanger.data;
             return Directionality(
               textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
               child: Scaffold(
                 resizeToAvoidBottomInset: false,
-              backgroundColor: wid>600?cTheme.backgroundColor:cTheme.primaryColorLight,//Color(0xff155E7D),
+              backgroundColor: wid>600?cTheme.scaffoldBackgroundColor:cTheme.primaryColorLight,//Color(0xff155E7D),
               body: SafeArea(
-                child: getAuth.isLoading?LoadingIndicator(cTheme.backgroundColor):Stack(
+                child: getAuth.isLoading?LoadingIndicator(cTheme.scaffoldBackgroundColor):Stack(
                   children: [
                     Center(
                       child: Container(
@@ -120,9 +120,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   }else {
                                     await getAuth.authwemailpass(AuthRequest(username.text, password.text));
                                     if(getAuth.data?.status=="OK"){
-                                      TokenManager().saveToken("accessToken", getAuth.data!.bearerToken);
+                                      // TokenManager().saveToken("accessToken", getAuth.data!.bearerToken);
+                                      getToken.writeToken("accessToken", getAuth.data!.bearerToken);
                                       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context){
-                                        return Test();
+                                        return HomeScreen();
                                       }), (route) => false);
                                       setState(() {
                                         errorMessage="Successful";
@@ -187,7 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               icon: Icon(tChanger.isDark?Icons.dark_mode_rounded:Icons.light_mode_rounded, color: cTheme.primaryColorDark,),
                             ),
                             //
-                            CustomDropDownMenu("Lang", 80, 30, 5, cTheme.backgroundColor, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], languageChanger.selectedLanguage, (val) {
+                            CustomDropDownMenu("Lang", 80, 30, 5, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], languageChanger.selectedLanguage, (val) {
                               print(val);
                               languageChanger.changeLanguage(val);
                             }),

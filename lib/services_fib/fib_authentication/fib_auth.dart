@@ -1,19 +1,21 @@
 import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:graduation_project/models/fib_login_parameters.dart';
-import 'package:graduation_project/tokenManager.dart';
+import 'package:graduation_project/models/fib_auth_parameters.dart';
+import 'package:graduation_project/services_fib/fib_authentication/i_fib_auth.dart';
+import 'package:graduation_project/constants/tokenManager.dart';
 import 'package:http/http.dart' as http;
-import '../models/fib_login_response.dart';
+import '../../models/fib_auth_response.dart';
 
-class Authentication{
-  Future<FIBLoginResponse?> login(FIBLoginParameters loginParameters) async {
+class FIBAuthentication extends IFIBAuth{
+  @override
+  Future<FIBLoginResponse?> fibAuthenticate(FIBLoginParameters fibLoginParameters) async {
     try {
       var request = http.Request('POST', Uri.parse('https://fib.stage.fib.iq/auth/realms/fib-online-shop/protocol/openid-connect/token'));
       request.bodyFields = {
-        'grant_type': loginParameters.grantType,
-        'client_id': loginParameters.id,
-        'client_secret': loginParameters.secret,
+        'grant_type': fibLoginParameters.grantType,
+        'client_id': fibLoginParameters.id,
+        'client_secret': fibLoginParameters.secret,
       };
 
       http.StreamedResponse response = await request.send();
@@ -39,6 +41,5 @@ class Authentication{
       return null;
     }
   }
-
 }
 

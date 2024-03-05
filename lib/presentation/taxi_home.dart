@@ -3,7 +3,6 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:graduation_project/controllers/theme_changer.dart";
 import "package:provider/provider.dart";
 
-import "../constants.dart";
 import "../constants/custom_dropdown_menu.dart";
 import "../constants/main_btn.dart";
 import "../controllers/language_changer.dart";
@@ -34,7 +33,7 @@ class _TaxiHomeScreenState extends State<TaxiHomeScreen> {
                 return Directionality(
                   textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
                   child: Scaffold(
-                  backgroundColor: cTheme.backgroundColor,
+                  backgroundColor: cTheme.scaffoldBackgroundColor,
                   appBar: AppBar(
                     backgroundColor: cTheme.primaryColorLight,
                     scrolledUnderElevation: 0,
@@ -51,7 +50,7 @@ class _TaxiHomeScreenState extends State<TaxiHomeScreen> {
                       },
                     ),
                     actions: [
-                      CustomDropDownMenu("Lang", 80, 30, 5, cTheme.backgroundColor, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], languageChanger.selectedLanguage, (val) {
+                      CustomDropDownMenu("Lang", 80, 30, 5, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], languageChanger.selectedLanguage, (val) {
                         print(val);
                         languageChanger.changeLanguage(val);
                       }),

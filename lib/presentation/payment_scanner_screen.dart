@@ -9,13 +9,11 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:graduation_project/controllers/get_payment.dart';
 import 'package:graduation_project/controllers/get_payment_status.dart';
-import 'package:graduation_project/fib_create_payment/payment.dart';
-import 'package:graduation_project/test.dart';
-import 'package:graduation_project/tokenManager.dart';
+import 'package:graduation_project/presentation/home_screen.dart';
+import 'package:graduation_project/constants/tokenManager.dart';
 import 'package:provider/provider.dart';
 import 'package:timer_count_down/timer_count_down.dart';
 
-import '../constants.dart';
 import '../constants/confirmation_custom_alert_dialog.dart';
 import '../constants/custom_alert_dialog.dart';
 import '../constants/custom_appbar.dart';
@@ -25,8 +23,7 @@ import '../constants/main_btn.dart';
 import '../controllers/language_changer.dart';
 import '../controllers/theme_changer.dart';
 import '../custom theme data/themes.dart';
-import '../fib_login/return_info.dart';
-import '../models/fib_login_parameters.dart';
+import '../models/fib_auth_parameters.dart';
 
 class PaymentScannerScreen extends StatefulWidget {
   const PaymentScannerScreen({super.key});
@@ -60,22 +57,22 @@ String intToTimeLeft(int value) {
 }
 
 class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
-  late String? token;
-  Future<void> callToken()async{
-    token= await TokenManager().readToken("FIBToken");
-  }
-  @override
-  void initState() {
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-    //   var request= FIBLoginParameters("client_credentials", "koya-uni", "1fb32463-c472-4572-8797-670b15be7e3c");
-    //   ReturnInfo rInfo= ReturnInfo();
-    //   var logSuccess= await rInfo.returnInfo(request);
-    //   var paymentId= Provider.of<GetPayment>(context, listen: false).getPaymentInformation(logSuccess!.accessToken);
-    //   Provider.of<GetPaymentStatus>(context, listen: false).getPaymentStatus(paymentId);
-    // });
-    super.initState();
-    callToken();
-  }
+  // late String? token;
+  // Future<void> callToken()async{
+  //   token= await TokenManager().readToken("FIBToken");
+  // }
+  // @override
+  // void initState() {
+  //   // WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+  //   //   var request= FIBLoginParameters("client_credentials", "koya-uni", "1fb32463-c472-4572-8797-670b15be7e3c");
+  //   //   ReturnInfo rInfo= ReturnInfo();
+  //   //   var logSuccess= await rInfo.returnInfo(request);
+  //   //   var paymentId= Provider.of<GetPayment>(context, listen: false).getPaymentInformation(logSuccess!.accessToken);
+  //   //   Provider.of<GetPaymentStatus>(context, listen: false).getPaymentStatus(paymentId);
+  //   // });
+  //   super.initState();
+  //   // callToken();
+  // }
   @override
   Widget build(BuildContext context) {
     double wid = MediaQuery.of(context).size.width;
@@ -94,7 +91,7 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
               appBar: CustomAppBar(cTheme.primaryColorLight, lChanger[8]["title"], cTheme.primaryColorDark, context),
               body: SafeArea(
                 child: getPayment.isLoading?Center(
-                  child: LoadingIndicator(cTheme.backgroundColor),
+                  child: LoadingIndicator(cTheme.scaffoldBackgroundColor),
                 ):Row(
                   children: [
                     Flex(
@@ -123,7 +120,7 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                               GestureDetector(
                                 onLongPress: (){
                                   Clipboard.setData(ClipboardData(text: getPayment.createPaymentResponse!.readableCode));
-                                  CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), "Copied to clipboard", cTheme.backgroundColor, cTheme.primaryColorDark);
+                                  CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), "Copied to clipboard", cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark);
                                 },
                                   child: Text(getPayment.createPaymentResponse!.readableCode, style: TextStyle(fontSize: 18, color: cTheme.primaryColorDark),),
                               ),
@@ -242,7 +239,7 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                                         // shape: RoundedRectangleBorder(
                                         //   borderRadius: BorderRadius.circular(45),
                                         // ),
-                                        content: LoadingIndicator(cTheme.backgroundColor),
+                                        content: LoadingIndicator(cTheme.scaffoldBackgroundColor),
                                       );
                                     });
                                 if(getPaymentStatus.fibCheckPaymentStatusResponse?.status=="PAID"){
@@ -250,7 +247,7 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                                   print('Not PAID');
                                   }else{
                                   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
-                                    return Test();
+                                    return HomeScreen();
                                   }), (route) => false);
                                   CustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, "Title", "Some text will be shown here", "Thumbs Up", true, context, (){
                                     // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){

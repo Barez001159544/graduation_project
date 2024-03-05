@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:graduation_project/constants.dart';
-import 'package:graduation_project/presentation/maintenance_screen.dart';
+import 'package:graduation_project/presentation_depricated/maintenance_screen.dart';
 import 'package:graduation_project/presentation/protest_screen.dart';
 import 'package:graduation_project/presentation/repair_screen.dart';
 import 'package:graduation_project/presentation/taxi_home.dart';
@@ -55,8 +54,8 @@ class _ServicesScreenState extends State<ServicesScreen> {
               return Directionality(
                 textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
                 child: Scaffold(
-                  backgroundColor: cTheme.backgroundColor,
-                  appBar: CustomAppBar(cTheme.backgroundColor, lChanger[9]["title"], cTheme.primaryColorDark, context),
+                  backgroundColor: cTheme.scaffoldBackgroundColor,
+                  appBar: CustomAppBar(cTheme.scaffoldBackgroundColor, lChanger[9]["title"], cTheme.primaryColorDark, context),
                 body: SafeArea(
                     child: ListView(
                       children: [

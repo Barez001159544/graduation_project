@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:graduation_project/models/decoded_token.dart';
 
-import '../tokenManager.dart';
+import '../constants/tokenManager.dart';
 
 class GetDecodedToken extends ChangeNotifier{
   bool isLoading=false;

@@ -5,7 +5,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:graduation_project/presentation/new_protest.dart';
 import 'package:provider/provider.dart';
 
-import '../constants.dart';
 import '../constants/confirmation_custom_alert_dialog.dart';
 import '../constants/custom_textfields.dart';
 import '../constants/custom_appbar.dart';

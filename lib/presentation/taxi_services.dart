@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-import '../constants.dart';
 import '../constants/custom_appbar.dart';
 import '../constants/main_btn.dart';
 import '../controllers/language_changer.dart';
@@ -34,8 +33,8 @@ class _TaxiServicesState extends State<TaxiServices> {
             return Directionality(
               textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
               child: Scaffold(
-              backgroundColor: cTheme.backgroundColor,
-              appBar: CustomAppBar(cTheme.backgroundColor, lChanger[10]["title"], cTheme.primaryColorDark, context),
+              backgroundColor: cTheme.scaffoldBackgroundColor,
+              appBar: CustomAppBar(cTheme.scaffoldBackgroundColor, lChanger[10]["title"], cTheme.primaryColorDark, context),
               body: SafeArea(
                 child: Center(
                   child: Flex(

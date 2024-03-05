@@ -31,7 +31,7 @@ class _NewProtestState extends State<NewProtest> {
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
     return Scaffold(
-      backgroundColor: cTheme.backgroundColor,
+      backgroundColor: cTheme.scaffoldBackgroundColor,
       body: SafeArea(
         child: Flex(
           direction: wid>600?Axis.horizontal:Axis.vertical,
@@ -75,7 +75,7 @@ class _NewProtestState extends State<NewProtest> {
                         width: 50,
                         height: 50,
                         decoration: BoxDecoration(
-                          color: ind>0?cTheme.primaryColor:cTheme.backgroundColor,
+                          color: ind>0?cTheme.primaryColor:cTheme.scaffoldBackgroundColor,
                           borderRadius: BorderRadius.all(Radius.circular(100)),
                         ),
                         child: Icon(Icons.format_list_numbered_rounded, color: Colors.white,),
@@ -89,7 +89,7 @@ class _NewProtestState extends State<NewProtest> {
                         width: 50,
                         height: 50,
                         decoration: BoxDecoration(
-                          color: ind>1?cTheme.primaryColor:cTheme.backgroundColor,
+                          color: ind>1?cTheme.primaryColor:cTheme.scaffoldBackgroundColor,
                           borderRadius: BorderRadius.all(Radius.circular(100)),
                         ),
                         child: Icon(Icons.check_rounded, color: Colors.white,),
@@ -174,7 +174,7 @@ class _NewProtestState extends State<NewProtest> {
                                   //     print(val);
                                   //   });
                                   // }),
-                                  CustomTextFields(titleController, "Provide the entire description about your protest here...", cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.backgroundColor, 15, 1),
+                                  CustomTextFields(titleController, "Provide the entire description about your protest here...", cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.scaffoldBackgroundColor, 15, 1),
                                 ],
                               ),
                               SizedBox(
@@ -194,8 +194,8 @@ class _NewProtestState extends State<NewProtest> {
                                     divisions: 4,
                                     // label: currentSliderValue.round().toString(),
                                     thumbColor: cTheme.primaryColor,
-                                    activeColor: cTheme.backgroundColor,
-                                    inactiveColor: cTheme.backgroundColor,
+                                    activeColor: cTheme.scaffoldBackgroundColor,
+                                    inactiveColor: cTheme.scaffoldBackgroundColor,
                                     onChanged: (val){
                                       setState(() {
                                         currentSliderValue=val;
@@ -262,7 +262,7 @@ class _NewProtestState extends State<NewProtest> {
                                     SizedBox(
                                       height: 10,
                                     ),
-                                    Expanded(child: CustomTextFields(descriptionController, "Provide the entire description about your protest here...", cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.backgroundColor, 15, null)),
+                                    Expanded(child: CustomTextFields(descriptionController, "Provide the entire description about your protest here...", cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.scaffoldBackgroundColor, 15, null)),
                                   ],
                                 ),
                               ),

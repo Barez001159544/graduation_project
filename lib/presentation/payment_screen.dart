@@ -4,23 +4,22 @@ import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
 import "package:flutter_styled_toast/flutter_styled_toast.dart";
+import "package:graduation_project/controllers/get_fib_auth.dart";
 import "package:graduation_project/controllers/get_payment.dart";
 import "package:graduation_project/controllers/get_payment_status.dart";
 import "package:graduation_project/controllers/get_token.dart";
-import "package:graduation_project/fib_create_payment/payment.dart";
-import "package:graduation_project/fib_login/return_info.dart";
 import "package:graduation_project/presentation/payment_scanner_screen.dart";
-import "package:graduation_project/tokenManager.dart";
+import "package:graduation_project/services_fib/fib_authentication/fib_auth.dart";
+import "package:graduation_project/constants/tokenManager.dart";
 import "package:provider/provider.dart";
 
-import "../constants.dart";
 import "../constants/custom_appbar.dart";
 import "../constants/custom_toast_notification.dart";
 import "../constants/main_btn.dart";
 import "../controllers/language_changer.dart";
 import "../controllers/theme_changer.dart";
 import "../custom theme data/themes.dart";
-import "../models/fib_login_parameters.dart";
+import "../models/fib_auth_parameters.dart";
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key});
@@ -40,14 +39,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
     bool or=MediaQuery.of(context).orientation==Orientation.landscape?true:false;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
-    return Consumer3<LanguageChanger, GetPayment, GetToken>(
-          builder: (_, languageChanger, getPayment, getToken, __) {
+    return Consumer4<LanguageChanger, GetPayment, GetToken, GetFIBAuth>(
+          builder: (_, languageChanger, getPayment, getToken, getFIBAuth, __) {
             lChanger= languageChanger.data;
             return Directionality(
               textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
               child: Scaffold(
-              backgroundColor: cTheme.backgroundColor,
-              appBar: CustomAppBar( cTheme.backgroundColor, lChanger[7]["title"], cTheme.primaryColorDark, context), ///Color(0xff08A99F)
+              backgroundColor: cTheme.scaffoldBackgroundColor,
+              appBar: CustomAppBar( cTheme.scaffoldBackgroundColor, lChanger[7]["title"], cTheme.primaryColorDark, context), ///Color(0xff08A99F)
               body: SafeArea(
                 child: Center(
                   child: SizedBox(
@@ -140,12 +139,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   // FIBLoginParameters fibLogin= FIBLoginParameters.fromJson(flp.toJson());
                                   // print("$fibLogin<><<<<<<<<<<>>>>>>");
                                   var request= FIBLoginParameters("client_credentials", "koya-uni", "1fb32463-c472-4572-8797-670b15be7e3c");
-                                  ReturnInfo rInfo= ReturnInfo();
-                                  var logSuccess= await rInfo.returnInfo(request);
+                                  // FIBAuthentication rInfo= FIBAuthentication();
+                                  await getFIBAuth.getAuth(request);
+                                  var logSuccess= getFIBAuth.fibLoginResponse; //await rInfo.fibAuthenticate(request);
                                   // print(logSuccess);
                                   if(logSuccess!=null){
                                     print("--------------");
-                                    TokenManager().saveToken("FIBToken", logSuccess.accessToken);
+                                    await getToken.writeToken("FIBToken", logSuccess.accessToken);
+                                    // TokenManager().saveToken("FIBToken", logSuccess.accessToken);
                                     print("--------------");
                                     await getPayment.getPaymentInformation(logSuccess.accessToken, "2000");
                                     if(getPayment.createPaymentResponse?.qrCode==null){

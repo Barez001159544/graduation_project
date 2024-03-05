@@ -43,8 +43,8 @@ class _PaymentTestState extends State<PaymentTest> {
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
     return Scaffold(
-      backgroundColor: cTheme.backgroundColor,
-      appBar: CustomAppBar(cTheme.backgroundColor, "Refill", cTheme.primaryColorDark, context),
+      backgroundColor: cTheme.scaffoldBackgroundColor,
+      appBar: CustomAppBar(cTheme.scaffoldBackgroundColor, "Refill", cTheme.primaryColorDark, context),
       body: SafeArea(
         child: Center(
           child: Column(

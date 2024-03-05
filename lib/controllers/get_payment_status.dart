@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:graduation_project/fib_create_payment/payment.dart';
 import 'package:graduation_project/models/fib_check_payment_status_response.dart';
 
+import '../services_fib/fib_payment/fib_payment.dart';
+
 class GetPaymentStatus extends ChangeNotifier{
-  final service= Payment();
+  final service= FIBPayment();
   bool isLoading=false;
   FIBCheckPaymentStatusResponse? _fibCheckPaymentStatusResponse;
   FIBCheckPaymentStatusResponse? get fibCheckPaymentStatusResponse=> _fibCheckPaymentStatusResponse;
@@ -11,7 +12,7 @@ class GetPaymentStatus extends ChangeNotifier{
     isLoading=true;
     notifyListeners();
 
-    var response=await service.checkPaymentStatus(paymentId);
+    var response=await service.fibCheckPaymentStatus(paymentId);
     _fibCheckPaymentStatusResponse= response;
     print("+++++++++++===${_fibCheckPaymentStatusResponse?.status}");
 

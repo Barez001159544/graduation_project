@@ -5,14 +5,19 @@ final ThemeData lightTheme = ThemeData(
   primaryColor: Color(0xff155E7D),
   primaryColorLight: Colors.white,
   primaryColorDark: Colors.black,
-  backgroundColor: Color(0xffE7E7E7),
+  scaffoldBackgroundColor: Color(0xffE7E7E7),
+  colorScheme: ColorScheme.light().copyWith(
+    primary: Color(0xff155E7D),
+    secondary: Colors.white,
+    tertiary: Colors.black,
+    surface: Color(0xffE7E7E7),
+  ),
   textTheme: TextTheme(
     displaySmall: TextStyle(
       color: Colors.grey,
       fontSize: 14,
     ),
   ),
-  // colorScheme: lightThemeColors(),
   textSelectionTheme: TextSelectionThemeData(
       selectionColor: Colors.blueGrey,
   ),
@@ -40,7 +45,13 @@ final ThemeData darkTheme = ThemeData(
   primaryColor: Color(0xff155E7D),
   primaryColorLight: Color(0xff1F1F1F),
   primaryColorDark: Colors.white,
-  backgroundColor: Color(0xff292929),
+  scaffoldBackgroundColor: Color(0xff292929),
+  colorScheme: ColorScheme.dark().copyWith(
+    primary: Color(0xff155E7D),
+    secondary: Colors.black,
+    tertiary: Colors.white,
+    surface: Color(0xff292929),
+  ),
   textTheme: TextTheme(
     displaySmall: TextStyle(
       color: Colors.grey,
@@ -48,6 +59,5 @@ final ThemeData darkTheme = ThemeData(
     ),
   ),
   fontFamily: "NotoSans",
-  scaffoldBackgroundColor: Color(0xff1F1F1F),
 );
 

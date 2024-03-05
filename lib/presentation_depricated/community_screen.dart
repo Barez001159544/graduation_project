@@ -3,7 +3,6 @@ import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
 import "package:provider/provider.dart";
 
-import "../constants.dart";
 import "../constants/custom_appbar.dart";
 import "../controllers/language_changer.dart";
 import "../controllers/theme_changer.dart";
@@ -32,8 +31,8 @@ class _CommunityScreenState extends State<CommunityScreen> {
           return Directionality(
             textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
             child: Scaffold(
-              backgroundColor: cTheme.backgroundColor,
-              appBar: CustomAppBar(cTheme.backgroundColor, lChanger[13]["title"], cTheme.primaryColorDark, context),
+              backgroundColor: cTheme.scaffoldBackgroundColor,
+              appBar: CustomAppBar(cTheme.scaffoldBackgroundColor, lChanger[13]["title"], cTheme.primaryColorDark, context),
               body: SafeArea(
                 child: ListView.builder(
                   itemCount: 5,

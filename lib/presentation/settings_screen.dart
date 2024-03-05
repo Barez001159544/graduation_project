@@ -6,7 +6,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/controllers/get_token.dart';
 import 'package:graduation_project/controllers/language_changer.dart';
 import 'package:graduation_project/controllers/theme_changer.dart';
@@ -44,8 +43,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           return Directionality(
             textDirection: lChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
             child: Scaffold(
-              appBar: CustomAppBar(or?cTheme.backgroundColor:cTheme.primaryColor, lChanger.data[0]["title"], or?cTheme.primaryColorDark:Colors.white, context),
-              backgroundColor: cTheme.backgroundColor,
+              appBar: CustomAppBar(or?cTheme.scaffoldBackgroundColor:cTheme.primaryColor, lChanger.data[0]["title"], or?cTheme.primaryColorDark:Colors.white, context),
+              backgroundColor: cTheme.scaffoldBackgroundColor,
               body: SafeArea(
                 child: Stack(
                   alignment: Alignment.center,

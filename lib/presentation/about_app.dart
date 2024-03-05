@@ -4,7 +4,6 @@ import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
 import "package:flutter_app_info/flutter_app_info.dart";
 import "package:glowy_borders/glowy_borders.dart";
-import "package:graduation_project/constants.dart";
 import "package:provider/provider.dart";
 
 import "../controllers/language_changer.dart";
@@ -39,7 +38,7 @@ class _AboutAppState extends State<AboutApp> {
           return Directionality(
             textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
             child: Scaffold(
-              backgroundColor: cTheme.backgroundColor,
+              backgroundColor: cTheme.scaffoldBackgroundColor,
               body: Center(
                 child: Stack(
                   alignment: Alignment.center,

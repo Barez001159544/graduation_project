@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:typethis/typethis.dart';
@@ -29,8 +31,8 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
           return Directionality(
             textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
             child: Scaffold(
-              backgroundColor: cTheme.backgroundColor,
-              appBar: CustomAppBar(cTheme.backgroundColor, lChanger[9]["title"], cTheme.primaryColorDark, context),
+              backgroundColor: cTheme.scaffoldBackgroundColor,
+              appBar: CustomAppBar(cTheme.scaffoldBackgroundColor, lChanger[9]["title"], cTheme.primaryColorDark, context),
               body: SafeArea(
                 child: ListView(
                   children: [
@@ -57,6 +59,31 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
                           // Text("John?", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 20, fontWeight: FontWeight.bold),),
                         ],
                       ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: wid>600?wid*0.25:0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Total: ", style: TextStyle(color: cTheme.primaryColorDark.withOpacity(0.6), fontSize: 12),),
+                              Text("6", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 12),),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Total: ", style: TextStyle(color: cTheme.primaryColorDark.withOpacity(0.6), fontSize: 12),),
+                              Text("6", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 12),),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
                     ),
                     Flex(
                       direction: wid>600?Axis.vertical:Axis.vertical,

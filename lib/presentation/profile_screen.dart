@@ -3,7 +3,6 @@ import 'package:graduation_project/constants/pick_media.dart';
 import 'package:graduation_project/controllers/theme_changer.dart';
 import 'package:provider/provider.dart';
 
-import '../constants.dart';
 import '../constants/custom_appbar.dart';
 import '../constants/main_btn.dart';
 import '../controllers/language_changer.dart';
@@ -34,7 +33,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
               child: Scaffold(
                   resizeToAvoidBottomInset: false,
-                  backgroundColor: cTheme.backgroundColor,
+                  backgroundColor: cTheme.scaffoldBackgroundColor,
                   appBar: CustomAppBar(cTheme.primaryColorLight, lChanger[1]["title"], cTheme.primaryColorDark, context),
                   body: SafeArea(
                     child: Column(

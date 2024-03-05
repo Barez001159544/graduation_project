@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/presentation/forgot_password_success.dart';
 import 'package:provider/provider.dart';
 
-import '../constants.dart';
 import '../constants/login_fields.dart';
 import '../constants/main_btn.dart';
 import '../controllers/language_changer.dart';
@@ -37,7 +36,7 @@ class _ForgotPasswordResetState extends State<ForgotPasswordReset> {
             return Directionality(
               textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
               child: Scaffold(
-              backgroundColor: cTheme.backgroundColor,
+              backgroundColor: cTheme.scaffoldBackgroundColor,
               body: SafeArea(
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: wid<500?20:wid-(wid-300)),

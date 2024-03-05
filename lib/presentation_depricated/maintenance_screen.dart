@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-import '../constants.dart';
 import '../constants/confirmation_custom_alert_dialog.dart';
 import '../constants/custom_dropdown_menu.dart';
 import '../constants/custom_textfields.dart';
@@ -38,8 +37,8 @@ class _MaintenanceScreenState extends State<MaintenanceScreen> {
             textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
             child: Scaffold(
               resizeToAvoidBottomInset: false,
-              backgroundColor: cTheme.backgroundColor,
-              appBar: CustomAppBar(cTheme.backgroundColor, "Maintenance", cTheme.primaryColorDark, context),
+              backgroundColor: cTheme.scaffoldBackgroundColor,
+              appBar: CustomAppBar(cTheme.scaffoldBackgroundColor, "Maintenance", cTheme.primaryColorDark, context),
               body: SafeArea(
                 child: Padding(
                   padding: EdgeInsets.all(10),
@@ -66,7 +65,7 @@ class _MaintenanceScreenState extends State<MaintenanceScreen> {
                                 height: 10,
                               ),
                               // CustomTextFields(titleController, lChanger[16]["ph1"], cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.backgroundColor, 25, 1),
-                              CustomDropDownMenu("What exactly do you require?", wid, 50, 25, cTheme.backgroundColor, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], maintainType, (val){
+                              CustomDropDownMenu("What exactly do you require?", wid, 50, 25, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], maintainType, (val){
                                 setState(() {
                                   maintainType=val;
                                   print(val);
@@ -75,7 +74,7 @@ class _MaintenanceScreenState extends State<MaintenanceScreen> {
                               SizedBox(
                                 height: 10,
                               ),
-                              Expanded(child: CustomTextFields(coreController, lChanger[16]["ph2"], cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.backgroundColor, 25, null)),
+                              Expanded(child: CustomTextFields(coreController, lChanger[16]["ph2"], cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.scaffoldBackgroundColor, 25, null)),
                             ],
                           ),
                         ),

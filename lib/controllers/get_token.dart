@@ -1,35 +1,35 @@
 import 'package:flutter/cupertino.dart';
-import 'package:graduation_project/tokenManager.dart';
+import 'package:graduation_project/constants/tokenManager.dart';
 import 'package:jwt_decode/jwt_decode.dart';
-import '../models/fib_login_parameters.dart';
+import '../models/fib_auth_parameters.dart';
 
 class GetToken extends ChangeNotifier{
 
   TokenManager tokenManager= TokenManager();
 
-  late String _dToken;
-  String get dToken=> _dToken;
+  late String? _dToken;
+  String? get dToken=> _dToken;
   bool isLoading=false;
 
-  void readToken(String tokenKey) async{
+  Future<void> readToken(String tokenKey) async{
     isLoading=true;
     notifyListeners();
 
-    _dToken = (await tokenManager.readToken(tokenKey))!;
+    _dToken = await tokenManager.readToken(tokenKey);
     isLoading=false;
     notifyListeners();
   }
 
-  void writeToken(String tokenKey) async{
+  Future<void> writeToken(String tokenKey, String token) async{
     isLoading=true;
     notifyListeners();
 
-    await tokenManager.saveToken(tokenKey, "token value here");
+    await tokenManager.saveToken(tokenKey, token);
     isLoading=false;
     notifyListeners();
   }
 
-  void deleteToken(String tokenKey) async{
+  Future<void> deleteToken(String tokenKey) async{
     isLoading=true;
     notifyListeners();
 

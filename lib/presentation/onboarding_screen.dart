@@ -5,7 +5,6 @@ import 'package:graduation_project/presentation/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../constants.dart';
 import '../constants/main_btn.dart';
 import '../controllers/theme_changer.dart';
 import '../custom theme data/themes.dart';

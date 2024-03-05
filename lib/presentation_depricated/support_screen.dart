@@ -105,8 +105,8 @@ class _SupportCenterState extends State<SupportCenter>  with SingleTickerProvide
           return Directionality(
           textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
           child: Scaffold(
-            backgroundColor: cTheme.backgroundColor,
-            appBar: CustomAppBar(cTheme.backgroundColor, lChanger[17]["title"], cTheme.primaryColorDark, context),
+            backgroundColor: cTheme.scaffoldBackgroundColor,
+            appBar: CustomAppBar(cTheme.scaffoldBackgroundColor, lChanger[17]["title"], cTheme.primaryColorDark, context),
             body: SafeArea(
               child: Stack(
                 children: [
@@ -174,7 +174,7 @@ class _SupportCenterState extends State<SupportCenter>  with SingleTickerProvide
                       padding: EdgeInsets.only(bottom: 10,),
                       margin: EdgeInsets.only(left: 10),
                       decoration: BoxDecoration(
-                        color: cTheme.backgroundColor,
+                        color: cTheme.scaffoldBackgroundColor,
                         borderRadius: BorderRadius.only(
                           topRight: Radius.circular(25),
                           topLeft: Radius.circular(25),

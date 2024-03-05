@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/presentation/login_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +24,7 @@ class ForgotPasswordSuccess extends StatelessWidget {
           builder: (_, languageChanger, __) {
             lChanger= languageChanger.data;
             return Scaffold(
-            backgroundColor: cTheme.backgroundColor,
+            backgroundColor: cTheme.scaffoldBackgroundColor,
             body: SafeArea(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
