@@ -15,6 +15,7 @@ import "package:provider/provider.dart";
 
 import "../constants/custom_appbar.dart";
 import "../constants/custom_toast_notification.dart";
+import "../constants/loading_indicator.dart";
 import "../constants/main_btn.dart";
 import "../controllers/language_changer.dart";
 import "../controllers/theme_changer.dart";
@@ -57,7 +58,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         Expanded(
                           child: Container(
                             width: wid,
-                            height: wid,
+                            // height: wid,
                             padding: EdgeInsets.all(40),
                             decoration: BoxDecoration(
                               color: cTheme.primaryColorLight,
@@ -94,7 +95,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 children: [
                                   Text("8/10", style: TextStyle(fontSize: 32, color: cTheme.primaryColorDark),),
                                   SizedBox(width: 10,),
-                                  Text("months paid", style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
+                                  Text(lChanger[7]["months"], style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
                                 ],
                               ),
                               SizedBox(
@@ -125,7 +126,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               SizedBox(
                                 height: 20,
                               ),
-                              MainBtn(wid, wid>600?62.0:72.0, cTheme.primaryColor, "Proceed",
+                              MainBtn(wid, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[7]["btn"],
                                 () async {
                                   // Navigator.push(context, MaterialPageRoute(builder: (context){
                                   //   return PaymentScannerScreen();
@@ -138,6 +139,21 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   // FIBLoginParameters flp= FIBLoginParameters(user.grantType, user.id, user.secret);
                                   // FIBLoginParameters fibLogin= FIBLoginParameters.fromJson(flp.toJson());
                                   // print("$fibLogin<><<<<<<<<<<>>>>>>");
+                                  showDialog(
+                                      context: context,
+                                      // barrierColor: cTheme.backgroundColor,
+                                      builder: (BuildContext context){
+                                        return AlertDialog(
+                                          actionsPadding: EdgeInsets.all(0),
+                                          contentPadding: EdgeInsets.all(5),
+                                          backgroundColor: Colors.transparent,
+                                          surfaceTintColor: Colors.transparent,
+                                          // shape: RoundedRectangleBorder(
+                                          //   borderRadius: BorderRadius.circular(45),
+                                          // ),
+                                          content: LoadingIndicator(cTheme.scaffoldBackgroundColor),
+                                        );
+                                      });
                                   var request= FIBLoginParameters("client_credentials", "koya-uni", "1fb32463-c472-4572-8797-670b15be7e3c");
                                   // FIBAuthentication rInfo= FIBAuthentication();
                                   await getFIBAuth.getAuth(request);
@@ -145,19 +161,21 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   // print(logSuccess);
                                   if(logSuccess!=null){
                                     print("--------------");
-                                    await getToken.writeToken("FIBToken", logSuccess.accessToken);
-                                    // TokenManager().saveToken("FIBToken", logSuccess.accessToken);
+                                    // await getToken.writeToken("FIBToken", logSuccess.accessToken);
+                                    /// TokenManager().saveToken("FIBToken", logSuccess.accessToken);
                                     print("--------------");
                                     await getPayment.getPaymentInformation(logSuccess.accessToken, "2000");
                                     if(getPayment.createPaymentResponse?.qrCode==null){
                                       CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred", cTheme.primaryColorLight, cTheme.primaryColorDark);
                                       print("ID or Secret invalid!: 2");
                                     }else{
+                                      Navigator.of(context).pop();
                                       Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
                                         return PaymentScannerScreen();
                                       }));
                                     }
                                   }else{
+                                    Navigator.of(context).pop();
                                     CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred", cTheme.primaryColorLight, cTheme.primaryColorDark);
                                     print("ID or Secret invalid!");
                                   }

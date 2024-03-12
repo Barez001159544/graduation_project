@@ -209,7 +209,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       child: GestureDetector(
                         onTap: (){
                           print("Log Out");
-                          ConfirmationCustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, lChanger.data[16]["popTitle"], lChanger.data[16]["popSubtitle"], lChanger.data[16]["agreeBtn"], lChanger.data[16]["declineBtn"], context, (){
+                          ConfirmationCustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, "title", "subtitle in the middle", "agree", "decline", context, (){
                             getToken.deleteToken("accessToken");
                             Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
                               return LoginScreen();

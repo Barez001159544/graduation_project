@@ -8,11 +8,11 @@ class GetPaymentStatus extends ChangeNotifier{
   bool isLoading=false;
   FIBCheckPaymentStatusResponse? _fibCheckPaymentStatusResponse;
   FIBCheckPaymentStatusResponse? get fibCheckPaymentStatusResponse=> _fibCheckPaymentStatusResponse;
-  Future<void> getPaymentStatus(String paymentId)async{
+  Future<void> getPaymentStatus(String paymentId, String token)async{
     isLoading=true;
     notifyListeners();
 
-    var response=await service.fibCheckPaymentStatus(paymentId);
+    var response=await service.fibCheckPaymentStatus(paymentId, token);
     _fibCheckPaymentStatusResponse= response;
     print("+++++++++++===${_fibCheckPaymentStatusResponse?.status}");
 

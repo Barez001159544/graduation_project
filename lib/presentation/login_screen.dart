@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:graduation_project/constants/loading_indicator.dart';
 import 'package:graduation_project/constants/main_btn.dart';
 import 'package:graduation_project/controllers/get_auth.dart';
+import 'package:graduation_project/controllers/get_get_self.dart';
 import 'package:graduation_project/controllers/get_token.dart';
 import 'package:graduation_project/models/auth_request.dart';
 import 'package:graduation_project/presentation/forgot_password_screen.dart';
@@ -44,8 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
       wid>600?DeviceOrientation.landscapeLeft:DeviceOrientation.portraitUp,
       wid>600?DeviceOrientation.landscapeRight:DeviceOrientation.portraitUp,
     ]);
-    return Consumer4<LanguageChanger, ThemeChanger, GetToken, GetAuth>(
-          builder: (_, languageChanger, tChanger, getToken, getAuth, __) {
+    return Consumer5<LanguageChanger, ThemeChanger, GetToken, GetAuth, GetGetSelf>(
+          builder: (_, languageChanger, tChanger, getToken, getAuth, getGetSelf, __) {
             lChanger= languageChanger.data;
             return Directionality(
               textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
@@ -70,8 +71,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text(wid>600?lChanger[2]["title1"]:lChanger[2]["title2"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 36), textAlign: TextAlign.center,),
-                              // Icon(Icons.login_rounded, size: 46, color: cTheme.primaryColorDark.withOpacity(0.6),),
+                              // Text(wid>600?lChanger[2]["title1"]:lChanger[2]["title2"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 36), textAlign: TextAlign.center,),
+                              Icon(Icons.login_rounded, size: 56, color: cTheme.primaryColorDark.withOpacity(0.6),),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -121,7 +122,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     await getAuth.authwemailpass(AuthRequest(username.text, password.text));
                                     if(getAuth.data?.status=="OK"){
                                       // TokenManager().saveToken("accessToken", getAuth.data!.bearerToken);
-                                      getToken.writeToken("accessToken", getAuth.data!.bearerToken);
+                                      await getToken.writeToken("accessToken", getAuth.data!.bearerToken);
+                                      await getGetSelf.getGetSelf();
                                       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context){
                                         return HomeScreen();
                                       }), (route) => false);

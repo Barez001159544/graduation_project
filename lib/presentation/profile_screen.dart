@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/constants/pick_media.dart';
+import 'package:graduation_project/controllers/get_get_self.dart';
 import 'package:graduation_project/controllers/theme_changer.dart';
+import 'package:graduation_project/controllers/update_user_controller.dart';
+import 'package:graduation_project/models/update_user_request.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/custom_appbar.dart';
+import '../constants/custom_toast_notification.dart';
+import '../constants/loading_indicator.dart';
 import '../constants/main_btn.dart';
 import '../controllers/language_changer.dart';
 import '../custom theme data/themes.dart';
@@ -19,6 +24,35 @@ class ProfileScreen extends StatefulWidget {
 // ThemeData cTheme = isDark ? lightTheme : darkTheme;
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  FocusNode _focus = FocusNode();
+  bool obsecure=true;
+
+  @override
+  void initState() {
+    super.initState();
+    _focus.addListener(_onFocusChange);
+  }
+
+  void _onFocusChange() {
+    debugPrint("Focus: ${_focus.hasFocus.toString()}");
+    if(_focus.hasFocus){
+      setState(() {
+        obsecure=false;
+      });
+    }else{
+      setState(() {
+        obsecure=true;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _focus.removeListener(_onFocusChange);
+    _focus.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double wid = MediaQuery.of(context).size.width;
@@ -26,9 +60,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     bool or=MediaQuery.of(context).orientation==Orientation.landscape?true:false;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
-    return Consumer<LanguageChanger>(
-          builder: (_, languageChanger, __) {
+    return Consumer3<LanguageChanger, GetGetSelf, GetUpdateUserController>(
+          builder: (_, languageChanger, getGetSelf, getUpdateUserController, __) {
             lChanger= languageChanger.data;
+            TextEditingController name= TextEditingController(text: getGetSelf.getSelfResponse?.userDetails?.name);
+            TextEditingController phoneNumber= TextEditingController(text: getGetSelf.getSelfResponse?.userDetails?.phoneNumber);
+            TextEditingController email= TextEditingController(text: getGetSelf.getSelfResponse?.userDetails?.email);
+            TextEditingController password= TextEditingController(text: getGetSelf.getSelfResponse?.userDetails?.phoneNumber);
+            TextEditingController jobTitle= TextEditingController(text: getGetSelf.getSelfResponse?.userDetails?.jobTitle);
+            TextEditingController age= TextEditingController(text: "${getGetSelf.getSelfResponse?.userDetails?.age}");
             return Directionality(
               textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
               child: Scaffold(
@@ -112,20 +152,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       physics: or?ScrollPhysics():NeverScrollableScrollPhysics(),
                                       child: Column(
                                         children: [
-                                          profileItem(lChanger[1]["ph1"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, TextEditingController(text: "John Doe"), false),
-                                          profileItem(lChanger[1]["ph2"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, TextEditingController(text: "0751 123 4567"), false),
-                                          profileItem(lChanger[1]["ph3"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, TextEditingController(text: "example@gmail.com"), false),
-                                          profileItem(lChanger[1]["ph4"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, TextEditingController(text: "Password"), true),
-                                          profileItem("More1", cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, TextEditingController(text: "Whatever"), false),
-                                          profileItem("More2", cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, TextEditingController(text: "Whatever"), false),
-                                          profileItem("More3", cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, TextEditingController(text: "Whatever"), false),
-                                          profileItem("More4", cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, TextEditingController(text: "Whatever"), false),
-                                          profileItem("More5", cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, TextEditingController(text: "Whatever"), false),
-                                          profileItem("More6", cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, TextEditingController(text: "Whatever"), false),
-                                          profileItem("More7", cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, TextEditingController(text: "Whatever"), false),
-                                          profileItem("More8", cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, TextEditingController(text: "Whatever"), false),
-                                          profileItem("More9", cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, TextEditingController(text: "Whatever9"), false),
-                                          profileItem("More10", cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, TextEditingController(text: "Whatever10"), false),
+                                          profileItem(lChanger[1]["ph1"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, name, false, true, FocusNode()),
+                                          profileItem(lChanger[1]["ph2"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, phoneNumber, false, false, FocusNode()),
+                                          profileItem(lChanger[1]["ph3"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, email, false, true, FocusNode()),
+                                          profileItem(lChanger[1]["ph4"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, password, obsecure, false, _focus),
+                                          profileItem("More1", cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, jobTitle, false, false, FocusNode()),
+                                          profileItem("More2", cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, age, false, true, FocusNode()),
                                         ],
                                       ),
                                     ),
@@ -146,8 +178,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             width: wid>500?500:wid,
                             height: or?100:120,
                             child: Center(
-                              child: MainBtn(wid>600?wid*0.35-80:wid-40, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[1]["btn"], () {
-                                print("SAVE");
+                              child: MainBtn(wid>600?wid*0.35-80:wid-40, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[1]["btn"], () async {
+                                showDialog(
+                                    context: context,
+                                    // barrierColor: cTheme.backgroundColor,
+                                    builder: (BuildContext context){
+                                      return AlertDialog(
+                                        actionsPadding: EdgeInsets.all(0),
+                                        contentPadding: EdgeInsets.all(5),
+                                        backgroundColor: Colors.transparent,
+                                        surfaceTintColor: Colors.transparent,
+                                        // shape: RoundedRectangleBorder(
+                                        //   borderRadius: BorderRadius.circular(45),
+                                        // ),
+                                        content: LoadingIndicator(cTheme.scaffoldBackgroundColor),
+                                      );
+                                    });
+                                await getUpdateUserController.getUpdateUser(UpdateUserRequest(phoneNumber.text, jobTitle.text, "abcdef"));
+                                await getGetSelf.getGetSelf();
+                                Navigator.of(context).pop();
+                                if(getGetSelf.getSelfResponse?.status=="success"){
+                                  CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), "Profile updated successfully", cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                }else{
+                                  CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred", cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                }
                               }),
                             ),
                           ),
@@ -162,18 +216,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 }
 
-Widget profileItem(String hint, Color cursorColor, Color txtColor, double wid,TextEditingController controller, bool obText){
+Widget profileItem(String hint, Color cursorColor, Color txtColor, double wid,TextEditingController controller, bool obText, bool isReadOnly, FocusNode focus){
   return SizedBox(
     width: wid>500?500:wid,
     child: TextField(
       controller: controller,
       cursorColor: cursorColor,
       obscureText: obText,
+      readOnly: isReadOnly,
+      focusNode: focus,
       style: TextStyle(
         color: txtColor,
       ),
       decoration: InputDecoration(
-        suffixIcon: Icon(Icons.edit_rounded, color: Colors.grey,),
+        suffixIcon: Icon(isReadOnly?Icons.edit_off_rounded:Icons.edit_rounded, color: Colors.grey,),
         hintText: hint,
         hintStyle: TextStyle(
           color: Colors.grey,

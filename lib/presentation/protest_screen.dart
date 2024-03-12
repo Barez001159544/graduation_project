@@ -43,7 +43,7 @@ class _ProtestScreenState extends State<ProtestScreen> {
                 foregroundColor: cTheme.primaryColor,
                 backgroundColor: cTheme.primaryColor,
                 focusColor: cTheme.primaryColor,
-                tooltip: "Make new protest",
+                tooltip: lChanger[16]["fab"],
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (context){
                     return NewProtest();
@@ -95,7 +95,7 @@ class _ProtestScreenState extends State<ProtestScreen> {
                               backgroundColor: Color(0xFFFE4A49),
                               foregroundColor: Colors.white,
                               icon: Icons.delete,
-                              label: 'Delete', onPressed: (BuildContext context) {  },
+                              label: lChanger[16]["action"], onPressed: (BuildContext context) {  },
                             ),
                             // SlidableAction(
                             //   backgroundColor: Color(0xFF21B7CA),
@@ -138,7 +138,13 @@ class _ProtestScreenState extends State<ProtestScreen> {
                                   color: index%2==0?Colors.green.withOpacity(0.4):(index%3==0?Colors.yellow.withOpacity(0.4):Colors.red.withOpacity(0.4)),
                                   borderRadius: BorderRadius.all(Radius.circular(15)),
                                 ),
-                                child: Icon(Icons.check, color: Colors.white,),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.check, color: Colors.white,),
+                                    Text(index%2==0?lChanger[16]["status1"]:(index%3==0?lChanger[16]["status2"]:lChanger[16]["status3"]), style: TextStyle(fontSize: 8),),
+                                  ],
+                                ),
                               ),
                             ],
                           ),

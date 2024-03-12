@@ -35,17 +35,17 @@ class FIBPayment implements IFIBPayment{
     }
   }
 
-  String? _token;
+  // String? _token;
   @override
-  Future<FIBCheckPaymentStatusResponse?> fibCheckPaymentStatus(String paymentId) async {
-    _token=await TokenManager().readToken("FIBToken");
-    print(_token==null?"UNFORTUNETLY":"GREAT WORK");
+  Future<FIBCheckPaymentStatusResponse?> fibCheckPaymentStatus(String paymentId, String token) async {
+    // _token=await TokenManager().readToken("FIBToken");
+    print(token==null?"UNFORTUNETLY":"GREAT WORK");
     try{
       http.Response response= await http.get(
           Uri.parse('https://fib.stage.fib.iq/protected/v1/payments/$paymentId/status'),
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer $_token',
+          'Authorization': 'Bearer $token',
         },
       );
       if(response.statusCode==200){

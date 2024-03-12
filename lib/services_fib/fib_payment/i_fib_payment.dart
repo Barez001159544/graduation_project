@@ -4,5 +4,5 @@ import '../../models/fib_create_payment_response.dart';
 
 abstract class IFIBPayment{
   Future<FIBCreatePaymentResponse?> fibPaymentCreation(FIBCreatePaymentParameters fibCreatePaymentParameters, String token);
-  Future<FIBCheckPaymentStatusResponse?> fibCheckPaymentStatus(String paymentId);
+  Future<FIBCheckPaymentStatusResponse?> fibCheckPaymentStatus(String paymentId, String token);
 }

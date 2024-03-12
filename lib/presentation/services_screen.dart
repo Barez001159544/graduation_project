@@ -65,7 +65,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                             TypeThis(
-                            string: lChanger[9]["subtitle"] + "John?",
+                            string: lChanger[9]["subtitle"] + " John?",
                             style: TextStyle(color: cTheme.primaryColorDark, fontSize: 20),
                             richTextMatchers: const [
                               TypeThisMatcher(
@@ -106,8 +106,8 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text(services[index], style: TextStyle(fontSize: 24, color: cTheme.primaryColorDark),),
-                                          Text("Payment", style: TextStyle(fontSize: 12, color: Colors.grey),),
+                                          Text(index==0?lChanger[9]["service1"]:(index==1?lChanger[9]["service2"]:lChanger[9]["service3"]), style: TextStyle(fontSize: 24, color: cTheme.primaryColorDark),),
+                                          Text(index==0?lChanger[9]["type1"]:(index==1?lChanger[9]["type2"]:lChanger[9]["type3"]), style: TextStyle(fontSize: 12, color: Colors.grey),),
                                         ],
                                       ),
                                     ],
@@ -117,7 +117,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Text(textAlign: TextAlign.center, "Reloaded 1 of 1971 libraries in 1,131ms (compile: 147 ms, reload: 424 ms, reassemble: 348 ms).", style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
+                                    child: Text(textAlign: TextAlign.center, index==0?lChanger[9]["par1"]:(index==1?lChanger[9]["par2"]:lChanger[9]["par3"]), style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
                                   ),
                                   Divider(
                                     height: 10,

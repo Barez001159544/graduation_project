@@ -9,11 +9,14 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graduation_project/controllers/get_auth.dart';
 import 'package:graduation_project/controllers/get_fib_auth.dart';
+import 'package:graduation_project/controllers/get_get_self.dart';
 import 'package:graduation_project/controllers/get_payment.dart';
 import 'package:graduation_project/controllers/get_payment_status.dart';
 import 'package:graduation_project/controllers/get_token.dart';
+import 'package:graduation_project/controllers/get_user_properties.dart';
 import 'package:graduation_project/controllers/language_changer.dart';
 import 'package:graduation_project/controllers/theme_changer.dart';
+import 'package:graduation_project/controllers/update_user_controller.dart';
 import 'package:graduation_project/custom%20theme%20data/themes.dart';
 import 'package:graduation_project/models/auth_request.dart';
 import 'package:graduation_project/models/auth_response.dart';
@@ -78,9 +81,18 @@ Future<void> main() async {
           ChangeNotifierProvider(
             create: (BuildContext context)=> GetFIBAuth(),
           ),
+          ChangeNotifierProvider(
+              create: (BuildContext context)=> GetGetSelf(),
+          ),
+          ChangeNotifierProvider(
+            create: (BuildContext context)=> GetUpdateUserController(),
+          ),
+          ChangeNotifierProvider(
+            create: (BuildContext context)=> GetUserProperties(),
+          ),
         ],
         child: MyApp(),
-        /// UNCOMMENT when new device_previw version is released
+        /// UNCOMMENT when new device_preview version is released
         // DevicePreview(
         //   enabled: !kReleaseMode,
         //   tools: [
@@ -95,7 +107,6 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     ThemeData cTheme =
@@ -121,27 +132,58 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  getToken() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool? firstTime = prefs.getBool('firstTime');
-    String? rToken = await TokenManager().readToken("accessToken");
-    ///---------------------------
-    // AuthResponse? forFun= await GetAuthentication().authenticate(AuthRequest("zhya@gmail.com", "abcdef"));
-    // print("$forFun<-------------");
-    /// -----------------
-    print("))))))))))$rToken");
-    Timer(
-      const Duration(seconds: 1),
-      () => Navigator.of(context, rootNavigator: false).pushReplacement(
-        MaterialPageRoute(
-          builder: (
-            context,
-          ) =>
-              // const PropertiesScreen(),
-          firstTime==false?(rToken==null?const LoginScreen():const HomeScreen()):const OnboardingScreen(),
-        ),
+  // getToken() async {
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   bool? firstTime = prefs.getBool('firstTime');
+  //   String? rToken = await TokenManager().readToken("accessToken");
+  //   ///---------------------------
+  //   // AuthResponse? forFun= await GetAuthentication().authenticate(AuthRequest("zhya@gmail.com", "abcdef"));
+  //   // print("$forFun<-------------");
+  //   /// -----------------
+  //   print("))))))))))$rToken");
+  //   Timer(
+  //     const Duration(seconds: 1),
+  //     () => Navigator.of(context, rootNavigator: false).pushReplacement(
+  //       MaterialPageRoute(
+  //         builder: (
+  //           context,
+  //         ) =>
+  //             // const PropertiesScreen(),
+  //         firstTime==false?(rToken==null?const LoginScreen():const HomeScreen()):const OnboardingScreen(),
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  void getToken() async {
+    // Simulate some async operation to get the future boolean value
+    bool? firstTime = await getFirstTime();
+    String? rToken= await getRToken();
+
+    // Delay for 1 second before executing the navigation logic
+    await Future.delayed(Duration(seconds: 1));
+
+    // Navigate based on the boolean value
+    Navigator.of(context, rootNavigator: false).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) =>
+            const TaxiHomeScreen(),
+        // firstTime == false ? (rToken == null ? const LoginScreen() : const HomeScreen()) : const OnboardingScreen(),
       ),
     );
+  }
+
+  Future<bool?> getFirstTime() async {
+    // Simulate some asynchronous operation to retrieve a boolean value
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? firstTime = prefs.getBool('firstTime');
+    return Future.value(firstTime);
+  }
+
+  Future<String?> getRToken() async {
+    // Simulate some asynchronous operation to retrieve a String value
+    String? rToken = await TokenManager().readToken("accessToken");
+    return Future.value(rToken);
   }
 
   @override
@@ -151,6 +193,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Provider.of<ThemeChanger>(context, listen: false).getDefaultTheme();
       Provider.of<LanguageChanger>(context, listen: false).readJson();
       Provider.of<GetToken>(context, listen: false).readToken("accessToken");
+      Provider.of<GetGetSelf>(context, listen: false).getGetSelf();
       // print(">>>>>>>>>>>>>>>${Provider.of<GetToken>(context, listen: false).dToken}");
       // Provider.of<GetToken>(context, listen: false).readToken();
       // Map<String, dynamic> decodedToken = {};

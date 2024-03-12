@@ -7,6 +7,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:graduation_project/controllers/get_get_self.dart';
+import 'package:graduation_project/controllers/get_user_properties.dart';
 import 'package:graduation_project/presentation_depricated/community_screen.dart';
 import 'package:graduation_project/presentation/login_screen.dart';
 import 'package:graduation_project/presentation/payment_screen.dart';
@@ -19,6 +21,7 @@ import 'package:graduation_project/presentation/taxi_services.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart' as badges;
 import '../constants/confirmation_custom_alert_dialog.dart';
+import '../constants/loading_indicator.dart';
 import '../controllers/get_token.dart';
 import '../controllers/language_changer.dart';
 import '../controllers/theme_changer.dart';
@@ -47,8 +50,8 @@ class _HomeScreenState extends State<HomeScreen> {
     double hei2= wid>600?wid/2.2:hei/2;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
-    return Consumer2<LanguageChanger, GetToken>(
-        builder: (_, languageChanger, getToken, __) {
+    return Consumer4<LanguageChanger, GetToken, GetGetSelf, GetUserProperties>(
+        builder: (_, languageChanger, getToken, getGetSelf, getUserProperties, __) {
           lChanger= languageChanger.data;
           return Directionality(
               textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
@@ -89,70 +92,76 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: cTheme.primaryColorLight,
                                     borderRadius: BorderRadius.all(Radius.circular(17.sp),),
                                   ),
-                                  child: SvgPicture.asset(
-                                      height: 70,
-                                      width: 70,
-                                      "images/fib-logo.svg",
-                                      color: cTheme.primaryColorDark,
-                                      semanticsLabel: 'App logo'),
-                                  // RotatedBox(
-                                  //   quarterTurns: languageChanger.selectedLanguage=="ENG"?90:0,
-                                  //     child: Icon(Icons.logout_rounded, color: Colors.red, size: 13.sp,)),
+                                  child: RotatedBox(
+                                    quarterTurns: languageChanger.selectedLanguage=="ENG"?90:0,
+                                      child: Icon(Icons.logout_rounded, color: Colors.red, size: 13.sp,)),
                                 ),
                               ),
-                              GestureDetector(
-                                onTap: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context){
-                                    return ProfileScreen();
-                                  }));
-                                },
-                                child: Container(
-                                  height: hei1*0.25,
-                                  width: hei1*0.25,
-                                  padding: EdgeInsets.all(12.sp),
-                                  decoration: BoxDecoration(
-                                    color: cTheme.primaryColorLight,
-                                    borderRadius: BorderRadius.all(Radius.circular(17.sp),),
-                                  ),
+                              Tooltip(
+                                message: lChanger[6]["tooltip1"],
+                                child: GestureDetector(
+                                  onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                                      return ProfileScreen();
+                                    }));
+                                  },
                                   child: Container(
+                                    height: hei1*0.25,
+                                    width: hei1*0.25,
+                                    padding: EdgeInsets.all(12.sp),
                                     decoration: BoxDecoration(
-                                      color: cTheme.primaryColor,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(100.sp),
-                                      ),
-                                      image: DecorationImage(
-                                        image: AssetImage("images/007-boy-2.jpg"),
-                                        fit: BoxFit.cover,
-                                      ),
-                                      border: Border.all(
-                                        width: 3,
-                                        color: cTheme.primaryColor,
-                                      ),
+                                      color: cTheme.primaryColorLight,
+                                      borderRadius: BorderRadius.all(Radius.circular(17.sp),),
                                     ),
+                                    child: SvgPicture.asset(
+                                        height: 70,
+                                        width: 70,
+                                        "images/fib-logo.svg",
+                                        color: cTheme.primaryColorDark,
+                                        semanticsLabel: 'App logo'),
+                                    // Container(
+                                    //   decoration: BoxDecoration(
+                                    //     color: cTheme.primaryColor,
+                                    //     borderRadius: BorderRadius.all(
+                                    //       Radius.circular(100.sp),
+                                    //     ),
+                                    //     image: DecorationImage(
+                                    //       image: AssetImage("images/007-boy-2.jpg"),
+                                    //       fit: BoxFit.cover,
+                                    //     ),
+                                    //     border: Border.all(
+                                    //       width: 3,
+                                    //       color: cTheme.primaryColor,
+                                    //     ),
+                                    //   ),
+                                    // ),
                                   ),
                                 ),
                               ),
-                              GestureDetector(
-                                onTap: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context){
-                                    return SettingsScreen();
-                                  }));
-                                },
-                                child: Container(
-                                  height: hei1*0.25,
-                                  width: hei1*0.25,
-                                  decoration: BoxDecoration(
-                                    color: cTheme.primaryColorLight,
-                                    borderRadius: BorderRadius.all(Radius.circular(17.sp),),
+                              Tooltip(
+                                message: lChanger[6]["tooltip3"],
+                                child: GestureDetector(
+                                  onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                                      return SettingsScreen();
+                                    }));
+                                  },
+                                  child: Container(
+                                    height: hei1*0.25,
+                                    width: hei1*0.25,
+                                    decoration: BoxDecoration(
+                                      color: cTheme.primaryColorLight,
+                                      borderRadius: BorderRadius.all(Radius.circular(17.sp),),
+                                    ),
+                                    child: Icon(Icons.settings_rounded, color: cTheme.primaryColorDark, size: 13.sp,),
                                   ),
-                                  child: Icon(Icons.settings_rounded, color: cTheme.primaryColorDark, size: 13.sp,),
                                 ),
                               )
                             ],
                           ):Row(
                             children: [
                               Tooltip(
-                                message: "Host",
+                                message: lChanger[6]["tooltip1"],
                                 child: Container(
                                   width: 80,
                                   height: 80,
@@ -208,23 +217,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                     //     ),
                                     //   ),
                                     // ),
-                                    GestureDetector(
-                                      onTap: (){
-                                        Navigator.push(context, MaterialPageRoute(builder: (context){
-                                          return SettingsScreen();
-                                        }));
-                                      },
-                                      child: Container(
-                                        width: 60,
-                                        height: 60,
-                                        // margin: EdgeInsets.only(left: index==0?0:10),
-                                        decoration: BoxDecoration(
-                                          color: cTheme.primaryColor,
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(25),
+                                    Tooltip(
+                                      message: lChanger[6]["tooltip3"],
+                                      child: GestureDetector(
+                                        onTap: (){
+                                          Navigator.push(context, MaterialPageRoute(builder: (context){
+                                            return SettingsScreen();
+                                          }));
+                                        },
+                                        child: Container(
+                                          width: 60,
+                                          height: 60,
+                                          // margin: EdgeInsets.only(left: index==0?0:10),
+                                          decoration: BoxDecoration(
+                                            color: cTheme.primaryColor,
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(25),
+                                            ),
                                           ),
+                                          child: Icon(Icons.settings_rounded, color: Colors.white, size: 25,),
                                         ),
-                                        child: Icon(Icons.settings_rounded, color: Colors.white, size: 25,),
                                       ),
                                     ),
                                     SizedBox(width: 10,),
@@ -233,7 +245,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(lChanger[6]["welcome"].toUpperCase(), textAlign: TextAlign.center, style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark.withOpacity(0.8),),),
-                                        Text("John Doe".toUpperCase(), textAlign: TextAlign.center, style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark, fontWeight: FontWeight.bold,),),
+                                        Text("${getGetSelf.getSelfResponse?.userDetails?.name}".toUpperCase(), textAlign: TextAlign.center, style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark, fontWeight: FontWeight.bold,),),
                                       ],
                                     ),
                                   ],
@@ -472,7 +484,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                             ),
                                             child: Center(
-                                              child: Icon(CupertinoIcons.arrow_up_right, size: hei1*0.16,),
+                                              child: Icon(CupertinoIcons.arrow_up_right, size: hei1*0.16, color: Colors.black,),
                                             ),
                                           ),
                                         ],
@@ -494,7 +506,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 alignment: Alignment.centerLeft,
                                                 children: [
                                                   Container(
-                                                    height: hei1*0.07,
+                                                    height: 30,
                                                     width: wid1*0.7,
                                                     decoration: BoxDecoration(
                                                       borderRadius: BorderRadius.all(
@@ -504,7 +516,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ),
                                                   ),
                                                   Container(
-                                                    height: hei1*0.07,
+                                                    height: 30,
                                                     width: (wid1*0.7)*(8/10),
                                                     decoration: BoxDecoration(
                                                       borderRadius: BorderRadius.only(
@@ -593,7 +605,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     children: [
                                       Icon(Icons.local_taxi_rounded, color: cTheme.primaryColor, size: 40,),
                                       SizedBox(height: 10,),
-                                      Text("Taxi", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
+                                      Text(lChanger[6]["taxi"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
                                     ],
                                   ),
                                 ),
@@ -632,7 +644,24 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             GestureDetector(
-                              onTap: (){
+                              onTap: () async{
+                                showDialog(
+                                    context: context,
+                                    // barrierColor: cTheme.backgroundColor,
+                                    builder: (BuildContext context){
+                                      return AlertDialog(
+                                        actionsPadding: EdgeInsets.all(0),
+                                        contentPadding: EdgeInsets.all(5),
+                                        backgroundColor: Colors.transparent,
+                                        surfaceTintColor: Colors.transparent,
+                                        // shape: RoundedRectangleBorder(
+                                        //   borderRadius: BorderRadius.circular(45),
+                                        // ),
+                                        content: LoadingIndicator(cTheme.scaffoldBackgroundColor),
+                                      );
+                                    });
+                                await getUserProperties.getUserProperties();
+                                Navigator.of(context).pop();
                                 Navigator.push(context, MaterialPageRoute(builder: (context){
                                   return PropertiesScreen();
                                 }));
@@ -652,7 +681,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     children: [
                                       Icon(Icons.other_houses_rounded, color: cTheme.primaryColor, size: 40,),
                                       SizedBox(height: 10,),
-                                      Text("Your Properties", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
+                                      Text(lChanger[6]["properties"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
                                     ],
                                   ),
                                 ),
