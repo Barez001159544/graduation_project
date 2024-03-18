@@ -1,6 +1,6 @@
 class MonetaryValue {
-  late String amount;
-  late String currency;
+  late int? amount;
+  late String? currency;
 
   MonetaryValue(
     this.amount,
@@ -11,4 +11,9 @@ class MonetaryValue {
         'amount': amount,
         'currency': currency,
       };
+
+  MonetaryValue.fromJson(Map<String, dynamic>? json){
+    amount= json?['amount'];
+    currency= json?['currency'];
+  }
 }

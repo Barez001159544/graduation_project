@@ -11,7 +11,7 @@ class GetPayment extends ChangeNotifier{
   FIBCreatePaymentResponse? _createPaymentResponse=null;
   FIBCreatePaymentResponse? get createPaymentResponse=> _createPaymentResponse;
   
-  Future<void> getPaymentInformation(String token, String amount) async {
+  Future<void> getPaymentInformation(String token, int amount) async {
     isLoading=true;
     notifyListeners();
     

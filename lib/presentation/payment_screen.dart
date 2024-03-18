@@ -13,6 +13,7 @@ import "package:graduation_project/services_fib/fib_authentication/fib_auth.dart
 import "package:graduation_project/constants/tokenManager.dart";
 import "package:provider/provider.dart";
 
+import "../constants/custom_alert_dialog.dart";
 import "../constants/custom_appbar.dart";
 import "../constants/custom_toast_notification.dart";
 import "../constants/loading_indicator.dart";
@@ -164,7 +165,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                     // await getToken.writeToken("FIBToken", logSuccess.accessToken);
                                     /// TokenManager().saveToken("FIBToken", logSuccess.accessToken);
                                     print("--------------");
-                                    await getPayment.getPaymentInformation(logSuccess.accessToken, "2000");
+                                    await getPayment.getPaymentInformation(logSuccess.accessToken, 1);
                                     if(getPayment.createPaymentResponse?.qrCode==null){
                                       CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred", cTheme.primaryColorLight, cTheme.primaryColorDark);
                                       print("ID or Secret invalid!: 2");
@@ -173,6 +174,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                       Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
                                         return PaymentScannerScreen();
                                       }));
+                                      CustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, "Title", "Some text will be shown here", "Thumbs Up", true, context, (){
+                                        // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
+                                        //   return Test();
+                                        // }), (route) => false);
+                                        // Navigator.of(context).pop();
+                                      }, cTheme.primaryColor);
                                     }
                                   }else{
                                     Navigator.of(context).pop();

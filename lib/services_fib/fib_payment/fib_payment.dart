@@ -57,7 +57,7 @@ class FIBPayment implements IFIBPayment{
         return null;
       }
     }catch(e){
-      print(e);
+      print("------${e}");
     }
   }
 

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:graduation_project/controllers/get_protests.dart';
 import 'package:graduation_project/presentation_depricated/maintenance_screen.dart';
 import 'package:graduation_project/presentation/protest_screen.dart';
 import 'package:graduation_project/presentation/repair_screen.dart';
@@ -12,6 +13,7 @@ import 'package:graduation_project/presentation/taxi_services.dart';
 import 'package:provider/provider.dart';
 import 'package:typethis/typethis.dart';
 import '../constants/custom_appbar.dart';
+import '../constants/loading_indicator.dart';
 import '../constants/main_btn.dart';
 import '../controllers/language_changer.dart';
 import '../controllers/theme_changer.dart';
@@ -48,8 +50,8 @@ class _ServicesScreenState extends State<ServicesScreen> {
     double hei = MediaQuery.of(context).size.height;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
-    return   Consumer<LanguageChanger>(
-            builder: (_, languageChanger, __) {
+    return   Consumer2<LanguageChanger, GetProtests>(
+            builder: (_, languageChanger, getAllProtests, __) {
               lChanger= languageChanger.data;
               return Directionality(
                 textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
@@ -136,10 +138,34 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                         ],
                                       ),
                                       SizedBox(width: 20,),
-                                      Expanded(child: MainBtn(wid, wid>600?62.0:72.0, cTheme.primaryColor, "Proceed", () {
+                                      Expanded(child: MainBtn(wid, wid>600?62.0:72.0, cTheme.primaryColor, "Proceed", () async {
+                                        showDialog(
+                                            context: context,
+                                            // barrierColor: cTheme.backgroundColor,
+                                            builder: (BuildContext context){
+                                              return AlertDialog(
+                                                actionsPadding: EdgeInsets.all(0),
+                                                contentPadding: EdgeInsets.all(5),
+                                                backgroundColor: Colors.transparent,
+                                                surfaceTintColor: Colors.transparent,
+                                                // shape: RoundedRectangleBorder(
+                                                //   borderRadius: BorderRadius.circular(45),
+                                                // ),
+                                                content: LoadingIndicator(cTheme.scaffoldBackgroundColor),
+                                              );
+                                            });
+                                        Navigator.of(context).pop();
+                                        if(index==1){
                                           Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                                            return index==1?RepairScreen():ProtestScreen();
+                                            return RepairScreen();
                                           }));
+                                        }else{
+                                          await getAllProtests.getAllProtests();
+                                          Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                                            return ProtestScreen();
+                                          }));
+                                        }
+
                                       })),
                                     ],
                                   ),

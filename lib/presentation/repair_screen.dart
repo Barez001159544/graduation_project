@@ -1,15 +1,23 @@
 
 import "package:flutter/material.dart";
+import "package:flutter_screenutil/flutter_screenutil.dart";
+import "package:graduation_project/controllers/get_repairment.dart";
+import "package:graduation_project/models/repair_request.dart";
 import "package:graduation_project/presentation/payment_screen.dart";
 import "package:provider/provider.dart";
 
 import "../constants/confirmation_custom_alert_dialog.dart";
 import "../constants/custom_appbar.dart";
+import "../constants/custom_dropdown_menu.dart";
 import "../constants/custom_switch_notification.dart";
+import "../constants/custom_textfields.dart";
+import "../constants/custom_toast_notification.dart";
+import "../constants/loading_indicator.dart";
 import "../constants/main_btn.dart";
 import "../controllers/language_changer.dart";
 import "../controllers/theme_changer.dart";
 import "../custom theme data/themes.dart";
+import "home_screen.dart";
 import "login_screen.dart";
 
 class RepairScreen extends StatefulWidget {
@@ -19,9 +27,31 @@ class RepairScreen extends StatefulWidget {
   State<RepairScreen> createState() => _RepairScreenState();
 }
 
+List items=[
+  "TV",
+  "Sofa",
+  "Coffee Table",
+  "Bed Frame",
+  "Mattress",
+  "Dining Table",
+  "Chairs",
+  "Desk",
+  "Bookshelf",
+  "Curtains",
+  "Rugs",
+  "Lamps",
+  "Mirrors",
+  "Throw Pillows",
+  "Wall Art",
+  "Plant Pots",
+  "Kitchen Appliances"
+];
+
 
 class _RepairScreenState extends State<RepairScreen> {
   List indexes=[];
+  TextEditingController textEditingController= TextEditingController();
+  String? selected;
   @override
   Widget build(BuildContext context) {
     double wid = MediaQuery.of(context).size.width;
@@ -29,8 +59,8 @@ class _RepairScreenState extends State<RepairScreen> {
     bool or=MediaQuery.of(context).orientation==Orientation.landscape?true:false;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
-    return Consumer2<ThemeChanger, LanguageChanger>(
-          builder: (_, tChanger, languageChanger, child) {
+    return Consumer3<ThemeChanger, LanguageChanger, GetRepairment>(
+          builder: (_, tChanger, languageChanger, getRepairment, child) {
             lChanger=languageChanger.data;
           return Directionality(
             textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
@@ -55,7 +85,7 @@ class _RepairScreenState extends State<RepairScreen> {
                               shrinkWrap: true,
                               physics: ScrollPhysics(),
                             padding: EdgeInsets.all(10),
-                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: or?5:(wid>500?4:2), mainAxisSpacing: 10, crossAxisSpacing: 10,), itemCount: 18, itemBuilder: (BuildContext contex, index){
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: wid>800?4:(wid>500?3:2), mainAxisSpacing: 10, crossAxisSpacing: 10,), itemCount: items.length, itemBuilder: (BuildContext contex, index){
                             return Container(
                               width: wid/3,
                               height: 200,
@@ -71,10 +101,12 @@ class _RepairScreenState extends State<RepairScreen> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Icon(Icons.tv_rounded, color: cTheme.primaryColorDark, size: 70,),
+                                      Icon(Icons.tv_rounded, color: cTheme.primaryColorDark, size: 60,),
                                       CustomSwitchBtn(indexes.contains(index), cTheme.scaffoldBackgroundColor, (val) {
                                         setState(() {
+                                          indexes.clear();
                                           val?indexes.add(index):indexes.remove(index);
+                                          print(index);
                                         });
                                       })
                                       // FToggleButton(
@@ -93,7 +125,7 @@ class _RepairScreenState extends State<RepairScreen> {
                                       // ),
                                     ],
                                   ),
-                                  Text("TV", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
+                                  Text(items[index], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
                                 ],
                               ),
                             );
@@ -102,12 +134,74 @@ class _RepairScreenState extends State<RepairScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 20, bottom: 20, right: 20),
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: MainBtn(wid>500?wid*0.35-80:wid-40, wid>500?62.0:72.0, cTheme.primaryColor, lChanger[15]["btn"], () {
-                          ConfirmationCustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, lChanger[15]["popTitle"], lChanger[15]["popSubtitle"], lChanger[15]["agreeBtn"], lChanger[15]["declineBtn"], context, (){}, (){}, cTheme.primaryColor);
-                        }),
+                      padding: EdgeInsets.only(top: 10, bottom: 20, right: 20, left: 20),//:EdgeInsets.only(),
+                      child: Column(
+                        children: [
+                          CustomTextFields(textEditingController, "description", cTheme.primaryColorDark, cTheme.primaryColorLight, cTheme.primaryColorLight, 15, 1, false),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              CustomDropDownMenu("Property", wid>500?wid*0.35-80:wid/2-25, wid>500?62.0:72.0, wid, cTheme.primaryColorLight, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], selected, (val) {
+                                print(val);
+                                setState(() {
+                                  selected=val;
+                                });
+                                // lChanger.changeLanguage(val);
+                              }),
+                              SizedBox(width: 10,),
+                              MainBtn(wid>500?wid*0.35-80:wid/2-25, wid>500?62.0:72.0, cTheme.primaryColor, lChanger[15]["btn"], () {
+                                if(indexes.isNotEmpty && selected!=null) {
+                                  print(indexes[0]);
+                                  print(selected);
+
+                                  ConfirmationCustomAlertDialog(
+                                      cTheme.primaryColorLight,
+                                      cTheme.primaryColorDark,
+                                      lChanger[15]["popTitle"],
+                                      lChanger[15]["popSubtitle"],
+                                      lChanger[15]["agreeBtn"],
+                                      lChanger[15]["declineBtn"],
+                                      context, () async{
+                                    showDialog(
+                                        context: context,
+                                        // barrierColor: cTheme.backgroundColor,
+                                        builder: (BuildContext context){
+                                          return AlertDialog(
+                                            actionsPadding: EdgeInsets.all(0),
+                                            contentPadding: EdgeInsets.all(5),
+                                            backgroundColor: Colors.transparent,
+                                            surfaceTintColor: Colors.transparent,
+                                            // shape: RoundedRectangleBorder(
+                                            //   borderRadius: BorderRadius.circular(45),
+                                            // ),
+                                            content: LoadingIndicator(cTheme.scaffoldBackgroundColor),
+                                          );
+                                        });
+                                        print(textEditingController.text);
+                                        print(selected);
+                                        print(items[indexes[0]]);
+                                        // await getRepairment.newRepair(RepairRequest(items[indexes[0]], "Electronic Devices", "This is the descirpion for fixing electronic devices reparirment request.", "houses", 3));
+                                    if(getRepairment.status=="A+"){
+                                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context){
+                                        return HomeScreen();
+                                      }), (route) => false);
+                                      CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), "Successfully Sent", cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                    }else{
+                                      CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred", cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                      Navigator.of(context).pop();
+                                    }
+                                  }, () {},
+                                      cTheme.primaryColor);
+                                }else{
+                                  CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "Choose a property and an item please", cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                }
+                                }),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ],

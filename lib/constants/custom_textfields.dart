@@ -8,7 +8,8 @@ class CustomTextFields extends StatelessWidget {
   final Color bgColor;
   final double radius;
   final int? maxLines;
-  const CustomTextFields(this.controller, this.hint, this.primaryColor, this.textColor, this.bgColor, this.radius, this.maxLines);
+  final bool readOnly;
+  const CustomTextFields(this.controller, this.hint, this.primaryColor, this.textColor, this.bgColor, this.radius, this.maxLines, this.readOnly);
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -16,6 +17,7 @@ class CustomTextFields extends StatelessWidget {
       expands: maxLines==null?true:false,
       controller: controller,
       cursorColor: primaryColor,
+      readOnly: readOnly,
       textAlignVertical: maxLines==null?TextAlignVertical.top:TextAlignVertical.center,
       style: TextStyle(
         color: primaryColor,

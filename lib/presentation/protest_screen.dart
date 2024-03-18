@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:graduation_project/controllers/get_protests.dart';
 import 'package:graduation_project/presentation/new_protest.dart';
 import 'package:provider/provider.dart';
 
@@ -30,8 +31,8 @@ class _ProtestScreenState extends State<ProtestScreen> {
     bool or=MediaQuery.of(context).orientation==Orientation.landscape?true:false;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
-    return Consumer2<ThemeChanger, LanguageChanger>(
-          builder: (_, tChanger, languageChanger, child) {
+    return Consumer3<ThemeChanger, LanguageChanger, GetProtests>(
+          builder: (_, tChanger, languageChanger, getAllProtests, child) {
             lChanger=languageChanger.data;
           return Directionality(
             textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
@@ -53,9 +54,11 @@ class _ProtestScreenState extends State<ProtestScreen> {
               ),
               floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
               body: SafeArea(
-                child: SingleChildScrollView(
+                child: getAllProtests.protestAllResponse==null?Center(
+                  child: Icon(Icons.hourglass_empty_rounded),
+                ):SingleChildScrollView(
                   child: Column(
-                    children: List.generate(30, (index){
+                    children: List.generate(getAllProtests.protestAllResponse!.eachProtestResponse!.length, (index){
                       return Slidable(
                         // Specify a key if the Slidable is dismissible.
                         // key: const ValueKey(0),
@@ -124,8 +127,8 @@ class _ProtestScreenState extends State<ProtestScreen> {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text("Title of the protest", style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark),),
-                                          Text("10/10/2024", style: TextStyle(color: Colors.grey, fontSize: 12),),
+                                          Text("${getAllProtests.protestAllResponse!.eachProtestResponse?[index].title??"DUNO"}", style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark),),
+                                          Text("${getAllProtests.protestAllResponse!.eachProtestResponse?[index].updatedAt?.split("T")[0]}", style: TextStyle(color: Colors.grey, fontSize: 12),),
                                         ],
                                       ))),
                               SizedBox(
@@ -135,14 +138,14 @@ class _ProtestScreenState extends State<ProtestScreen> {
                                 width: 60,
                                 height: 60,
                                 decoration: BoxDecoration(
-                                  color: index%2==0?Colors.green.withOpacity(0.4):(index%3==0?Colors.yellow.withOpacity(0.4):Colors.red.withOpacity(0.4)),
+                                  color: getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="pending"?Colors.yellow.withOpacity(0.4):Colors.green.withOpacity(0.4),
                                   borderRadius: BorderRadius.all(Radius.circular(15)),
                                 ),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.check, color: Colors.white,),
-                                    Text(index%2==0?lChanger[16]["status1"]:(index%3==0?lChanger[16]["status2"]:lChanger[16]["status3"]), style: TextStyle(fontSize: 8),),
+                                    Icon(getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="pending"?Icons.more_horiz_rounded:Icons.check, color: Colors.white,),
+                                    Text(getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="pending"?lChanger[16]["status2"]:lChanger[16]["status2"], style: TextStyle(fontSize: 8),),
                                   ],
                                 ),
                               ),

@@ -1,29 +1,29 @@
 class HousesResponse{
-  late int? id;
-  late String? name;
+  // late int? id;
   late int? electricityUnit;
-  late int? facilityId;
+  late String? name;
+  // late int? facilityId;
   late String? ownerId;
-  late String? createdAt;
-  late String? updatedAt;
+  // late String? createdAt;
+  // late String? updatedAt;
 
   HousesResponse(
-      this.id,
-      this.name,
+      // this.id,
       this.electricityUnit,
-      this.facilityId,
+      this.name,
+      // this.facilityId,
       this.ownerId,
-      this.createdAt,
-      this.updatedAt,
+      // this.createdAt,
+      // this.updatedAt,
       );
 
   HousesResponse.fromJson(Map<String, dynamic> json){
-    id= json['id'];
-    name= json['name'];
+    // id= json['id'];
     electricityUnit= json['electricity_unit'];
-    facilityId= json['facility_id'];
-    ownerId= json['owner_id'];
-    createdAt= json['created_at'];
-    updatedAt= json['updated_at'];
+    name= json['house_name'];
+    // facilityId= json['facility_id'];
+    ownerId= json['owner'];
+    // createdAt= json['created_at'];
+    // updatedAt= json['updated_at'];
   }
 }

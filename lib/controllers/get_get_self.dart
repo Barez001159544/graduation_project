@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:graduation_project/models/GetSelfResponse.dart';
 import 'package:graduation_project/services/user/user.dart';
+
+import '../models/get_self_response.dart';
 
 class GetGetSelf extends ChangeNotifier{
   bool isLoading=false;

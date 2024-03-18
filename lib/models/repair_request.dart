@@ -1,23 +1,27 @@
 class RepairRequest{
-  late int id;
-  late String client;
-  late List<Map<String, bool>> items;
+  String? title;
+  String? repairmentComponents;
+  String? description;
+  String? type;
+  int? propertyId;
 
   RepairRequest(
-      this.id,
-      this.client,
-      this.items,
+      this.title,
+      this.repairmentComponents,
+      this.description,
+      this.type,
+      this.propertyId,
       );
 
   Map<String, dynamic> toJson()=>{
-    'id': id,
-    'client': client,
-    'items': items,
+    'title': title,
+    'repairment_component': repairmentComponents,
+    'description': description,
+    "type": type,
+    "property_id": propertyId,
   };
 
   RepairRequest.fromJson(Map<String, dynamic> json){
-    id= json['id'];
-    client= json['client'];
-    items= json['items'];
+    //
   }
 }

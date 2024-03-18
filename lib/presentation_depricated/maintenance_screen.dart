@@ -74,7 +74,7 @@ class _MaintenanceScreenState extends State<MaintenanceScreen> {
                               SizedBox(
                                 height: 10,
                               ),
-                              Expanded(child: CustomTextFields(coreController, lChanger[16]["ph2"], cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.scaffoldBackgroundColor, 25, null)),
+                              Expanded(child: CustomTextFields(coreController, lChanger[16]["ph2"], cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.scaffoldBackgroundColor, 25, null, false)),
                             ],
                           ),
                         ),

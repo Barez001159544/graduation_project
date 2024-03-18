@@ -2,11 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:graduation_project/constants/custom_textfields.dart';
+import 'package:graduation_project/controllers/get_protests.dart';
+import 'package:graduation_project/models/protest_request.dart';
+import 'package:graduation_project/presentation/home_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/custom_alert_dialog.dart';
 import '../constants/custom_dropdown_menu.dart';
 import '../constants/custom_toast_notification.dart';
+import '../constants/loading_indicator.dart';
+import '../constants/pick_media.dart';
 import '../controllers/language_changer.dart';
 import '../controllers/theme_changer.dart';
 import '../custom theme data/themes.dart';
@@ -22,9 +27,10 @@ class _NewProtestState extends State<NewProtest> {
   PageController pageController= PageController();
   TextEditingController titleController= TextEditingController();
   TextEditingController descriptionController= TextEditingController();
-  String error="";
+  String? compliant;
+  String error="*";
   int ind=0;
-  double currentSliderValue=1;
+  // double currentSliderValue=1;
   @override
   Widget build(BuildContext context) {
     double wid = MediaQuery.of(context).size.width;
@@ -32,8 +38,8 @@ class _NewProtestState extends State<NewProtest> {
     bool or=MediaQuery.of(context).orientation==Orientation.landscape?true:false;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
-    return Consumer2<ThemeChanger, LanguageChanger>(
-        builder: (_, tChanger, languageChanger, child) {
+    return Consumer3<ThemeChanger, LanguageChanger, GetProtests>(
+        builder: (_, tChanger, languageChanger, getProtests, child) {
           lChanger=languageChanger.data;
         return Scaffold(
           backgroundColor: cTheme.scaffoldBackgroundColor,
@@ -179,35 +185,35 @@ class _NewProtestState extends State<NewProtest> {
                                       //     print(val);
                                       //   });
                                       // }),
-                                      CustomTextFields(titleController, lChanger[16]["p2Ph1"], cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.scaffoldBackgroundColor, 15, 1),
+                                      CustomTextFields(titleController, lChanger[16]["p2Ph1"], cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.scaffoldBackgroundColor, 15, 1, false),
                                     ],
                                   ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text("${lChanger[16]["p2Title2"]} ${currentSliderValue.round()} Normal", style: TextStyle(fontSize: 16, color: Colors.grey),),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Slider(
-                                        min: 1,
-                                        max: 5,
-                                        value: currentSliderValue,
-                                        divisions: 4,
-                                        // label: currentSliderValue.round().toString(),
-                                        thumbColor: cTheme.primaryColor,
-                                        activeColor: cTheme.scaffoldBackgroundColor,
-                                        inactiveColor: cTheme.scaffoldBackgroundColor,
-                                        onChanged: (val){
-                                          setState(() {
-                                            currentSliderValue=val;
-                                          });
-                                        },),
-                                    ],
-                                  ),
+                                  // SizedBox(
+                                  //   height: 20,
+                                  // ),
+                                  // Column(
+                                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                                  //   children: [
+                                  //     Text("${lChanger[16]["p2Title2"]} ${currentSliderValue.round()} Normal", style: TextStyle(fontSize: 16, color: Colors.grey),),
+                                  //     SizedBox(
+                                  //       height: 10,
+                                  //     ),
+                                  //     Slider(
+                                  //       min: 1,
+                                  //       max: 5,
+                                  //       value: currentSliderValue,
+                                  //       divisions: 4,
+                                  //       // label: currentSliderValue.round().toString(),
+                                  //       thumbColor: cTheme.primaryColor,
+                                  //       activeColor: cTheme.scaffoldBackgroundColor,
+                                  //       inactiveColor: cTheme.scaffoldBackgroundColor,
+                                  //       onChanged: (val){
+                                  //         setState(() {
+                                  //           currentSliderValue=val;
+                                  //         });
+                                  //       },),
+                                  //   ],
+                                  // ),
                                   SizedBox(
                                     height: 20,
                                   ),
@@ -231,23 +237,81 @@ class _NewProtestState extends State<NewProtest> {
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Container(
-                                        width: wid,
-                                        height: 50,
-                                        decoration: BoxDecoration(
-                                          color: cTheme.primaryColor.withOpacity(0.5),
-                                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                                      GestureDetector(
+                                        onTap: () async {
+                                          await pickImage();
+                                          setState((){
+                                            print(">>>>>>>>>>$file");
+                                          });
+                                        },
+                                        child: Container(
+                                          width: wid,
+                                          height: 50,
+                                          decoration: BoxDecoration(
+                                            color: cTheme.primaryColor.withOpacity(0.5),
+                                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              file!=null?SizedBox(
+                                                height: 45,
+                                                width: 45,
+                                                child: Image.file(file!),
+                                              ):Icon(Icons.image_rounded, color: cTheme.primaryColorDark, size: 30,),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Text(lChanger[16]["p2Ph2"], style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
+                                            ],
+                                          ),
                                         ),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Icon(Icons.image_rounded, color: cTheme.primaryColorDark, size: 30,),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Text(lChanger[16]["p2Ph2"], style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
-                                          ],
-                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text("Location", style: TextStyle(fontSize: 16, color: Colors.grey),),
+                                              Text(error, style: TextStyle(fontSize: 16, color: Colors.red),),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          CustomDropDownMenu("hint", wid/2-15, 50, 15, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, ["outdoor", "indoor",], compliant, (value) {
+                                            setState(() {
+                                              compliant=value;
+                                            });
+                                          }),
+                                        ],
+                                      ),
+                                      SizedBox(width: 10,),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text("Compliant", style: TextStyle(fontSize: 16, color: Colors.grey),),
+                                              Text(error, style: TextStyle(fontSize: 16, color: Colors.red),),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          CustomDropDownMenu("hint", wid/2-15, 50, 15, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, ["outdoor", "indoor",], compliant, (value) {
+                                            setState(() {
+                                              compliant=value;
+                                            });
+                                          }),
+                                        ],
                                       ),
                                     ],
                                   ),
@@ -267,7 +331,7 @@ class _NewProtestState extends State<NewProtest> {
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        Expanded(child: CustomTextFields(descriptionController, lChanger[16]["p2Ph3"], cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.scaffoldBackgroundColor, 15, null)),
+                                        Expanded(child: CustomTextFields(descriptionController, lChanger[16]["p2Ph3"], cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.scaffoldBackgroundColor, 15, null, false)),
                                       ],
                                     ),
                                   ),
@@ -302,35 +366,52 @@ class _NewProtestState extends State<NewProtest> {
                                         child: Row(
                                           children: [
                                             Text(lChanger[16]["p3Title2"], style: TextStyle(color: Colors.white70, fontSize: 16),),
-                                            Text("${currentSliderValue.round()}", style: TextStyle(color: Colors.white, fontSize: 16),),
+                                            Text("${compliant}", style: TextStyle(color: Colors.white, fontSize: 16),),
                                           ],
                                         ),
                                       ),
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                                        decoration: BoxDecoration(
-                                          color: Colors.blueGrey,
-                                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                                        ),
-                                        child: Row(
-                                          children: [
-                                            Text(lChanger[16]["p3Title3"], style: TextStyle(color: Colors.white70, fontSize: 16),),
-                                            Flexible(
-                                              child:  Container(
-                                                child:  Text(
-                                                  descriptionController.text==""?lChanger[16]["if2"]:descriptionController.text,
-                                                  overflow: TextOverflow.ellipsis,
-                                                  style: TextStyle(color: Colors.white, fontSize: 16),
-                                                ),
-                                              ),
-                                            ),
-                                            // Container(child: Text(descriptionController.text, style: TextStyle(color: Colors.white, fontSize: 16), overflow: TextOverflow.ellipsis,)),
-                                          ],
-                                        ),
+                                      Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text(lChanger[16]["p3Title3"], style: TextStyle(fontSize: 16, color: Colors.grey),),
+                                              Text(error, style: TextStyle(fontSize: 16, color: Colors.red),),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Container(
+                                              width: wid,
+                                              height: 100,
+                                              child: CustomTextFields(descriptionController, lChanger[16]["p2Ph3"], cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.scaffoldBackgroundColor, 15, null, true)),
+                                        ],
                                       ),
+                                      // Container(
+                                      //   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                      //   decoration: BoxDecoration(
+                                      //     color: Colors.blueGrey,
+                                      //     borderRadius: BorderRadius.all(Radius.circular(15)),
+                                      //   ),
+                                      //   child: Row(
+                                      //     children: [
+                                      //       Text(lChanger[16]["p3Title3"], style: TextStyle(color: Colors.white70, fontSize: 16),),
+                                      //       Flexible(
+                                      //         child:  Container(
+                                      //           child:  Text(
+                                      //             descriptionController.text==""?lChanger[16]["if2"]:descriptionController.text,
+                                      //             overflow: TextOverflow.ellipsis,
+                                      //             style: TextStyle(color: Colors.white, fontSize: 16),
+                                      //           ),
+                                      //         ),
+                                      //       ),
+                                      //       // Container(child: Text(descriptionController.text, style: TextStyle(color: Colors.white, fontSize: 16), overflow: TextOverflow.ellipsis,)),
+                                      //     ],
+                                      //   ),
+                                      // ),
                                     ],
                                   ),
                                   // SizedBox(
@@ -376,15 +457,39 @@ class _NewProtestState extends State<NewProtest> {
                                   width: wid>600?200:wid/2-20,
                                   height: 50,
                                   child: ElevatedButton(
-                                    onPressed: (){
+                                    onPressed: () async {
 
                                       if(index==1 && (titleController.text=="" || descriptionController.text=="")){
                                         setState(() {
-                                          error=lChanger[16]["mandatory"];
+                                          // error=lChanger[16]["mandatory"];
                                         });
                                       }else if(index==2){
-                                        Navigator.of(context).pop();
-                                        CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[16]["errorAlertMessage"], cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                        showDialog(
+                                            context: context,
+                                            // barrierColor: cTheme.backgroundColor,
+                                            builder: (BuildContext context){
+                                              return AlertDialog(
+                                                actionsPadding: EdgeInsets.all(0),
+                                                contentPadding: EdgeInsets.all(5),
+                                                backgroundColor: Colors.transparent,
+                                                surfaceTintColor: Colors.transparent,
+                                                // shape: RoundedRectangleBorder(
+                                                //   borderRadius: BorderRadius.circular(45),
+                                                // ),
+                                                content: LoadingIndicator(cTheme.scaffoldBackgroundColor),
+                                              );
+                                            });
+                                        ProtestRequest protestRequest= ProtestRequest(titleController.text, descriptionController.text, compliant, "apartments", 4, encodedImage);
+                                        await getProtests.newProtest(protestRequest);
+                                        if(getProtests.status=="A+"){
+                                          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context){
+                                            return HomeScreen();
+                                          }), (route) => false);
+                                          CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), "Successfully Sent", cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                        }else{
+                                          CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred", cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                          Navigator.of(context).pop();
+                                        }
                                         /// CustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, "Title", "Some text will be shown here", "Thumbs Up", true, context, (){
                                         ///   // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
                                         ///   //   return Test();

@@ -222,7 +222,7 @@ class _SupportCenterState extends State<SupportCenter>  with SingleTickerProvide
                             Row(
                               children: [
                                 Expanded(
-                                    child: CustomTextFields(_controller, lChanger[17]["ph"], Colors.white, Colors.white, Colors.grey.withOpacity(0.2), 15, 1)),
+                                    child: CustomTextFields(_controller, lChanger[17]["ph"], Colors.white, Colors.white, Colors.grey.withOpacity(0.2), 15, 1, false)),
                                 SizedBox(
                                   width: 10,
                                 ),

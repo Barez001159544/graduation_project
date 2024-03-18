@@ -1,11 +1,10 @@
 import 'dart:convert';
-
-import 'package:graduation_project/models/GetSelfResponse.dart';
 import 'package:graduation_project/models/update_user_request.dart';
 import 'package:graduation_project/models/user_details.dart';
 import 'package:http/http.dart' as http;
 
 import '../../constants/tokenManager.dart';
+import '../../models/get_self_response.dart';
 import 'i_user.dart';
 
 class User extends IUser{

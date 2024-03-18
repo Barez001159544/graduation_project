@@ -1,51 +1,37 @@
+import 'dart:io';
+
 class ProtestRequest{
-  late String title;
-  late String complaint;
-  late String picture;
-  late String date;
-  late String place;
-  late String status;
-  late String topic;
-  late String userId;
-  late String createdAt;
-  late String updatedAt;
+  String? title;
+  String? description;
+  String? compliant;
+  String? type;
+  int? propertyId;
+  String? file;
 
   ProtestRequest(
       this.title,
-      this.complaint,
-      this.picture,
-      this.date,
-      this.place,
-      this.status,
-      this.topic,
-      this.userId,
-      this.createdAt,
-      this.updatedAt,
+      this.description,
+      this.compliant,
+      this.type,
+      this.propertyId,
+      this.file,
       );
 
   Map<String, dynamic> toJson()=>{
     'title': title,
-    'complaint': complaint,
-    'picture': picture,
-    'date': date,
-    'place': place,
-    'status': status,
-    'topic': topic,
-    'userId': userId,
-    'createdAt': createdAt,
-    'updatedAt': updatedAt,
+    'description': description,
+    'compliant': compliant,
+    'type': type,
+    'property_id': propertyId,
+    "picture": file,
   };
 
   ProtestRequest.fromJson(Map<String, dynamic> json){
     title= json['title'];
-    complaint= json['complaint'];
-    picture= json['picture'];
-    date= json['date'];
-    place= json['place'];
-    status= json['status'];
-    topic= json['topic'];
-    userId= json['userId'];
-    createdAt= json['createdAt'];
-    updatedAt= json['updatedAt'];
+    description= json['description'];
+    compliant= json['compliant'];
+    type= json['type'];
+    propertyId= json['property_id'];
+    file= json["picture"];
   }
 }

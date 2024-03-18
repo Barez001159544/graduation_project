@@ -7,11 +7,13 @@ import 'package:flutter_app_info/flutter_app_info.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:graduation_project/controllers/get_protests.dart';
 import 'package:graduation_project/controllers/get_auth.dart';
 import 'package:graduation_project/controllers/get_fib_auth.dart';
 import 'package:graduation_project/controllers/get_get_self.dart';
 import 'package:graduation_project/controllers/get_payment.dart';
 import 'package:graduation_project/controllers/get_payment_status.dart';
+import 'package:graduation_project/controllers/get_repairment.dart';
 import 'package:graduation_project/controllers/get_token.dart';
 import 'package:graduation_project/controllers/get_user_properties.dart';
 import 'package:graduation_project/controllers/language_changer.dart';
@@ -90,6 +92,12 @@ Future<void> main() async {
           ChangeNotifierProvider(
             create: (BuildContext context)=> GetUserProperties(),
           ),
+          ChangeNotifierProvider(
+            create: (BuildContext context)=> GetProtests(),
+          ),
+          ChangeNotifierProvider(
+            create: (BuildContext context)=> GetRepairment(),
+          ),
         ],
         child: MyApp(),
         /// UNCOMMENT when new device_preview version is released
@@ -167,8 +175,8 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.of(context, rootNavigator: false).pushReplacement(
       MaterialPageRoute(
         builder: (context) =>
-            const TaxiHomeScreen(),
-        // firstTime == false ? (rToken == null ? const LoginScreen() : const HomeScreen()) : const OnboardingScreen(),
+            // const RepairScreen(),
+        firstTime == false ? (rToken == null ? const LoginScreen() : const HomeScreen()) : const OnboardingScreen(),
       ),
     );
   }

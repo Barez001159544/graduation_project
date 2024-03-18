@@ -19,6 +19,7 @@ import 'package:timer_count_down/timer_count_down.dart';
 import '../constants/confirmation_custom_alert_dialog.dart';
 import '../constants/custom_alert_dialog.dart';
 import '../constants/custom_appbar.dart';
+import '../constants/custom_dropdown_menu.dart';
 import '../constants/custom_toast_notification.dart';
 import '../constants/loading_indicator.dart';
 import '../constants/main_btn.dart';
@@ -164,12 +165,23 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                           //     ),
                           //     child:
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.baseline,
-                                textBaseline: TextBaseline.alphabetic,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                // crossAxisAlignment: CrossAxisAlignment.baseline,
+                                // textBaseline: TextBaseline.alphabetic,
                                 children: [
-                                  Text("500,000", style: TextStyle(fontSize: 28, color: Colors.grey.shade700),),
-                                  Text(" IQD", style: TextStyle(color: Colors.grey.shade700),),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                                    textBaseline: TextBaseline.alphabetic,
+                                    children: [
+                                      Text("500,000", style: TextStyle(fontSize: 28, color: Colors.grey.shade700),),
+                                      Text(" IQD", style: TextStyle(color: Colors.grey.shade700),),
+                                    ],
+                                  ),
+                                  CustomDropDownMenu("Property", 110, 30, 5, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], null, (val) {
+                                    print(val);
+                                    // lChanger.changeLanguage(val);
+                                  })
                                 ],
                               ),
                           //   ),
@@ -251,10 +263,12 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                             if(logSuccess!=null){
                               // await getToken.writeToken("FIBToken", logSuccess.accessToken);
                               await getPaymentStatus.getPaymentStatus(getPayment.createPaymentResponse!.paymentId, logSuccess.accessToken);
-                              if(getPaymentStatus.fibCheckPaymentStatusResponse?.status=="PAID"){
+                              if(getPaymentStatus.fibCheckPaymentStatusResponse?.status!="PAID"){
                                 Navigator.of(context).pop();
                                 print('Not PAID');
+                                CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[8]["error"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                               }else{
+                                print(getPaymentStatus.fibCheckPaymentStatusResponse!.paidBy?.name);
                                 CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[8]["success"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
                                   return HomeScreen();
