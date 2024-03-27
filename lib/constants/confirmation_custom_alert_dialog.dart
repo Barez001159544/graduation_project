@@ -139,8 +139,8 @@ Future<dynamic> ConfirmationCustomAlertDialog(Color bgColor, Color txtColor, Str
               children: [
                 GestureDetector(
                   onTap: () {
+                    Navigator.of(contex).pop();
                     onGotIt();
-                    // Navigator.of(contex).pop();
                   },
                   child: Container(
                     height: 40,

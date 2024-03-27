@@ -95,6 +95,7 @@ class SpecialCustomDropDownMenu extends StatelessWidget {
       child: DropdownButtonHideUnderline(
         child: DropdownButton(
           dropdownColor: ddmColor,
+          focusColor: Colors.transparent,
           isExpanded: true,
           disabledHint: Text(hint, style: TextStyle(fontFamily: "NotoSans", color: Colors.grey),),
           hint: Text(hint, style: TextStyle(fontFamily: "NotoSans", color: Colors.grey),),
@@ -108,16 +109,19 @@ class SpecialCustomDropDownMenu extends StatelessWidget {
           items: List<dynamic>.from(combinedItems as Iterable)
               .map((dynamic itemss) {
             return DropdownMenuItem(
-              value: itemss,
+              value: "${itemss.toString()=="Instance of 'HousesResponse'"?"Houses-":"Apartments-"}${itemss.name}",
               child: Text(
-                "${itemss.electricityUnit}",
+                "${itemss.toString()=="Instance of 'HousesResponse'"?"Houses-":"Apartments-"}${itemss.name}",
                 textAlign: TextAlign.left,
                 style: TextStyle(fontFamily: "NotoSans"),
               ),
             );
           }).toList(),
           onChanged: (dynamic val) {
-            onChange(val?.name);
+            // print("${val.toString()=="Instance of 'HousesResponse'"?"Houses ":"Apartments "}${val.name}",);
+            // print(val);
+            onChange(val);
+            // onChange("${val.toString()=="Instance of 'HousesResponse'"?"Houses-":"Apartments-"}${val.name}");
           },
         ),
       ),

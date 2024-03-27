@@ -18,12 +18,12 @@
       "btn": "Save"
     },
     {
-      "title1": "Login",
-      "title2": "Login",
       "ph1": "Username",
       "ph2": "Password",
       "btn": "Login",
-      "fbtn": "Forgot Password?"
+      "fbtn": "Forgot Password?",
+      "error1": "leave no field empty",
+      "error2": "username or password invalid"
     },
     {
       "title": "Recover Password",

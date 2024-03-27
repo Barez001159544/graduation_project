@@ -99,8 +99,8 @@ class _SupportCenterState extends State<SupportCenter>  with SingleTickerProvide
     bool or=MediaQuery.of(context).orientation==Orientation.landscape?true:false;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
-    return Consumer2<LanguageChanger, GetToken>(
-        builder: (_, languageChanger, getToken, __) {
+    return Consumer<LanguageChanger>(
+        builder: (_, languageChanger, __) {
           lChanger= languageChanger.data;
           return Directionality(
           textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,

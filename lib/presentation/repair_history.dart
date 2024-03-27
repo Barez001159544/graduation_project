@@ -4,7 +4,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:graduation_project/constants/loading_indicator.dart';
 import 'package:graduation_project/controllers/get_protests.dart';
+import 'package:graduation_project/controllers/get_repairment.dart';
 import 'package:graduation_project/presentation/new_protest.dart';
+import 'package:graduation_project/presentation/repair_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/confirmation_custom_alert_dialog.dart';
@@ -15,14 +17,14 @@ import '../controllers/language_changer.dart';
 import '../controllers/theme_changer.dart';
 import '../custom theme data/themes.dart';
 
-class ProtestScreen extends StatefulWidget {
-  const ProtestScreen({super.key});
+class RepairHistory extends StatefulWidget {
+  const RepairHistory({super.key});
 
   @override
-  State<ProtestScreen> createState() => _ProtestScreenState();
+  State<RepairHistory> createState() => _RepairHistoryState();
 }
 
-class _ProtestScreenState extends State<ProtestScreen> {
+class _RepairHistoryState extends State<RepairHistory> {
   TextEditingController titleController = TextEditingController();
   TextEditingController coreController = TextEditingController();
 
@@ -30,8 +32,8 @@ class _ProtestScreenState extends State<ProtestScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if((Provider.of<GetProtests>(context, listen: false).protestAllResponse==null)){
-        Provider.of<GetProtests>(context, listen: false).getAllProtests();
+      if((Provider.of<GetRepairment>(context, listen: false).repairHistoryResponse==null)){
+        Provider.of<GetRepairment>(context, listen: false).getAllRepair();
       }
     });
   }
@@ -42,9 +44,9 @@ class _ProtestScreenState extends State<ProtestScreen> {
     bool or=MediaQuery.of(context).orientation==Orientation.landscape?true:false;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
-    return Consumer3<ThemeChanger, LanguageChanger, GetProtests>(
-          builder: (_, tChanger, languageChanger, getAllProtests, child) {
-            lChanger=languageChanger.data;
+    return Consumer3<ThemeChanger, LanguageChanger, GetRepairment>(
+        builder: (_, tChanger, languageChanger, getRepairment, child) {
+          lChanger=languageChanger.data;
           return Directionality(
             textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
             child: Scaffold(
@@ -58,20 +60,20 @@ class _ProtestScreenState extends State<ProtestScreen> {
                 tooltip: lChanger[16]["fab"],
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                    return NewProtest();
+                    return RepairScreen();
                   }));
                 },
-                child: Icon(Icons.edit_rounded, color: Colors.white,),
+                child: Icon(Icons.add_rounded, color: Colors.white,),
               ),
               floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
               body: SafeArea(
-                child: getAllProtests.isLoading?Center(
+                child: getRepairment.isLoading?Center(
                   child: LoadingIndicator(cTheme.primaryColorLight),
                 ):RefreshIndicator(
                   onRefresh: () async{
-                    getAllProtests.getAllProtests();
+                    getRepairment.getAllRepair();
                   },
-                  child: getAllProtests.protestAllResponse?.eachProtestResponse==null?ListView(
+                  child: (getRepairment.repairHistoryResponse?.historyOfRepairs)==null?ListView(
                     children: [
                       SizedBox(
                         height: 50,
@@ -88,7 +90,7 @@ class _ProtestScreenState extends State<ProtestScreen> {
                       ),
                     ],
                   ):ListView(
-                    children: List.generate(getAllProtests.protestAllResponse!.eachProtestResponse!.length, (index){
+                    children: List.generate(getRepairment.repairHistoryResponse!.historyOfRepairs!.length, (index){
                       return Slidable(
                         // Specify a key if the Slidable is dismissible.
                         // key: const ValueKey(0),
@@ -157,8 +159,8 @@ class _ProtestScreenState extends State<ProtestScreen> {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text("${getAllProtests.protestAllResponse!.eachProtestResponse?[index].title??"DUNO"}", style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark),),
-                                          Text("${getAllProtests.protestAllResponse!.eachProtestResponse?[index].updatedAt?.split("T")[0]}", style: TextStyle(color: Colors.grey, fontSize: 12),),
+                                          Text("${getRepairment.repairHistoryResponse!.historyOfRepairs?[index].title??"DUNO"}", style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark),),
+                                          Text("${getRepairment.repairHistoryResponse!.historyOfRepairs?[index].updatedAt?.split("T")[0]}", style: TextStyle(color: Colors.grey, fontSize: 12),),
                                         ],
                                       ))),
                               SizedBox(
@@ -168,14 +170,14 @@ class _ProtestScreenState extends State<ProtestScreen> {
                                 width: 60,
                                 height: 60,
                                 decoration: BoxDecoration(
-                                  color: getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="pending"?Colors.yellow.withOpacity(0.4):Colors.green.withOpacity(0.4),
+                                  color: getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?Colors.yellow.withOpacity(0.4):Colors.green.withOpacity(0.4),
                                   borderRadius: BorderRadius.all(Radius.circular(15)),
                                 ),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="pending"?Icons.more_horiz_rounded:Icons.check, color: cTheme.primaryColorDark,),
-                                    Text(getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="pending"?lChanger[16]["status2"]:lChanger[16]["status2"], style: TextStyle(fontSize: 8),),
+                                    Icon(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?Icons.more_horiz_rounded:Icons.check, color: cTheme.primaryColorDark,),
+                                    Text(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?lChanger[16]["status2"]:lChanger[16]["status2"], style: TextStyle(fontSize: 8),),
                                   ],
                                 ),
                               ),
@@ -190,6 +192,6 @@ class _ProtestScreenState extends State<ProtestScreen> {
             ),
           );
         }
-      );
+    );
   }
 }

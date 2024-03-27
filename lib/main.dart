@@ -15,7 +15,9 @@ import 'package:graduation_project/controllers/get_payment.dart';
 import 'package:graduation_project/controllers/get_payment_status.dart';
 import 'package:graduation_project/controllers/get_repairment.dart';
 import 'package:graduation_project/controllers/get_token.dart';
+import 'package:graduation_project/controllers/get_user_payments.dart';
 import 'package:graduation_project/controllers/get_user_properties.dart';
+import 'package:graduation_project/controllers/get_what_is_paid.dart';
 import 'package:graduation_project/controllers/language_changer.dart';
 import 'package:graduation_project/controllers/theme_changer.dart';
 import 'package:graduation_project/controllers/update_user_controller.dart';
@@ -23,6 +25,8 @@ import 'package:graduation_project/custom%20theme%20data/themes.dart';
 import 'package:graduation_project/models/auth_request.dart';
 import 'package:graduation_project/models/auth_response.dart';
 import 'package:graduation_project/presentation/about_app.dart';
+import 'package:graduation_project/presentation/faq_screen.dart';
+import 'package:graduation_project/presentation/splash_widget.dart';
 import 'package:graduation_project/presentation_depricated/community_screen.dart';
 import 'package:graduation_project/presentation_depricated/fib_login.dart';
 import 'package:graduation_project/presentation_depricated/maintenance_screen.dart';
@@ -74,21 +78,21 @@ Future<void> main() async {
           ChangeNotifierProvider(
             create: (BuildContext context) => GetPayment(),
           ),
-          ChangeNotifierProvider(
-            create: (BuildContext context)=> GetAuth(),
-          ),
-          ChangeNotifierProvider(
-            create: (BuildContext context)=> GetPaymentStatus(),
-          ),
-          ChangeNotifierProvider(
-            create: (BuildContext context)=> GetFIBAuth(),
-          ),
+          // ChangeNotifierProvider(
+          //   create: (BuildContext context)=> GetAuth(),
+          // ),
+          // ChangeNotifierProvider(
+          //   create: (BuildContext context)=> GetPaymentStatus(),
+          // ),
+          // ChangeNotifierProvider(
+          //   create: (BuildContext context)=> GetFIBAuth(),
+          // ),
           ChangeNotifierProvider(
               create: (BuildContext context)=> GetGetSelf(),
           ),
-          ChangeNotifierProvider(
-            create: (BuildContext context)=> GetUpdateUserController(),
-          ),
+          // ChangeNotifierProvider(
+          //   create: (BuildContext context)=> GetUpdateUserController(),
+          // ),
           ChangeNotifierProvider(
             create: (BuildContext context)=> GetUserProperties(),
           ),
@@ -97,6 +101,12 @@ Future<void> main() async {
           ),
           ChangeNotifierProvider(
             create: (BuildContext context)=> GetRepairment(),
+          ),
+          ChangeNotifierProvider(
+              create: (BuildContext context)=>GetWhatIsPaid(),
+          ),
+          ChangeNotifierProvider(
+            create: (BuildContext context)=>GetUserPayments(),
           ),
         ],
         child: MyApp(),
@@ -175,7 +185,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.of(context, rootNavigator: false).pushReplacement(
       MaterialPageRoute(
         builder: (context) =>
-            // const RepairScreen(),
+            // const HomeScreen(),
         firstTime == false ? (rToken == null ? const LoginScreen() : const HomeScreen()) : const OnboardingScreen(),
       ),
     );
@@ -200,8 +210,10 @@ class _MyHomePageState extends State<MyHomePage> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<ThemeChanger>(context, listen: false).getDefaultTheme();
       Provider.of<LanguageChanger>(context, listen: false).readJson();
-      Provider.of<GetToken>(context, listen: false).readToken("accessToken");
+      // Provider.of<GetToken>(context, listen: false).readToken("accessToken");
       Provider.of<GetGetSelf>(context, listen: false).getGetSelf();
+      // Provider.of<GetUserPayments>(context, listen: false).getThisMonthPayment("houses", "2");
+      // Provider.of<GetUserProperties>(context, listen: false).getUserProperties();
       // print(">>>>>>>>>>>>>>>${Provider.of<GetToken>(context, listen: false).dToken}");
       // Provider.of<GetToken>(context, listen: false).readToken();
       // Map<String, dynamic> decodedToken = {};
@@ -223,50 +235,4 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class SplashWidget extends StatefulWidget {
-  const SplashWidget({super.key});
 
-  @override
-  State<SplashWidget> createState() => _SplashWidgetState();
-}
-
-class _SplashWidgetState extends State<SplashWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xff155E7D),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const SizedBox(),
-            Container(
-              width: 70,
-              height: 70,
-              padding: const EdgeInsets.only(top: 10),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20),
-                ),
-              ),
-              child: SvgPicture.asset(
-                  height: 40,
-                  width: 40,
-                  "images/007-boy-2.svg",
-                  semanticsLabel: 'App logo'),
-            ).animate().shimmer(duration: 3.seconds, curve: Curves.easeOut),
-            const Padding(
-              padding: EdgeInsets.only(bottom: 20),
-              child: Text(
-                "RCMS",
-                style: TextStyle(
-                    color: Colors.white, fontSize: 20, fontFamily: "NotoSans"),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}

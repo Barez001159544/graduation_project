@@ -1,4 +1,5 @@
 import "dart:convert";
+import "package:flutter/painting.dart";
 import 'package:flutter_svg/svg.dart';
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
@@ -8,8 +9,8 @@ import "package:graduation_project/controllers/get_fib_auth.dart";
 import "package:graduation_project/controllers/get_payment.dart";
 import "package:graduation_project/controllers/get_payment_status.dart";
 import "package:graduation_project/controllers/get_token.dart";
+import "package:graduation_project/controllers/get_what_is_paid.dart";
 import "package:graduation_project/presentation/payment_scanner_screen.dart";
-import "package:graduation_project/services_fib/fib_authentication/fib_auth.dart";
 import "package:graduation_project/constants/tokenManager.dart";
 import "package:provider/provider.dart";
 
@@ -34,6 +35,9 @@ bool isDark = true;
 ThemeData cTheme = isDark ? lightTheme : darkTheme;
 
 class _PaymentScreenState extends State<PaymentScreen> {
+
+  PageController pageViewController= PageController();
+  int currentPage=0;
   @override
   Widget build(BuildContext context) {
     double wid = MediaQuery.of(context).size.width;
@@ -41,8 +45,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
     bool or=MediaQuery.of(context).orientation==Orientation.landscape?true:false;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
-    return Consumer4<LanguageChanger, GetPayment, GetToken, GetFIBAuth>(
-          builder: (_, languageChanger, getPayment, getToken, getFIBAuth, __) {
+    return Consumer3<LanguageChanger, GetPayment, GetWhatIsPaid>(
+          builder: (_, languageChanger, getPayment, getWhatIsPaid, __) {
             lChanger= languageChanger.data;
             return Directionality(
               textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
@@ -57,25 +61,65 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     child: Column(
                       children: [
                         Expanded(
-                          child: Container(
-                            width: wid,
-                            // height: wid,
-                            padding: EdgeInsets.all(40),
-                            decoration: BoxDecoration(
-                              color: cTheme.primaryColorLight,
-                              borderRadius: BorderRadius.all(Radius.circular(50)),
-                              image: DecorationImage(
-                                scale: 1.8,
-                                image: AssetImage("images/payment.png",),
-                              ),
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
+                          child: Stack(
+                            children: [
+                              PageView.builder(
+                                itemCount: 2,
+                                  controller: pageViewController,
+                                  onPageChanged: (cPage){
+                                  print(cPage);
+                                  setState(() {
+                                    currentPage=cPage;
+                                  });
+                                  },
+                                  itemBuilder: (context, index){
+                                return Container(
+                                  width: wid,
+                                  // height: wid,
+                                  padding: EdgeInsets.all(20),
+                                  decoration: BoxDecoration(
+                                    color: cTheme.primaryColorLight,
+                                    borderRadius: BorderRadius.all(Radius.circular(50)),
+                                    // image: DecorationImage(
+                                    //   scale: 2,
+                                    //   image: AssetImage("images/payment.png",),
+                                    // ),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Expanded(
+                                        child: Image.asset(
+                                          scale: 2,
+                                          "images/${index==0?"receive-money":"songkran"}.png",
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }),
 
-                              ],
-                            ),
-                          ),
+                              Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    currentPage==0?SizedBox():IconButton(
+                                        onPressed: (){
+                                          pageViewController.previousPage(duration: Duration(seconds: 1), curve: Curves.ease);
+                                        },
+                                        icon: Icon(Icons.keyboard_arrow_left_rounded, color: cTheme.primaryColorDark,),
+                                    ),
+                                    currentPage==1?SizedBox():IconButton(
+                                        onPressed: (){
+                                          pageViewController.nextPage(duration: Duration(seconds: 1), curve: Curves.ease);
+                                        },
+                                        icon: Icon(Icons.keyboard_arrow_right_rounded, color: cTheme.primaryColorDark,),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )
                         ),
                         SizedBox(
                           height: 10,
@@ -89,16 +133,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           ),
                           child: Column(
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.baseline,
-                                textBaseline: TextBaseline.alphabetic,
-                                children: [
-                                  Text("8/10", style: TextStyle(fontSize: 32, color: cTheme.primaryColorDark),),
-                                  SizedBox(width: 10,),
-                                  Text(lChanger[7]["months"], style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
-                                ],
-                              ),
+                              Text(currentPage==0?"Monthly Fee":"Monthly Water", style: TextStyle(fontSize: 24, color: cTheme.primaryColorDark),),
                               SizedBox(
                                 height: 10,
                               ),
@@ -157,8 +192,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                       });
                                   var request= FIBLoginParameters("client_credentials", "koya-uni", "1fb32463-c472-4572-8797-670b15be7e3c");
                                   // FIBAuthentication rInfo= FIBAuthentication();
-                                  await getFIBAuth.getAuth(request);
-                                  var logSuccess= getFIBAuth.fibLoginResponse; //await rInfo.fibAuthenticate(request);
+                                  await getPayment.getAuth(request);
+                                  var logSuccess= getPayment.fibLoginResponse; //await rInfo.fibAuthenticate(request);
                                   // print(logSuccess);
                                   if(logSuccess!=null){
                                     print("--------------");
@@ -166,6 +201,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                     /// TokenManager().saveToken("FIBToken", logSuccess.accessToken);
                                     print("--------------");
                                     await getPayment.getPaymentInformation(logSuccess.accessToken, 1);
+                                    getWhatIsPaid.getWhatIsPaid(currentPage==0?"Fee":"Water", "1");
                                     if(getPayment.createPaymentResponse?.qrCode==null){
                                       CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred", cTheme.primaryColorLight, cTheme.primaryColorDark);
                                       print("ID or Secret invalid!: 2");

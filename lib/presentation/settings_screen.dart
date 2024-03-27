@@ -7,11 +7,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:graduation_project/controllers/get_token.dart';
+import 'package:graduation_project/controllers/get_user_properties.dart';
 import 'package:graduation_project/controllers/language_changer.dart';
 import 'package:graduation_project/controllers/theme_changer.dart';
 import 'package:graduation_project/presentation/about_app.dart';
 import 'package:graduation_project/presentation/forgot_password_reset.dart';
 import 'package:graduation_project/presentation/login_screen.dart';
+import 'package:graduation_project/presentation/payment_history.dart';
 import 'package:graduation_project/presentation/profile_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +21,12 @@ import '../constants/confirmation_custom_alert_dialog.dart';
 import '../constants/custom_appbar.dart';
 import '../constants/custom_dropdown_menu.dart';
 import '../constants/custom_switch_notification.dart';
+import '../constants/custom_toast_notification.dart';
+import '../constants/loading_indicator.dart';
 import '../custom theme data/themes.dart';
+import '../models/fully_aparments_reponse.dart';
+import '../models/fully_houses_response.dart';
+import 'faq_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -32,14 +39,19 @@ class SettingsScreen extends StatefulWidget {
 
 
 class _SettingsScreenState extends State<SettingsScreen> {
+
+  String? selectedProperty;
+  String? selectedType;
+  int? selectedId;
+
   @override
   Widget build(BuildContext context) {
     double wid = MediaQuery.of(context).size.width;
     double hei = MediaQuery.of(context).size.height;
     bool or=MediaQuery.of(context).orientation==Orientation.landscape?true:false;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
-    return Consumer3<ThemeChanger, LanguageChanger, GetToken>(
-        builder: (_, tChanger, lChanger, getToken, child) {
+    return Consumer4<ThemeChanger, LanguageChanger, GetToken, GetUserProperties>(
+        builder: (_, tChanger, lChanger, getToken, getUserProperties, child) {
           return Directionality(
             textDirection: lChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
             child: Scaffold(
@@ -184,11 +196,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   //   borderColorDisEnable: Colors.transparent,
                                   // ),),
                                   GestureDetector(
-                                    onTap: (){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context){
-                                        return AboutApp();
-                                      }));
-                                    },
+                                      onTap: (){
+                                        Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                                          return FAQScreen();
+                                        }));
+                                      },
                                       child: settings("FAQ", cTheme.primaryColorDark, wid, SizedBox(),)),
                                   GestureDetector(
                                       onTap: (){
@@ -196,7 +208,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           return AboutApp();
                                         }));
                                       },
-                                      child: settings(lChanger.data[0]["about"], cTheme.primaryColorDark, wid, SizedBox(),)),
+                                      child: settings(lChanger.data[0]["about"], cTheme.primaryColorDark, wid,
+                                        SizedBox(),
+                                      )),
+
                                 ],
                               ),
                             ),

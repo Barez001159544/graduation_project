@@ -33,58 +33,79 @@ class _TaxiServicesState extends State<TaxiServices> {
             return Directionality(
               textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
               child: Scaffold(
-              backgroundColor: cTheme.scaffoldBackgroundColor,
-              appBar: CustomAppBar(cTheme.scaffoldBackgroundColor, lChanger[10]["title"], cTheme.primaryColorDark, context),
-              body: SafeArea(
-                child: Center(
-                  child: Flex(
-                    direction: or?Axis.horizontal:Axis.vertical,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(50.0),
-                        child: Image.asset("images/car-taxi.png", fit: BoxFit.contain,),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                backgroundColor: cTheme.scaffoldBackgroundColor,
+                appBar: CustomAppBar( cTheme.scaffoldBackgroundColor, lChanger[10]["title"], cTheme.primaryColorDark, context), ///Color(0xff08A99F)
+                body: SafeArea(
+                  child: Center(
+                    child: SizedBox(
+                      width: wid>600?wid/2:wid-20,
+                      height: hei-100,
+                      child: Column(
                         children: [
-                          // Container(
-                          //   width: 100,
-                          //   height: 10,
-                          //   decoration: BoxDecoration(
-                          //     color: cTheme.primaryColor,
-                          //     borderRadius: BorderRadius.all(
-                          //       Radius.circular(50),
-                          //     ),
-                          //   ),
-                          // ),
-                          SizedBox(
-                            height: 20,
+                          Expanded(
+                              child: Container(
+                                width: wid,
+                                // height: wid,
+                                padding: EdgeInsets.all(20),
+                                decoration: BoxDecoration(
+                                  color: cTheme.primaryColorLight,
+                                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                                  // image: DecorationImage(
+                                  //   scale: 2,
+                                  //   image: AssetImage("images/payment.png",),
+                                  // ),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Image.asset(
+                                      scale: 2,
+                                      "images/car-taxi.png",
+                                    ),
+                                    Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Text("Monthly Fee")),
+                                  ],
+                                ),
+                              )
                           ),
-                          Text(lChanger[10]["subtitle"], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: cTheme.primaryColorDark),),
                           SizedBox(
                             height: 10,
                           ),
-                          Text(lChanger[10]["subtitle2"], style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark), textAlign: TextAlign.center,),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          MainBtn(wid>600?wid*0.35-80:wid-40, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[10]["btn"], () {
-                            setState(() {
-                              //
-                            });
-                          }),
-                          SizedBox(
-                            height: 50,
+                          Container(
+                            width: wid,
+                            padding: EdgeInsets.all(40),
+                            decoration: BoxDecoration(
+                              color: cTheme.primaryColorLight,
+                              borderRadius: BorderRadius.all(Radius.circular(50)),
+                            ),
+                            child: Column(
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text(lChanger[10]["subtitle"], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: cTheme.primaryColorDark),),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(lChanger[10]["subtitle2"], style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark), textAlign: TextAlign.center,),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 30,
+                                ),
+                                MainBtn(wid, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[10]["btn"],
+                                      () async {},
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-                        ),
             );
         }
       );

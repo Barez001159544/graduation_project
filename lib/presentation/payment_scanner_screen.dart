@@ -11,6 +11,9 @@ import 'package:graduation_project/controllers/get_fib_auth.dart';
 import 'package:graduation_project/controllers/get_payment.dart';
 import 'package:graduation_project/controllers/get_payment_status.dart';
 import 'package:graduation_project/controllers/get_token.dart';
+import 'package:graduation_project/controllers/get_user_payments.dart';
+import 'package:graduation_project/controllers/get_what_is_paid.dart';
+import 'package:graduation_project/models/house_payment_request.dart';
 import 'package:graduation_project/presentation/home_screen.dart';
 import 'package:graduation_project/constants/tokenManager.dart';
 import 'package:provider/provider.dart';
@@ -23,10 +26,13 @@ import '../constants/custom_dropdown_menu.dart';
 import '../constants/custom_toast_notification.dart';
 import '../constants/loading_indicator.dart';
 import '../constants/main_btn.dart';
+import '../controllers/get_user_properties.dart';
 import '../controllers/language_changer.dart';
 import '../controllers/theme_changer.dart';
 import '../custom theme data/themes.dart';
 import '../models/fib_auth_parameters.dart';
+import '../models/fully_aparments_reponse.dart';
+import '../models/fully_houses_response.dart';
 
 class PaymentScannerScreen extends StatefulWidget {
   const PaymentScannerScreen({super.key});
@@ -76,6 +82,24 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
   //   super.initState();
   //   // callToken();
   // }
+
+  TextEditingController titleController= TextEditingController();
+  TextEditingController descriptionController= TextEditingController();
+  String? compliant;
+  String? selectedProperty;
+  String? selectedType;
+  int? selectedId;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<GetUserProperties>(context, listen: false).getUserProperties();
+      Provider.of<GetUserProperties>(context, listen: false).getAllHouses();
+      Provider.of<GetUserProperties>(context, listen: false).getAllApartments();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double wid = MediaQuery.of(context).size.width;
@@ -83,8 +107,8 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
     bool or=MediaQuery.of(context).orientation==Orientation.landscape?true:false;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark?darkTheme:lightTheme;
     List lChanger;
-    return Consumer5<LanguageChanger, GetPayment, GetPaymentStatus, GetFIBAuth, GetToken>(
-          builder: (_, languageChanger, getPayment, getPaymentStatus, getFIBAuth, getToken, __) {
+    return Consumer5<LanguageChanger, GetPayment, GetUserProperties, GetWhatIsPaid, GetUserPayments>(
+          builder: (_, languageChanger, getPayment, getUserProperties, getWhatIsPaid, getUserPayments, __) {
             lChanger= languageChanger.data;
             // Payment().checkPaymentStatus(getPayment.createPaymentResponse!.paymentId);
             return Directionality(
@@ -93,7 +117,7 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
               backgroundColor: cTheme.primaryColorLight,
               appBar: CustomAppBar(cTheme.primaryColorLight, lChanger[8]["title"], cTheme.primaryColorDark, context),
               body: SafeArea(
-                child: getPayment.isLoading?Center(
+                child: (getPayment.isLoading || getUserPayments.isLoading)?Center(
                   child: LoadingIndicator(cTheme.scaffoldBackgroundColor),
                 ):Flex(
                   direction: or?Axis.horizontal:Axis.vertical,
@@ -124,6 +148,9 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                               CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), "Copied to clipboard", cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark);
                             },
                               child: Text(getPayment.createPaymentResponse!.readableCode, style: TextStyle(fontSize: 18, color: cTheme.primaryColorDark),),
+                          ),
+                          SizedBox(
+                            height: 10,
                           ),
                           // Text(getPaymentStatus.isLoading?"Loading...":"${getPaymentStatus.fibCheckPaymentStatusResponse?.status}", style: TextStyle(color: cTheme.primaryColorDark),),
                           Tooltip(
@@ -164,24 +191,43 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                           //       borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
                           //     ),
                           //     child:
+                          Text("${getWhatIsPaid.whatIsPaidModel?.type}, ${getWhatIsPaid.whatIsPaidModel?.amount}"),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 // crossAxisAlignment: CrossAxisAlignment.baseline,
                                 // textBaseline: TextBaseline.alphabetic,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.baseline,
-                                    textBaseline: TextBaseline.alphabetic,
-                                    children: [
-                                      Text("500,000", style: TextStyle(fontSize: 28, color: Colors.grey.shade700),),
-                                      Text(" IQD", style: TextStyle(color: Colors.grey.shade700),),
-                                    ],
-                                  ),
-                                  CustomDropDownMenu("Property", 110, 30, 5, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], null, (val) {
-                                    print(val);
-                                    // lChanger.changeLanguage(val);
-                                  })
+                                  // Row(
+                                  //   mainAxisAlignment: MainAxisAlignment.center,
+                                  //   crossAxisAlignment: CrossAxisAlignment.baseline,
+                                  //   textBaseline: TextBaseline.alphabetic,
+                                  //   children: [
+                                  //     Text("500,000", style: TextStyle(fontSize: 28, color: Colors.grey.shade700),),
+                                  //     Text(" IQD", style: TextStyle(color: Colors.grey.shade700),),
+                                  //   ],
+                                  // ),
+                                  // CustomDropDownMenu("Property", 110, 30, 5, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], null, (val) {
+                                  //   print(val);
+                                  //   // lChanger.changeLanguage(val);
+                                  // }),
+                                  // ------------------------------
+                                  getUserProperties.isLoading?Center(
+                                    child: LoadingIndicator(cTheme.primaryColorDark),
+                                  ):SpecialCustomDropDownMenu("Property", 150, 30, 5, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.houses, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.apartments, selectedProperty, (val) {
+                                    setState(() {
+                                      selectedProperty=val;
+                                    });
+                                    selectedType="${val}".split("-")[0].toLowerCase();
+                                    if("$val".split("-")[0]=="Houses"){
+                                      EachHouseResponse? obj = getUserProperties.fullyHousesResponse?.eachHouseResponse?.firstWhere((obj) => obj?.name == "${val}".split("-")[1],);
+                                      selectedId=obj?.id;
+                                      print(">>>>>>>>>${selectedId}");
+                                    }else{
+                                      EachApartmentsResponse? obj = getUserProperties.fullyApartmentsResponse?.eachApartmentsResponse?.firstWhere((obj) => obj?.name == "${val}".split("-")[1],);
+                                      selectedId=obj?.id;
+                                      print(">>>>>>>>>${selectedId}");
+                                    }
+                                  }),
                                 ],
                               ),
                           //   ),
@@ -207,8 +253,8 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                                     // crossAxisAlignment: CrossAxisAlignment.baseline,
                                     // textBaseline: TextBaseline.alphabetic,
                                     children: [
-                                      Text(lChanger[8]["from"], style: TextStyle(color: cTheme.primaryColorDark),),
-                                      Text(lChanger[8]["you"], style: TextStyle(fontSize: 20, color: cTheme.primaryColorDark),),
+                                      Text("${getWhatIsPaid.whatIsPaidModel?.amount}0000000", style: TextStyle(fontSize: 20, color: cTheme.primaryColorDark),),
+                                      Text("IQD", style: TextStyle(color: cTheme.primaryColorDark),),
                                     ],
                                   ),
                                 ),
@@ -219,7 +265,7 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                                                       color: cTheme.primaryColorDark,
                                                       borderRadius: BorderRadius.all(Radius.circular(100)),
                                                     ),
-                                                      child: Icon(Icons.arrow_forward_rounded, color: cTheme.primaryColorLight)),
+                                                      child: Icon(Icons.arrow_upward_rounded, color: cTheme.primaryColorLight)),
                                                   SizedBox(height: 5,),
                                 Expanded(
                                   child: Column(
@@ -228,8 +274,8 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                                     // crossAxisAlignment: CrossAxisAlignment.baseline,
                                     // textBaseline: TextBaseline.alphabetic,
                                     children: [
-                                      Text(lChanger[8]["to"], style: TextStyle(color: cTheme.primaryColorDark),),
-                                      Text("MRF", style: TextStyle(fontSize: 20, color: cTheme.primaryColorDark),),
+                                      Text("${selectedProperty?.split("-")[1]??"N/A"}", style: TextStyle(fontSize: 20, color: cTheme.primaryColorDark),),
+                                      Text("${selectedProperty?.split("-")[0]??"N/A"}", style: TextStyle(color: cTheme.primaryColorDark),),
                                     ],
                                   ),
                                 ),
@@ -241,49 +287,64 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                             height: 20,
                           ),
                           MainBtn(wid>600?wid*0.4:wid-40, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[8]["btn"], () async {
-                            // Navigator.of(context).pop();
-                            showDialog(
-                                context: context,
-                                // barrierColor: cTheme.backgroundColor,
-                                builder: (BuildContext context){
-                                  return AlertDialog(
-                                    actionsPadding: EdgeInsets.all(0),
-                                    contentPadding: EdgeInsets.all(5),
-                                    backgroundColor: Colors.transparent,
-                                    surfaceTintColor: Colors.transparent,
-                                    // shape: RoundedRectangleBorder(
-                                    //   borderRadius: BorderRadius.circular(45),
-                                    // ),
-                                    content: LoadingIndicator(cTheme.scaffoldBackgroundColor),
-                                  );
-                                });
-                            var request= FIBLoginParameters("client_credentials", "koya-uni", "1fb32463-c472-4572-8797-670b15be7e3c");
-                            await getFIBAuth.getAuth(request);
-                            var logSuccess= getFIBAuth.fibLoginResponse; //await rInfo.fibAuthenticate(request);
-                            if(logSuccess!=null){
-                              // await getToken.writeToken("FIBToken", logSuccess.accessToken);
-                              await getPaymentStatus.getPaymentStatus(getPayment.createPaymentResponse!.paymentId, logSuccess.accessToken);
-                              if(getPaymentStatus.fibCheckPaymentStatusResponse?.status!="PAID"){
-                                Navigator.of(context).pop();
-                                print('Not PAID');
-                                CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[8]["error"], cTheme.primaryColorLight, cTheme.primaryColorDark);
-                              }else{
-                                print(getPaymentStatus.fibCheckPaymentStatusResponse!.paidBy?.name);
-                                CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[8]["success"], cTheme.primaryColorLight, cTheme.primaryColorDark);
-                                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
-                                  return HomeScreen();
-                                }), (route) => false);
-                                /// CustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, "Title", "Some text will be shown here", "Thumbs Up", true, context, (){
-                                ///   // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
-                                ///   //   return Test();
-                                ///   // }), (route) => false);
-                                ///   // Navigator.of(context).pop();
-                                /// }, cTheme.primaryColor);
-                              }
+                            if(selectedProperty==null){
+                              CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "You haven't selected any property!", cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark);
                             }else{
-                              CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[8]["error"], cTheme.primaryColorLight, cTheme.primaryColorDark);
+                              // Navigator.of(context).pop();
+                              // showDialog(
+                              //     context: context,
+                              //     // barrierColor: cTheme.backgroundColor,
+                              //     builder: (BuildContext context){
+                              //       return AlertDialog(
+                              //         actionsPadding: EdgeInsets.all(0),
+                              //         contentPadding: EdgeInsets.all(5),
+                              //         backgroundColor: Colors.transparent,
+                              //         surfaceTintColor: Colors.transparent,
+                              //         content: LoadingIndicator(cTheme.scaffoldBackgroundColor),
+                              //       );
+                              //     });
+                              var request= FIBLoginParameters("client_credentials", "koya-uni", "1fb32463-c472-4572-8797-670b15be7e3c");
+                              await getPayment.getAuth(request);
+                              var logSuccess= getPayment.fibLoginResponse; //await rInfo.fibAuthenticate(request);
+                              if(logSuccess!=null){
+                                await getPayment.getPaymentStatus(getPayment.createPaymentResponse!.paymentId, logSuccess.accessToken);
+                                if(getPayment.fibCheckPaymentStatusResponse?.status!="PAID"){
+                                  // Navigator.of(context).pop();
+                                  print('Not PAID');
+                                  CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[8]["error"], cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark);
+                                }else{
+                                  print(getPayment.fibCheckPaymentStatusResponse!.paidBy?.name);
+                                  if(getWhatIsPaid.whatIsPaidModel?.type=="Fee"){
+                                    print("$selectedType & $selectedId");
+                                    await getUserPayments.payHouse(HousePaymentRequest(selectedType, selectedId));
+                                    if(getUserPayments.status=="OK"){
+                                      print("${getUserPayments.status}");
+                                      CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[8]["success"], cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
+                                        return HomeScreen();
+                                      }), (route) => false);
+                                    }else{
+                                      // Navigator.of(context).pop();
+                                      CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[8]["error"], cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark);
+                                    }
+                                  }else{
+                                    /// Pay for Water here...
+                                  }
+                                  // CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[8]["success"], cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                  // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
+                                  //   return HomeScreen();
+                                  // }), (route) => false);
+                                  /// CustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, "Title", "Some text will be shown here", "Thumbs Up", true, context, (){
+                                  ///   // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
+                                  ///   //   return Test();
+                                  ///   // }), (route) => false);
+                                  ///   // Navigator.of(context).pop();
+                                  /// }, cTheme.primaryColor);
+                                }
+                              }else{
+                                CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[8]["error"], cTheme.primaryColorLight, cTheme.primaryColorDark);
+                              }
                             }
-
                           }),
                           // SizedBox(
                           //   height: 10,

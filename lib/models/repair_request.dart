@@ -15,7 +15,7 @@ class RepairRequest{
 
   Map<String, dynamic> toJson()=>{
     'title': title,
-    'repairment_component': repairmentComponents,
+    'repairment_components': repairmentComponents,
     'description': description,
     "type": type,
     "property_id": propertyId,

@@ -4,6 +4,7 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:graduation_project/controllers/get_repairment.dart";
 import "package:graduation_project/models/repair_request.dart";
 import "package:graduation_project/presentation/payment_screen.dart";
+import "package:graduation_project/presentation/repair_history.dart";
 import "package:provider/provider.dart";
 
 import "../constants/confirmation_custom_alert_dialog.dart";
@@ -14,9 +15,12 @@ import "../constants/custom_textfields.dart";
 import "../constants/custom_toast_notification.dart";
 import "../constants/loading_indicator.dart";
 import "../constants/main_btn.dart";
+import "../controllers/get_user_properties.dart";
 import "../controllers/language_changer.dart";
 import "../controllers/theme_changer.dart";
 import "../custom theme data/themes.dart";
+import "../models/fully_aparments_reponse.dart";
+import "../models/fully_houses_response.dart";
 import "home_screen.dart";
 import "login_screen.dart";
 
@@ -52,6 +56,21 @@ class _RepairScreenState extends State<RepairScreen> {
   List indexes=[];
   TextEditingController textEditingController= TextEditingController();
   String? selected;
+
+  String? selectedProperty;
+  String? selectedType;
+  int? selectedId;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<GetUserProperties>(context, listen: false).getUserProperties();
+      Provider.of<GetUserProperties>(context, listen: false).getAllHouses();
+      Provider.of<GetUserProperties>(context, listen: false).getAllApartments();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double wid = MediaQuery.of(context).size.width;
@@ -59,8 +78,8 @@ class _RepairScreenState extends State<RepairScreen> {
     bool or=MediaQuery.of(context).orientation==Orientation.landscape?true:false;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
-    return Consumer3<ThemeChanger, LanguageChanger, GetRepairment>(
-          builder: (_, tChanger, languageChanger, getRepairment, child) {
+    return Consumer4<ThemeChanger, LanguageChanger, GetRepairment, GetUserProperties>(
+          builder: (_, tChanger, languageChanger, getRepairment, getUserProperties, child) {
             lChanger=languageChanger.data;
           return Directionality(
             textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
@@ -144,16 +163,42 @@ class _RepairScreenState extends State<RepairScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              CustomDropDownMenu("Property", wid>500?wid*0.35-80:wid/2-25, wid>500?62.0:72.0, wid, cTheme.primaryColorLight, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], selected, (val) {
-                                print(val);
-                                setState(() {
-                                  selected=val;
-                                });
-                                // lChanger.changeLanguage(val);
-                              }),
+                              // CustomDropDownMenu("Property", wid>500?wid*0.35-80:wid/2-25, wid>500?62.0:72.0, wid, cTheme.primaryColorLight, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], selected, (val) {
+                              //   print(val);
+                              //   setState(() {
+                              //     selected=val;
+                              //   });
+                              //   // lChanger.changeLanguage(val);
+                              // }),
+                              // -----------------------------
+                              Theme(
+                                data: cTheme.copyWith(
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                ),
+                                child: getUserProperties.isLoading?Center(
+                                  child: LoadingIndicator(cTheme.primaryColorLight),
+                                ):SpecialCustomDropDownMenu("Property", wid>500?wid*0.35-80:wid/2-25, wid>500?62.0:72.0, wid, cTheme.primaryColorLight, cTheme.primaryColorDark, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.houses, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.apartments, selectedProperty, (val) {
+                                  setState(() {
+                                    selectedProperty=val;
+                                  });
+                                  selectedType="${val}".split("-")[0].toLowerCase();
+                                  if("$val".split("-")[0]=="Houses"){
+                                    EachHouseResponse? obj = getUserProperties.fullyHousesResponse?.eachHouseResponse?.firstWhere((obj) => obj?.name == "${val}".split("-")[1],);
+                                    selectedId=obj?.id;
+                                    print(">>>>>>>>>${selectedId}");
+                                  }else{
+                                    EachApartmentsResponse? obj = getUserProperties.fullyApartmentsResponse?.eachApartmentsResponse?.firstWhere((obj) => obj?.name == "${val}".split("-")[1],);
+                                    selectedId=obj?.id;
+                                    print(">>>>>>>>>${selectedId}");
+                                  }
+                                }),
+                              ),
+                              // -----------------------------
                               SizedBox(width: 10,),
                               MainBtn(wid>500?wid*0.35-80:wid/2-25, wid>500?62.0:72.0, cTheme.primaryColor, lChanger[15]["btn"], () {
-                                if(indexes.isNotEmpty && selected!=null) {
+                                if(indexes.isNotEmpty && selectedProperty!=null && textEditingController.text!="") {
                                   print(indexes[0]);
                                   print(selected);
 
@@ -168,7 +213,7 @@ class _RepairScreenState extends State<RepairScreen> {
                                     showDialog(
                                         context: context,
                                         // barrierColor: cTheme.backgroundColor,
-                                        builder: (BuildContext context){
+                                        builder: (BuildContext ctx){
                                           return AlertDialog(
                                             actionsPadding: EdgeInsets.all(0),
                                             contentPadding: EdgeInsets.all(5),
@@ -183,20 +228,21 @@ class _RepairScreenState extends State<RepairScreen> {
                                         print(textEditingController.text);
                                         print(selected);
                                         print(items[indexes[0]]);
-                                        // await getRepairment.newRepair(RepairRequest(items[indexes[0]], "Electronic Devices", "This is the descirpion for fixing electronic devices reparirment request.", "houses", 3));
-                                    if(getRepairment.status=="A+"){
-                                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context){
-                                        return HomeScreen();
-                                      }), (route) => false);
+                                        await getRepairment.newRepair(RepairRequest("television broken", "electronic components", "${textEditingController.text}", "$selectedType", selectedId));
+                                        Navigator.of(context).pop();
+                                        if(getRepairment.status=="OK"){
+                                      // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context){
+                                      //   return HomeScreen();
+                                      // }), (route) => false);
                                       CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), "Successfully Sent", cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                      Navigator.of(context).pop();
                                     }else{
                                       CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred", cTheme.primaryColorLight, cTheme.primaryColorDark);
-                                      Navigator.of(context).pop();
                                     }
                                   }, () {},
                                       cTheme.primaryColor);
                                 }else{
-                                  CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "Choose a property and an item please", cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                  CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "Do not leave any field empty", cTheme.primaryColorLight, cTheme.primaryColorDark);
                                 }
                                 }),
                             ],

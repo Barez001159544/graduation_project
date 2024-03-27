@@ -3,13 +3,30 @@ import 'package:graduation_project/models/fib_create_payment_monetary_value.dart
 import 'package:graduation_project/models/fib_create_payment_parameters.dart';
 import 'package:graduation_project/models/fib_create_payment_response.dart';
 
-import '../services_fib/fib_payment/fib_payment.dart';
+import '../models/fib_auth_parameters.dart';
+import '../models/fib_auth_response.dart';
+import '../models/fib_check_payment_status_response.dart';
+import '../services_fib/fib_services.dart';
 
 class GetPayment extends ChangeNotifier{
-  final service= FIBPayment();
+  final service= FIBServices();
   bool isLoading=false;
   FIBCreatePaymentResponse? _createPaymentResponse=null;
   FIBCreatePaymentResponse? get createPaymentResponse=> _createPaymentResponse;
+
+  FIBLoginResponse? _fibLoginResponse;
+  FIBLoginResponse? get fibLoginResponse=>_fibLoginResponse;
+
+  Future<void> getAuth(FIBLoginParameters fibLoginParameters) async{
+    isLoading=true;
+    notifyListeners();
+
+    var response= await service.fibAuthenticate(fibLoginParameters);
+    _fibLoginResponse=response;
+
+    isLoading=false;
+    notifyListeners();
+  }
   
   Future<void> getPaymentInformation(String token, int amount) async {
     isLoading=true;
@@ -24,6 +41,20 @@ class GetPayment extends ChangeNotifier{
     print("------------");
     print(_createPaymentResponse?.qrCode);
     print("------------");
+    isLoading=false;
+    notifyListeners();
+  }
+
+  FIBCheckPaymentStatusResponse? _fibCheckPaymentStatusResponse;
+  FIBCheckPaymentStatusResponse? get fibCheckPaymentStatusResponse=> _fibCheckPaymentStatusResponse;
+  Future<void> getPaymentStatus(String paymentId, String token)async{
+    isLoading=true;
+    notifyListeners();
+
+    var response=await service.fibCheckPaymentStatus(paymentId, token);
+    _fibCheckPaymentStatusResponse= response;
+    print("+++++++++++===${_fibCheckPaymentStatusResponse?.status}");
+
     isLoading=false;
     notifyListeners();
   }

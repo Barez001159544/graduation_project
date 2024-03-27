@@ -60,13 +60,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     bool or=MediaQuery.of(context).orientation==Orientation.landscape?true:false;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
-    return Consumer3<LanguageChanger, GetGetSelf, GetUpdateUserController>(
-          builder: (_, languageChanger, getGetSelf, getUpdateUserController, __) {
+    return Consumer2<LanguageChanger, GetGetSelf>(
+          builder: (_, languageChanger, getGetSelf, __) {
             lChanger= languageChanger.data;
             TextEditingController name= TextEditingController(text: getGetSelf.getSelfResponse?.userDetails?.name);
             TextEditingController phoneNumber= TextEditingController(text: getGetSelf.getSelfResponse?.userDetails?.phoneNumber);
             TextEditingController email= TextEditingController(text: getGetSelf.getSelfResponse?.userDetails?.email);
-            TextEditingController password= TextEditingController(text: getGetSelf.getSelfResponse?.userDetails?.phoneNumber);
+            TextEditingController password= TextEditingController(text: "messi12345");
             TextEditingController jobTitle= TextEditingController(text: getGetSelf.getSelfResponse?.userDetails?.jobTitle);
             TextEditingController age= TextEditingController(text: "${getGetSelf.getSelfResponse?.userDetails?.age}");
             return Directionality(
@@ -95,7 +95,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               physics: or?NeverScrollableScrollPhysics():ScrollPhysics(),
                               child: Flex(
                                 direction: or?Axis.horizontal:Axis.vertical,
-                                mainAxisAlignment: or?MainAxisAlignment.spaceAround:MainAxisAlignment.start,
+                                mainAxisAlignment: or?MainAxisAlignment.spaceAround:MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Container(
@@ -118,6 +118,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             color: cTheme.primaryColor,
                                             image: DecorationImage(
                                               image: AssetImage("images/007-boy-2.jpg"),
+                                              fit: BoxFit.cover
                                             ),
                                             borderRadius: BorderRadius.all(
                                               Radius.circular(1000),
@@ -147,20 +148,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                   // (or && hei>600)?SizedBox(height: 100,):SizedBox(),
                                   SizedBox(
-                                    height: or?hei-200:hei-116,
-                                    child: SingleChildScrollView(
-                                      physics: or?ScrollPhysics():NeverScrollableScrollPhysics(),
-                                      child: Column(
-                                        children: [
-                                          profileItem(lChanger[1]["ph1"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, name, false, true, FocusNode()),
-                                          profileItem(lChanger[1]["ph2"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, phoneNumber, false, false, FocusNode()),
-                                          profileItem(lChanger[1]["ph3"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, email, false, true, FocusNode()),
-                                          profileItem(lChanger[1]["ph4"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, password, obsecure, false, _focus),
-                                          profileItem("More1", cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, jobTitle, false, false, FocusNode()),
-                                          profileItem("More2", cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, age, false, true, FocusNode()),
-                                        ],
-                                      ),
-                                    ),
+                                    height: 50,
+                                  ),
+                                  Column(
+                                    children: [
+                                      profileItem(lChanger[1]["ph1"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, name, false, true, FocusNode()),
+                                      SizedBox(height: 10,),
+                                      profileItem(lChanger[1]["ph2"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, phoneNumber, false, false, FocusNode()),
+                                      SizedBox(height: 10,),
+                                      profileItem(lChanger[1]["ph3"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, email, false, true, FocusNode()),
+                                      SizedBox(height: 10,),
+                                      profileItem(lChanger[1]["ph4"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, password, obsecure, false, _focus),
+                                      SizedBox(height: 10,),
+                                      profileItem("More1", cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, jobTitle, false, false, FocusNode()),
+                                      SizedBox(height: 10,),
+                                      profileItem("More2", cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, age, false, true, FocusNode()),
+                                    ],
                                   ),
                                   // profileItem("label", wid, Icon(Icons.edit_rounded),),
                                   // profileItem("label", wid, Icon(Icons.edit_rounded),),
@@ -194,7 +197,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         content: LoadingIndicator(cTheme.scaffoldBackgroundColor),
                                       );
                                     });
-                                await getUpdateUserController.getUpdateUser(UpdateUserRequest(phoneNumber.text, jobTitle.text, "abcdef"));
+                                await getGetSelf.getUpdateUser(UpdateUserRequest(phoneNumber.text, jobTitle.text, "abcdef"));
                                 await getGetSelf.getGetSelf();
                                 Navigator.of(context).pop();
                                 if(getGetSelf.getSelfResponse?.status=="success"){
@@ -219,6 +222,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 Widget profileItem(String hint, Color cursorColor, Color txtColor, double wid,TextEditingController controller, bool obText, bool isReadOnly, FocusNode focus){
   return SizedBox(
     width: wid>500?500:wid,
+    height: 40,
     child: TextField(
       controller: controller,
       cursorColor: cursorColor,
@@ -229,7 +233,7 @@ Widget profileItem(String hint, Color cursorColor, Color txtColor, double wid,Te
         color: txtColor,
       ),
       decoration: InputDecoration(
-        suffixIcon: Icon(isReadOnly?Icons.edit_off_rounded:Icons.edit_rounded, color: Colors.grey,),
+        suffixIcon: Icon(isReadOnly?Icons.edit_off_rounded:Icons.edit_rounded, color: Colors.grey, size: 15,),
         hintText: hint,
         hintStyle: TextStyle(
           color: Colors.grey,

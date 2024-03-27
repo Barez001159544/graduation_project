@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:graduation_project/models/fib_check_payment_status_response.dart';
 
-import '../services_fib/fib_payment/fib_payment.dart';
+import '../services_fib/fib_services.dart';
 
 class GetPaymentStatus extends ChangeNotifier{
-  final service= FIBPayment();
+  final service= FIBServices();
   bool isLoading=false;
   FIBCheckPaymentStatusResponse? _fibCheckPaymentStatusResponse;
   FIBCheckPaymentStatusResponse? get fibCheckPaymentStatusResponse=> _fibCheckPaymentStatusResponse;

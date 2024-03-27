@@ -47,11 +47,10 @@ class Protest extends IProtest{
       );
       if(response.statusCode==200){
         print(response.body);
-        return "A+";
+        return "OK";
       }else{
         print(response.reasonPhrase);
         print(response.body);
-        return "F-";
       }
     }catch(e){
       print(e);

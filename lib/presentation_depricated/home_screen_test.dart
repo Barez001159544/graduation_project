@@ -53,8 +53,8 @@ class _HomeScreenTestState extends State<HomeScreenTest> {
       wid>600?DeviceOrientation.landscapeLeft:DeviceOrientation.portraitUp,
       wid>600?DeviceOrientation.landscapeRight:DeviceOrientation.portraitUp,
     ]);
-    return Consumer2<LanguageChanger, GetToken>(
-        builder: (_, languageChanger, getToken, __) {
+    return Consumer<LanguageChanger>(
+        builder: (_, languageChanger, __) {
           lChanger= languageChanger.data;
           return Directionality(
             textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,

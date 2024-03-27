@@ -45,8 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
       wid>600?DeviceOrientation.landscapeLeft:DeviceOrientation.portraitUp,
       wid>600?DeviceOrientation.landscapeRight:DeviceOrientation.portraitUp,
     ]);
-    return Consumer5<LanguageChanger, ThemeChanger, GetToken, GetAuth, GetGetSelf>(
-          builder: (_, languageChanger, tChanger, getToken, getAuth, getGetSelf, __) {
+    return Consumer4<LanguageChanger, ThemeChanger, GetToken, GetGetSelf>(
+          builder: (_, languageChanger, tChanger, getToken, getGetSelf, __) {
             lChanger= languageChanger.data;
             return Directionality(
               textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
@@ -54,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 resizeToAvoidBottomInset: false,
               backgroundColor: wid>600?cTheme.scaffoldBackgroundColor:cTheme.primaryColorLight,//Color(0xff155E7D),
               body: SafeArea(
-                child: getAuth.isLoading?LoadingIndicator(cTheme.scaffoldBackgroundColor):Stack(
+                child: (getGetSelf.isLoading || getToken.isLoading)?LoadingIndicator(cTheme.scaffoldBackgroundColor):Stack(
                   children: [
                     Center(
                       child: Container(
@@ -116,27 +116,27 @@ class _LoginScreenState extends State<LoginScreen> {
                                 // getAuth.isLoading?print("NABW"):print("BW");
                                   if(username.text.isEmpty || password.text.isEmpty){
                                     setState(() {
-                                      errorMessage="leave no field empty";
+                                      errorMessage=lChanger[2]["error1"];
                                     });
                                   }else {
-                                    await getAuth.authwemailpass(AuthRequest(username.text, password.text));
-                                    if(getAuth.data?.status=="OK"){
+                                    await getGetSelf.authwemailpass(AuthRequest(username.text, password.text));
+                                    if(getGetSelf.data?.status=="OK"){
                                       // TokenManager().saveToken("accessToken", getAuth.data!.bearerToken);
-                                      await getToken.writeToken("accessToken", getAuth.data!.bearerToken);
+                                      await getToken.writeToken("accessToken", getGetSelf.data!.bearerToken);
                                       await getGetSelf.getGetSelf();
                                       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context){
                                         return HomeScreen();
                                       }), (route) => false);
-                                      setState(() {
-                                        errorMessage="Successful";
-                                      });
+                                      // setState(() {
+                                      //   errorMessage="Successful";
+                                      // });
                                     }else{
                                       setState(() {
-                                        errorMessage="Invalid username or password";
+                                        errorMessage=lChanger[2]["error2"];
                                       });
                                     }
                                     print("**************");
-                                    print(getAuth.data?.status);
+                                    print(getGetSelf.data?.status);
                                     print("**************");
                                     // TokenManager().saveToken("AuthenticationToken", getAuth.data as String);
                                   }
@@ -190,7 +190,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               icon: Icon(tChanger.isDark?Icons.dark_mode_rounded:Icons.light_mode_rounded, color: cTheme.primaryColorDark,),
                             ),
                             //
-                            CustomDropDownMenu("Lang", 80, 30, 5, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], languageChanger.selectedLanguage, (val) {
+                            CustomDropDownMenu("Lang", 100, 30, 5, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], languageChanger.selectedLanguage, (val) {
                               print(val);
                               languageChanger.changeLanguage(val);
                             }),
