@@ -42,14 +42,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
     animationController.dispose();
     super.dispose();
   }
-  _preloadImages() {
-    images.map((img) => precacheImage(img, context));
-  }
-  @override
-  void didChangeDependencies() {
-    _preloadImages();
-    super.didChangeDependencies();
-  }
+  // _preloadImages() {
+  //   images.map((img) => precacheImage(img, context));
+  // }
+  // @override
+  // void didChangeDependencies() {
+  //   _preloadImages();
+  //   super.didChangeDependencies();
+  // }
   @override
   Widget build(BuildContext context) {
     double wid = MediaQuery.of(context).size.width;
@@ -105,7 +105,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
                             Text(
                               "${txt[ind]}",
                               style: TextStyle(
-                                  fontFamily: "NotoSans", fontSize: 18),
+                                  fontFamily: "NotoSans", fontSize: 18, color: Colors.black),
                               textAlign: TextAlign.center,
                             ),
                           ],

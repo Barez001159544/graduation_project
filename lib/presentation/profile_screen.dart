@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/constants/pick_media.dart';
 import 'package:graduation_project/controllers/get_get_self.dart';
 import 'package:graduation_project/controllers/theme_changer.dart';
-import 'package:graduation_project/controllers/update_user_controller.dart';
+import 'package:graduation_project/controllers/deprecated_controller/update_user_controller.dart';
 import 'package:graduation_project/models/update_user_request.dart';
 import 'package:provider/provider.dart';
 
@@ -160,9 +160,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       SizedBox(height: 10,),
                                       profileItem(lChanger[1]["ph4"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, password, obsecure, false, _focus),
                                       SizedBox(height: 10,),
-                                      profileItem("More1", cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, jobTitle, false, false, FocusNode()),
+                                      profileItem(lChanger[1]["ph5"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, jobTitle, false, false, FocusNode()),
                                       SizedBox(height: 10,),
-                                      profileItem("More2", cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, age, false, true, FocusNode()),
+                                      profileItem(lChanger[1]["ph6"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, age, false, true, FocusNode()),
                                     ],
                                   ),
                                   // profileItem("label", wid, Icon(Icons.edit_rounded),),
@@ -197,13 +197,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         content: LoadingIndicator(cTheme.scaffoldBackgroundColor),
                                       );
                                     });
-                                await getGetSelf.getUpdateUser(UpdateUserRequest(phoneNumber.text, jobTitle.text, "abcdef"));
+                                await getGetSelf.getUpdateUser(UpdateUserRequest(phoneNumber.text, jobTitle.text, "messi12345"));
                                 await getGetSelf.getGetSelf();
                                 Navigator.of(context).pop();
                                 if(getGetSelf.getSelfResponse?.status=="success"){
-                                  CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), "Profile updated successfully", cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                  CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[1]["notification1"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                 }else{
-                                  CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred", cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                  CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[1]["notification2"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                 }
                               }),
                             ),

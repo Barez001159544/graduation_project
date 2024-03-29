@@ -85,7 +85,7 @@ class _RepairScreenState extends State<RepairScreen> {
             textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
             child: Scaffold(
               backgroundColor: cTheme.scaffoldBackgroundColor,
-              appBar: CustomAppBar(cTheme.scaffoldBackgroundColor, lChanger[15]["title"], cTheme.primaryColorDark, context),
+              appBar: CustomAppBar(cTheme.scaffoldBackgroundColor, lChanger[15]["title2"], cTheme.primaryColorDark, context),
               body: SafeArea(
                 child: Column(
                   children: [
@@ -156,7 +156,7 @@ class _RepairScreenState extends State<RepairScreen> {
                       padding: EdgeInsets.only(top: 10, bottom: 20, right: 20, left: 20),//:EdgeInsets.only(),
                       child: Column(
                         children: [
-                          CustomTextFields(textEditingController, "description", cTheme.primaryColorDark, cTheme.primaryColorLight, cTheme.primaryColorLight, 15, 1, false),
+                          CustomTextFields(textEditingController, lChanger[15]["description"], cTheme.primaryColorDark, cTheme.primaryColorLight, cTheme.primaryColorLight, 15, 1, false),
                           SizedBox(
                             height: 10,
                           ),
@@ -179,7 +179,7 @@ class _RepairScreenState extends State<RepairScreen> {
                                 ),
                                 child: getUserProperties.isLoading?Center(
                                   child: LoadingIndicator(cTheme.primaryColorLight),
-                                ):SpecialCustomDropDownMenu("Property", wid>500?wid*0.35-80:wid/2-25, wid>500?62.0:72.0, wid, cTheme.primaryColorLight, cTheme.primaryColorDark, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.houses, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.apartments, selectedProperty, (val) {
+                                ):SpecialCustomDropDownMenu(lChanger[15]["property"], wid>500?wid*0.35-80:wid/2-25, wid>500?62.0:72.0, wid, cTheme.primaryColorLight, cTheme.primaryColorDark, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.houses, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.apartments, selectedProperty, (val) {
                                   setState(() {
                                     selectedProperty=val;
                                   });
@@ -234,15 +234,15 @@ class _RepairScreenState extends State<RepairScreen> {
                                       // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context){
                                       //   return HomeScreen();
                                       // }), (route) => false);
-                                      CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), "Successfully Sent", cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                      CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[15]["notification1"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                       Navigator.of(context).pop();
                                     }else{
-                                      CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred", cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                      CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[15]["notification2"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                     }
                                   }, () {},
                                       cTheme.primaryColor);
                                 }else{
-                                  CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "Do not leave any field empty", cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                  CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[15]["notification3"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                 }
                                 }),
                             ],

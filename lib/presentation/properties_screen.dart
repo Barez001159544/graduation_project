@@ -40,6 +40,7 @@ class PropertiesScreen extends StatefulWidget {
 class _PropertiesScreenState extends State<PropertiesScreen> {
 
   bool isHouse=true;
+
   @override
   void initState() {
     super.initState();
@@ -88,7 +89,7 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
                           children: [
                             Icon(Icons.satellite_alt_rounded, color: cTheme.primaryColorDark, size: 70,),
                             SizedBox(height: 10,),
-                            Text("Empty", style: TextStyle(color: Colors.grey, fontSize: 12),),
+                            Text(lChanger[18]["empty"], style: TextStyle(color: Colors.grey, fontSize: 12),),
                           ],
                         ),
                       ),
@@ -218,7 +219,7 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
                                     height: 120,
                                     decoration: BoxDecoration(
                                       image: DecorationImage(
-                                        image: AssetImage(isHouse?"images/house_img.jpg":"images/building_img.jpg"),
+                                        image: isHouse?AssetImage("images/house_img.jpg"):AssetImage("images/building_img.jpg"),
                                         fit: BoxFit.cover,
                                         colorFilter: ColorFilter.mode(
                                           Colors.black38,

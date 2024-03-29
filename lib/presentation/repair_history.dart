@@ -52,12 +52,12 @@ class _RepairHistoryState extends State<RepairHistory> {
             child: Scaffold(
               resizeToAvoidBottomInset: false,
               backgroundColor: cTheme.primaryColorLight,
-              appBar: CustomAppBar(cTheme.primaryColorLight, lChanger[16]["title"], cTheme.primaryColorDark, context),
+              appBar: CustomAppBar(cTheme.primaryColorLight, lChanger[15]["title1"], cTheme.primaryColorDark, context),
               floatingActionButton: FloatingActionButton(
                 foregroundColor: cTheme.primaryColor,
                 backgroundColor: cTheme.primaryColor,
                 focusColor: cTheme.primaryColor,
-                tooltip: lChanger[16]["fab"],
+                tooltip: lChanger[15]["fab"],
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (context){
                     return RepairScreen();
@@ -84,7 +84,7 @@ class _RepairHistoryState extends State<RepairHistory> {
                           children: [
                             Icon(Icons.satellite_alt_rounded, color: cTheme.primaryColorDark, size: 70,),
                             SizedBox(height: 10,),
-                            Text("Empty", style: TextStyle(color: Colors.grey, fontSize: 12),),
+                            Text(lChanger[15]["empty"], style: TextStyle(color: Colors.grey, fontSize: 12),),
                           ],
                         ),
                       ),
@@ -130,7 +130,7 @@ class _RepairHistoryState extends State<RepairHistory> {
                               backgroundColor: Color(0xFFFE4A49),
                               foregroundColor: Colors.white,
                               icon: Icons.delete,
-                              label: lChanger[16]["action"], onPressed: (BuildContext context) {  },
+                              label: lChanger[15]["action"], onPressed: (BuildContext context) {  },
                             ),
                             // SlidableAction(
                             //   backgroundColor: Color(0xFF21B7CA),
@@ -159,7 +159,7 @@ class _RepairHistoryState extends State<RepairHistory> {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text("${getRepairment.repairHistoryResponse!.historyOfRepairs?[index].title??"DUNO"}", style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark),),
+                                          Text("${getRepairment.repairHistoryResponse!.historyOfRepairs?[index].title??"N/A"}", style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark),),
                                           Text("${getRepairment.repairHistoryResponse!.historyOfRepairs?[index].updatedAt?.split("T")[0]}", style: TextStyle(color: Colors.grey, fontSize: 12),),
                                         ],
                                       ))),
@@ -177,7 +177,7 @@ class _RepairHistoryState extends State<RepairHistory> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?Icons.more_horiz_rounded:Icons.check, color: cTheme.primaryColorDark,),
-                                    Text(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?lChanger[16]["status2"]:lChanger[16]["status2"], style: TextStyle(fontSize: 8),),
+                                    Text(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?lChanger[15]["status2"]:lChanger[15]["status1"], style: TextStyle(fontSize: 8),),
                                   ],
                                 ),
                               ),

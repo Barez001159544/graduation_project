@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:graduation_project/controllers/get_fib_auth.dart';
+import 'package:graduation_project/controllers/deprecated_controller/get_fib_auth.dart';
 import 'package:graduation_project/controllers/get_payment.dart';
 import 'package:graduation_project/controllers/get_payment_status.dart';
 import 'package:graduation_project/controllers/get_token.dart';

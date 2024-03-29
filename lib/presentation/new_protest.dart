@@ -247,7 +247,7 @@ class _NewProtestState extends State<NewProtest> {
                                     Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(lChanger[16]["p2Title3"], style: TextStyle(fontSize: 16, color: Colors.grey),),
+                                        Text(lChanger[16]["p2Title2"], style: TextStyle(fontSize: 16, color: Colors.grey),),
                                         SizedBox(
                                           height: 10,
                                         ),
@@ -291,7 +291,7 @@ class _NewProtestState extends State<NewProtest> {
                                         Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text("Location", style: TextStyle(fontSize: 16, color: Colors.grey),),
+                                            Text(lChanger[16]["p2Title3"], style: TextStyle(fontSize: 16, color: Colors.grey),),
                                             SizedBox(
                                               height: 10,
                                             ),
@@ -304,7 +304,7 @@ class _NewProtestState extends State<NewProtest> {
                                           //   -----------
                                             getUserProperties.isLoading?Center(
                                               child: LoadingIndicator(cTheme.primaryColorDark),
-                                            ):SpecialCustomDropDownMenu("Property", wid>600?(wid-(wid*0.3+30))/2:wid/2-15, 50, 15, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.houses, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.apartments, selectedProperty, (val) {
+                                            ):SpecialCustomDropDownMenu(lChanger[16]["p2Ph3"], wid>600?(wid-(wid*0.3+30))/2:wid/2-15, 50, 15, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.houses, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.apartments, selectedProperty, (val) {
                                               print(val);
                                               print(selectedProperty);
                                               setState(() {
@@ -335,11 +335,11 @@ class _NewProtestState extends State<NewProtest> {
                                         Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text("Compliant", style: TextStyle(fontSize: 16, color: Colors.grey),),
+                                            Text(lChanger[16]["p2Title4"], style: TextStyle(fontSize: 16, color: Colors.grey),),
                                             SizedBox(
                                               height: 10,
                                             ),
-                                            CustomDropDownMenu("hint", wid>600?(wid-(wid*0.3+30))/2:wid/2-15, 50, 15, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, ["outdoor", "indoor",], compliant, (value) {
+                                            CustomDropDownMenu(lChanger[16]["p2Ph4"], wid>600?(wid-(wid*0.3+30))/2:wid/2-15, 50, 15, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, ["outdoor", "indoor",], compliant, (value) {
                                               setState(() {
                                                 compliant=value;
                                               });
@@ -355,11 +355,11 @@ class _NewProtestState extends State<NewProtest> {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text(lChanger[16]["p2Title4"], style: TextStyle(fontSize: 16, color: Colors.grey),),
+                                          Text(lChanger[16]["p2Title5"], style: TextStyle(fontSize: 16, color: Colors.grey),),
                                           SizedBox(
                                             height: 10,
                                           ),
-                                          Expanded(child: CustomTextFields(descriptionController, lChanger[16]["p2Ph3"], cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.scaffoldBackgroundColor, 15, null, false)),
+                                          Expanded(child: CustomTextFields(descriptionController, lChanger[16]["p2Ph5"], cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.scaffoldBackgroundColor, 15, null, false)),
                                         ],
                                       ),
                                     ),
@@ -441,7 +441,7 @@ class _NewProtestState extends State<NewProtest> {
                                     //   height: 20,
                                     // ),
                                     Icon(Icons.report_gmailerrorred_rounded, color: cTheme.primaryColor, size: 70,),
-                                    Text("Confirmation", style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark, fontWeight: FontWeight.bold), textAlign: TextAlign.center, ),
+                                    Text(lChanger[16]["confirmation"], style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark, fontWeight: FontWeight.bold), textAlign: TextAlign.center, ),
                                     SizedBox(
                                       height: 10,
                                     ),
@@ -486,9 +486,8 @@ class _NewProtestState extends State<NewProtest> {
                                     height: 50,
                                     child: ElevatedButton(
                                       onPressed: () async {
-
                                         if(index==1 && (titleController.text=="" || selectedProperty==null || descriptionController.text=="" || compliant==null)){
-                                          CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "Do not leave any field empty", cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark);
+                                          CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[16]["notification1"], cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark);
                                         }else if(index==2){
                                           showDialog(
                                               context: context,
@@ -505,17 +504,17 @@ class _NewProtestState extends State<NewProtest> {
                                                   content: LoadingIndicator(cTheme.scaffoldBackgroundColor),
                                                 );
                                               });
-                                          ProtestRequest protestRequest= ProtestRequest(titleController.text, descriptionController.text, compliant, selectedType, selectedId, encodedImage);
+                                          ProtestRequest protestRequest= ProtestRequest(titleController.text, descriptionController.text, compliant, "selectedType", 1, encodedImage);
                                           await getProtests.newProtest(protestRequest);
                                           Navigator.of(context).pop();
                                           if(getProtests.status=="OK"){
                                             // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context){
                                             //   return HomeScreen();
                                             // }), (route) => false);
-                                            CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), "Successfully Sent", cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                            CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[16]["notification2"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                             Navigator.pop(context);
                                           }else{
-                                            CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred", cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                            CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[16]["notification3"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                           }
                                           /// CustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, "Title", "Some text will be shown here", "Thumbs Up", true, context, (){
                                           ///   // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){

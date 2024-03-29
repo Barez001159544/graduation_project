@@ -8,8 +8,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graduation_project/controllers/get_protests.dart';
-import 'package:graduation_project/controllers/get_auth.dart';
-import 'package:graduation_project/controllers/get_fib_auth.dart';
+import 'package:graduation_project/controllers/deprecated_controller/get_auth.dart';
+import 'package:graduation_project/controllers/deprecated_controller/get_fib_auth.dart';
 import 'package:graduation_project/controllers/get_get_self.dart';
 import 'package:graduation_project/controllers/get_payment.dart';
 import 'package:graduation_project/controllers/get_payment_status.dart';
@@ -20,7 +20,7 @@ import 'package:graduation_project/controllers/get_user_properties.dart';
 import 'package:graduation_project/controllers/get_what_is_paid.dart';
 import 'package:graduation_project/controllers/language_changer.dart';
 import 'package:graduation_project/controllers/theme_changer.dart';
-import 'package:graduation_project/controllers/update_user_controller.dart';
+import 'package:graduation_project/controllers/deprecated_controller/update_user_controller.dart';
 import 'package:graduation_project/custom%20theme%20data/themes.dart';
 import 'package:graduation_project/models/auth_request.dart';
 import 'package:graduation_project/models/auth_response.dart';
@@ -179,14 +179,14 @@ class _MyHomePageState extends State<MyHomePage> {
     String? rToken= await getRToken();
 
     // Delay for 1 second before executing the navigation logic
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(Duration(seconds: 3));
 
     // Navigate based on the boolean value
     Navigator.of(context, rootNavigator: false).pushReplacement(
       MaterialPageRoute(
         builder: (context) =>
-            // const HomeScreen(),
-        firstTime == false ? (rToken == null ? const LoginScreen() : const HomeScreen()) : const OnboardingScreen(),
+            const AboutApp(),
+        // firstTime == false ? (rToken == null ? const LoginScreen() : const HomeScreen()) : const OnboardingScreen(),
       ),
     );
   }
@@ -204,9 +204,38 @@ class _MyHomePageState extends State<MyHomePage> {
     return Future.value(rToken);
   }
 
+  final   List _allAsset = [
+  "images/house_img.jpg",
+  "images/building_img.jpg",
+    "images/007-boy-2.jpg",
+    "images/receive-money.png",
+    "images/songkran.png",
+  "images/onboard1.png",
+  "images/onboard2.png",
+  "images/onboard3.png",
+    "images/rcms-logo-2.png",
+        "images/rcms-logo-1.png"
+  ];
+  final   List _allSVGs = [
+    "images/007-boy-2.svg",
+    "images/fib-logo.svg",
+  ];
   @override
   initState() {
     super.initState();
+    final binding = WidgetsFlutterBinding.ensureInitialized();
+    binding.addPostFrameCallback((_) async {
+      BuildContext context = binding.renderViewElement as BuildContext;
+        for (String element in _allSVGs) {
+          SvgPicture.asset(element);
+        }
+      //-----------------------
+      if(context != null) {
+        for(var asset in _allAsset) {
+          precacheImage(AssetImage(asset), context);
+        }
+      }
+    });
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<ThemeChanger>(context, listen: false).getDefaultTheme();
       Provider.of<LanguageChanger>(context, listen: false).readJson();

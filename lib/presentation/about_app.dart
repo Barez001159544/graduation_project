@@ -77,7 +77,14 @@ class _AboutAppState extends State<AboutApp> {
                                 ),
                               ],
                             ),
-                            child: Icon(Icons.home_max_rounded, size: 100, color: Colors.white,),
+                            child: SizedBox(
+                              height: 140,
+                              width: 140,
+                              child: Image.asset(
+                                "images/rcms-logo-2.png",
+                              ),
+                            ),
+                            // Icon(Icons.home_max_rounded, size: 100, color: Colors.white,),
                           ),
                         ),
                         Column(

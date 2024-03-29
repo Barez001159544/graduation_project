@@ -20,27 +20,34 @@ class _SplashWidgetState extends State<SplashWidget> {
           children: [
             const SizedBox(),
             Container(
-              width: 70,
-              height: 70,
+              width: 150,
+              height: 150,
               padding: const EdgeInsets.only(top: 10),
               decoration: const BoxDecoration(
-                color: Colors.white,
+                // color: Colors.white,
                 borderRadius: BorderRadius.all(
                   Radius.circular(20),
                 ),
               ),
-              child: SvgPicture.asset(
-                  height: 40,
-                  width: 40,
-                  "images/007-boy-2.svg",
-                  semanticsLabel: 'App logo'),
-            ).animate().shimmer(duration: 3.seconds, curve: Curves.easeOut),
+              child: SizedBox(
+                height: 150,
+                width: 150,
+                child: Image.asset(
+                  "images/rcms-logo-2.png",
+                ),
+              ).animate().shimmer(duration: 3.seconds, curve: Curves.easeOut, color: Colors.grey),
+              // SvgPicture.asset(
+              //     height: 40,
+              //     width: 40,
+              //     "images/007-boy-2.svg",
+              //     semanticsLabel: 'App logo'),
+            ),
             const Padding(
               padding: EdgeInsets.only(bottom: 20),
               child: Text(
-                "RCMS",
+                "Home Management",
                 style: TextStyle(
-                    color: Colors.white, fontSize: 20, fontFamily: "NotoSans"),
+                    color: Colors.white70, fontSize: 14, fontFamily: "NotoSans"),
               ),
             ),
           ],

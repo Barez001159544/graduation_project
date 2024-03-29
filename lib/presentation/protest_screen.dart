@@ -82,7 +82,7 @@ class _ProtestScreenState extends State<ProtestScreen> {
                           children: [
                             Icon(Icons.satellite_alt_rounded, color: cTheme.primaryColorDark, size: 70,),
                             SizedBox(height: 10,),
-                            Text("Empty", style: TextStyle(color: Colors.grey, fontSize: 12),),
+                            Text(lChanger[16]["fab"], style: TextStyle(color: Colors.grey, fontSize: 12),),
                           ],
                         ),
                       ),
@@ -157,7 +157,7 @@ class _ProtestScreenState extends State<ProtestScreen> {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text("${getAllProtests.protestAllResponse!.eachProtestResponse?[index].title??"DUNO"}", style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark),),
+                                          Text("${getAllProtests.protestAllResponse!.eachProtestResponse?[index].title??"N/A"}", style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark),),
                                           Text("${getAllProtests.protestAllResponse!.eachProtestResponse?[index].updatedAt?.split("T")[0]}", style: TextStyle(color: Colors.grey, fontSize: 12),),
                                         ],
                                       ))),
@@ -175,7 +175,7 @@ class _ProtestScreenState extends State<ProtestScreen> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="pending"?Icons.more_horiz_rounded:Icons.check, color: cTheme.primaryColorDark,),
-                                    Text(getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="pending"?lChanger[16]["status2"]:lChanger[16]["status2"], style: TextStyle(fontSize: 8),),
+                                    Text(getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="pending"?lChanger[16]["status2"]:lChanger[16]["status1"], style: TextStyle(fontSize: 8),),
                                   ],
                                 ),
                               ),

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graduation_project/constants/loading_indicator.dart';
 import 'package:graduation_project/constants/main_btn.dart';
-import 'package:graduation_project/controllers/get_auth.dart';
+import 'package:graduation_project/controllers/deprecated_controller/get_auth.dart';
 import 'package:graduation_project/controllers/get_get_self.dart';
 import 'package:graduation_project/controllers/get_token.dart';
 import 'package:graduation_project/models/auth_request.dart';
@@ -72,7 +72,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               // Text(wid>600?lChanger[2]["title1"]:lChanger[2]["title2"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 36), textAlign: TextAlign.center,),
-                              Icon(Icons.login_rounded, size: 56, color: cTheme.primaryColorDark.withOpacity(0.6),),
+                              // Icon(Icons.login_rounded, size: 56, color: cTheme.primaryColorDark.withOpacity(0.6),),
+                              SizedBox(
+                                height: 140,
+                                width: 140,
+                                child: Image.asset(
+                                    "images/rcms-logo-2.png",
+                                ),
+                              ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [

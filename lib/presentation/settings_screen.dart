@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:graduation_project/controllers/get_token.dart';
 import 'package:graduation_project/controllers/get_user_properties.dart';
 import 'package:graduation_project/controllers/language_changer.dart';
@@ -211,7 +212,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       child: settings(lChanger.data[0]["about"], cTheme.primaryColorDark, wid,
                                         SizedBox(),
                                       )),
-
                                 ],
                               ),
                             ),
@@ -224,7 +224,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       child: GestureDetector(
                         onTap: (){
                           print("Log Out");
-                          ConfirmationCustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, "title", "subtitle in the middle", "agree", "decline", context, (){
+                          ConfirmationCustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, lChanger.data[0]["confirmationTitle"], lChanger.data[0]["confirmationSubtitle"], lChanger.data[0]["confirmationAccept"], lChanger.data[0]["confirmationDecline"], context, (){
                             getToken.deleteToken("accessToken");
                             Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
                               return LoginScreen();

@@ -1,5 +1,5 @@
 import 'package:graduation_project/models/all_house_payments.dart';
-import 'package:graduation_project/models/apartment_service_payments_parameters.dart';
+import 'package:graduation_project/models/models_depricated/apartment_service_payments_parameters.dart';
 
 import '../../models/all_water_payments.dart';
 import '../../models/entire_house_fee.dart';

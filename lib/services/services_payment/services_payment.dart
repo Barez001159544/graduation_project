@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:graduation_project/constants/tokenManager.dart';
 import 'package:graduation_project/models/all_house_payments.dart';
 import 'package:graduation_project/models/all_water_payments.dart';
-import 'package:graduation_project/models/apartment_service_payments_parameters.dart';
+import 'package:graduation_project/models/models_depricated/apartment_service_payments_parameters.dart';
 import 'package:graduation_project/models/entire_house_fee.dart';
 import 'package:graduation_project/models/house_payment_request.dart';
 import 'package:graduation_project/models/this_month_payment.dart';
