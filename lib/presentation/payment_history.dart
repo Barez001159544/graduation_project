@@ -64,24 +64,24 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                               ],
                             ),
                           ):SizedBox(),
-                          getUserProperties.oneApartmentResponse!=null?Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: Row(
-                              children: [
-                                Text("Building: ", style: TextStyle(color: Colors.grey, fontSize: 16),),
-                                Text("${getUserProperties.oneApartmentResponse?.buildingId}", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
-                              ],
-                            ),
-                          ):SizedBox(),
-                          getUserProperties.oneHouseResponse!=null?Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: Row(
-                              children: [
-                                Text("Facility Id: ", style: TextStyle(color: Colors.grey, fontSize: 16),),
-                                Text("${getUserProperties.oneHouseResponse?.facilityId}", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
-                              ],
-                            ),
-                          ):SizedBox(),
+                          // getUserProperties.oneApartmentResponse!=null?Padding(
+                          //   padding: const EdgeInsets.only(bottom: 10),
+                          //   child: Row(
+                          //     children: [
+                          //       Text("Building: ", style: TextStyle(color: Colors.grey, fontSize: 16),),
+                          //       Text("${getUserProperties.oneApartmentResponse?.buildingId}", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
+                          //     ],
+                          //   ),
+                          // ):SizedBox(),
+                          // getUserProperties.oneHouseResponse!=null?Padding(
+                          //   padding: const EdgeInsets.only(bottom: 10),
+                          //   child: Row(
+                          //     children: [
+                          //       Text("Facility Id: ", style: TextStyle(color: Colors.grey, fontSize: 16),),
+                          //       Text("${getUserProperties.oneHouseResponse?.facilityId}", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
+                          //     ],
+                          //   ),
+                          // ):SizedBox(),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 10),
                             child: Row(
@@ -206,7 +206,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                         Text("${getUserPayments.thisMonthPaymentHistory!.eachHouseFee?[index].feeType}".split("T")[0], style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
                                       ],
                                     ),
-                                    Container(child: Text("${getUserPayments.thisMonthPaymentHistory!.eachHouseFee?[index].createdAt}".split("T")[0].replaceAll("-", "."), style: TextStyle(color: cTheme.primaryColorDark.withOpacity(0.6), fontSize: 10),)),
+                                    Container(child: Text("${getUserPayments.thisMonthPaymentHistory!.eachHouseFee?[index].updatedAt}".split("T")[0].replaceAll("-", "."), style: TextStyle(color: cTheme.primaryColorDark.withOpacity(0.6), fontSize: 10),)),
                                   ],
                                 ),
                               ],

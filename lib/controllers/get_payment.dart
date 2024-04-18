@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:graduation_project/models/fib_create_payment_monetary_value.dart';
 import 'package:graduation_project/models/fib_create_payment_parameters.dart';
 import 'package:graduation_project/models/fib_create_payment_response.dart';
-
 import '../models/fib_auth_parameters.dart';
 import '../models/fib_auth_response.dart';
 import '../models/fib_check_payment_status_response.dart';
@@ -11,7 +10,7 @@ import '../services_fib/fib_services.dart';
 class GetPayment extends ChangeNotifier{
   final service= FIBServices();
   bool isLoading=false;
-  FIBCreatePaymentResponse? _createPaymentResponse=null;
+  FIBCreatePaymentResponse? _createPaymentResponse;
   FIBCreatePaymentResponse? get createPaymentResponse=> _createPaymentResponse;
 
   FIBLoginResponse? _fibLoginResponse;

@@ -310,6 +310,7 @@ class _NewProtestState extends State<NewProtest> {
                                               setState(() {
                                                 selectedProperty=val;
                                                 selectedType="${val}".split("-")[0].toLowerCase();
+                                                print(selectedType);
                                               });
                                               // print("*********${val}");
                                               if("$val".split("-")[0]=="Houses"){
@@ -487,7 +488,7 @@ class _NewProtestState extends State<NewProtest> {
                                     child: ElevatedButton(
                                       onPressed: () async {
                                         if(index==1 && (titleController.text=="" || selectedProperty==null || descriptionController.text=="" || compliant==null)){
-                                          CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[16]["notification1"], cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark);
+                                          CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[16]["notification3"], cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark);
                                         }else if(index==2){
                                           showDialog(
                                               context: context,
@@ -504,17 +505,17 @@ class _NewProtestState extends State<NewProtest> {
                                                   content: LoadingIndicator(cTheme.scaffoldBackgroundColor),
                                                 );
                                               });
-                                          ProtestRequest protestRequest= ProtestRequest(titleController.text, descriptionController.text, compliant, "selectedType", 1, encodedImage);
+                                          ProtestRequest protestRequest= ProtestRequest(titleController.text, descriptionController.text, compliant, selectedType, 1, encodedImage);
                                           await getProtests.newProtest(protestRequest);
                                           Navigator.of(context).pop();
                                           if(getProtests.status=="OK"){
                                             // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context){
                                             //   return HomeScreen();
                                             // }), (route) => false);
-                                            CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[16]["notification2"], cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                            CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[16]["notification1"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                             Navigator.pop(context);
                                           }else{
-                                            CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[16]["notification3"], cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                            CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[16]["notification2"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                           }
                                           /// CustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, "Title", "Some text will be shown here", "Thumbs Up", true, context, (){
                                           ///   // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){

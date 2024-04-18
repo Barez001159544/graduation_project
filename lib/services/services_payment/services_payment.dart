@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:graduation_project/constants/tokenManager.dart';
 import 'package:graduation_project/models/all_house_payments.dart';
 import 'package:graduation_project/models/all_water_payments.dart';
-import 'package:graduation_project/models/models_depricated/apartment_service_payments_parameters.dart';
 import 'package:graduation_project/models/entire_house_fee.dart';
 import 'package:graduation_project/models/house_payment_request.dart';
 import 'package:graduation_project/models/this_month_payment.dart';
@@ -112,7 +111,7 @@ class ServicesPayment extends IServicesPayment{
     _token= await TokenManager().readToken("accessToken");
     try{
       http.Response response= await http.get(
-          Uri.parse("http://127.0.0.1:8000/api/monthly-payments/current-month?property_type=$property&property_id=$id"),
+          Uri.parse("http://127.0.0.1:8000/api/monthly-payments/all-months?property_type=$property&property_id=$id"),
           headers: {
             "Accept": "application/json",
             "content-type": "application/json",

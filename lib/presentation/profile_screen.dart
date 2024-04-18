@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/constants/pick_media.dart';
 import 'package:graduation_project/controllers/get_get_self.dart';
 import 'package:graduation_project/controllers/theme_changer.dart';
-import 'package:graduation_project/controllers/deprecated_controller/update_user_controller.dart';
 import 'package:graduation_project/models/update_user_request.dart';
 import 'package:provider/provider.dart';
 
@@ -66,7 +65,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             TextEditingController name= TextEditingController(text: getGetSelf.getSelfResponse?.userDetails?.name);
             TextEditingController phoneNumber= TextEditingController(text: getGetSelf.getSelfResponse?.userDetails?.phoneNumber);
             TextEditingController email= TextEditingController(text: getGetSelf.getSelfResponse?.userDetails?.email);
-            TextEditingController password= TextEditingController(text: "messi12345");
+            TextEditingController password= TextEditingController(text: "");
             TextEditingController jobTitle= TextEditingController(text: getGetSelf.getSelfResponse?.userDetails?.jobTitle);
             TextEditingController age= TextEditingController(text: "${getGetSelf.getSelfResponse?.userDetails?.age}");
             return Directionality(
@@ -81,105 +80,78 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Expanded(
                           child: Container(
                             width: wid,
-                            height: or?hei-156:hei-176,
+                            height: wid>600?hei-156:hei-176,
                             padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                            // color: Colors.deepPurple,
                             decoration: BoxDecoration(
                               color: cTheme.primaryColorLight,
+                              // color: Colors.red,
                               borderRadius: BorderRadius.only(
                                 bottomRight: Radius.circular(50),
                                 bottomLeft: Radius.circular(50),
                               ),
                             ),
-                            child: SingleChildScrollView(
-                              physics: or?NeverScrollableScrollPhysics():ScrollPhysics(),
-                              child: Flex(
-                                direction: or?Axis.horizontal:Axis.vertical,
-                                mainAxisAlignment: or?MainAxisAlignment.spaceAround:MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: or?wid*0.25:wid,
-                                    padding: EdgeInsets.only(left: or?0:0),
-                                    // color: Colors.yellow,
-                                    child: Align(
-                                      alignment: or?Alignment.centerLeft:Alignment.center,
-                                      child: GestureDetector(
-                                        onTap: ()async{
-                                          await pickImage();
-                                          setState((){
-                                            print(">>>>>>>>>>$file");
-                                          });
-                                        },
-                                        child: file==null?Container(
-                                          width: wid>500?hei/3:wid/2,
-                                          height: wid>500?hei/3:wid/2,
-                                          decoration: BoxDecoration(
-                                            color: cTheme.primaryColor,
-                                            image: DecorationImage(
-                                              image: AssetImage("images/007-boy-2.jpg"),
-                                              fit: BoxFit.cover
-                                            ),
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(1000),
-                                            ),
-                                          ),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: Colors.black.withOpacity(0.6),
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(1000),
-                                              ),
-                                            ),
-                                            child: Icon(Icons.edit, color: Colors.grey,),
-                                          ),
-                                        ):Container(
-                                            width: wid>500?hei/3:wid/2,
-                                            height: wid>500?hei/3:wid/2,
-                                            decoration: BoxDecoration(
-                                              color: cTheme.primaryColor,
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(1000),
-                                              ),
-                                            ),
-                                            child: Image.file(file!)),
+                            child: Flex(
+                              direction: wid>600?Axis.horizontal:Axis.vertical,
+                              mainAxisAlignment: wid>600?MainAxisAlignment.spaceAround:MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: wid>600?wid*0.25:wid,
+                                  height: wid>600?hei:wid/3,
+                                  // color: Colors.blue,
+                                  padding: EdgeInsets.only(left: wid>600?0:0),
+                                  // color: Colors.yellow,
+                                  child: Align(
+                                    alignment: wid>600?Alignment.centerLeft:Alignment.center,
+                                    child: Container(
+                                      width: wid>600?hei/4:wid/3,
+                                      height: wid>600?hei/4:wid/3,
+                                      decoration: BoxDecoration(
+                                        color: cTheme.primaryColor,
+                                        image: DecorationImage(
+                                            image: AssetImage("images/007-boy-2.jpg"),
+                                            fit: BoxFit.cover
+                                        ),
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(1000),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                  // (or && hei>600)?SizedBox(height: 100,):SizedBox(),
-                                  SizedBox(
-                                    height: 50,
-                                  ),
-                                  Column(
-                                    children: [
-                                      profileItem(lChanger[1]["ph1"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, name, false, true, FocusNode()),
-                                      SizedBox(height: 10,),
-                                      profileItem(lChanger[1]["ph2"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, phoneNumber, false, false, FocusNode()),
-                                      SizedBox(height: 10,),
-                                      profileItem(lChanger[1]["ph3"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, email, false, true, FocusNode()),
-                                      SizedBox(height: 10,),
-                                      profileItem(lChanger[1]["ph4"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, password, obsecure, false, _focus),
-                                      SizedBox(height: 10,),
-                                      profileItem(lChanger[1]["ph5"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, jobTitle, false, false, FocusNode()),
-                                      SizedBox(height: 10,),
-                                      profileItem(lChanger[1]["ph6"], cTheme.primaryColor, cTheme.primaryColorDark, or?wid*0.6:wid, age, false, true, FocusNode()),
-                                    ],
-                                  ),
-                                  // profileItem("label", wid, Icon(Icons.edit_rounded),),
-                                  // profileItem("label", wid, Icon(Icons.edit_rounded),),
-                                  // profileItem("label", wid, Icon(Icons.edit_rounded),),
-                                  // profileItem("label", wid, Icon(Icons.edit_rounded),),
+                                ),
+                                // (or && hei>600)?SizedBox(height: 100,):SizedBox(),
+                                // SizedBox(
+                                //   height: 50,
+                                // ),
+                                Column(
+                                  children: [
+                                    profileItem(lChanger[1]["ph1"], cTheme.primaryColor, cTheme.primaryColorDark, wid>600?wid*0.6:wid, name, false, true, FocusNode()),
+                                    SizedBox(height: 10,),
+                                    profileItem(lChanger[1]["ph2"], cTheme.primaryColor, cTheme.primaryColorDark, wid>600?wid*0.6:wid, phoneNumber, false, false, FocusNode()),
+                                    SizedBox(height: 10,),
+                                    profileItem(lChanger[1]["ph3"], cTheme.primaryColor, cTheme.primaryColorDark, wid>600?wid*0.6:wid, email, false, true, FocusNode()),
+                                    SizedBox(height: 10,),
+                                    profileItem(lChanger[1]["ph4"], cTheme.primaryColor, cTheme.primaryColorDark, wid>600?wid*0.6:wid, password, obsecure, false, _focus),
+                                    SizedBox(height: 10,),
+                                    profileItem(lChanger[1]["ph5"], cTheme.primaryColor, cTheme.primaryColorDark, wid>600?wid*0.6:wid, jobTitle, false, false, FocusNode()),
+                                    SizedBox(height: 10,),
+                                    profileItem(lChanger[1]["ph6"], cTheme.primaryColor, cTheme.primaryColorDark, wid>600?wid*0.6:wid, age, false, true, FocusNode()),
+                                  ],
+                                ),
+                                // profileItem("label", wid, Icon(Icons.edit_rounded),),
+                                // profileItem("label", wid, Icon(Icons.edit_rounded),),
+                                // profileItem("label", wid, Icon(Icons.edit_rounded),),
+                                // profileItem("label", wid, Icon(Icons.edit_rounded),),
 
-                                ],
-                              ),
+                              ],
                             ),
                           ),
                         ),
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: SizedBox(
-                            width: wid>500?500:wid,
-                            height: or?100:120,
+                            width: wid>600?500:wid,
+                            height: wid>600?100:120,
                             child: Center(
                               child: MainBtn(wid>600?wid*0.35-80:wid-40, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[1]["btn"], () async {
                                 showDialog(
@@ -221,7 +193,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
 Widget profileItem(String hint, Color cursorColor, Color txtColor, double wid,TextEditingController controller, bool obText, bool isReadOnly, FocusNode focus){
   return SizedBox(
-    width: wid>500?500:wid,
+    width: wid>600?500:wid,
     height: 40,
     child: TextField(
       controller: controller,

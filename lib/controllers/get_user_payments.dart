@@ -23,18 +23,18 @@ class GetUserPayments extends ChangeNotifier{
     notifyListeners();
   }
 
-  AllWaterPayments? _allWaterPayments;
-  AllWaterPayments? get allWaterPayments=> _allWaterPayments;
-  Future<void> getAllWaterPayments() async{
-    isLoading=true;
-    notifyListeners();
-
-    var response= await services.allWaterPayments();
-    _allWaterPayments=response;
-
-    isLoading=false;
-    notifyListeners();
-  }
+  // AllWaterPayments? _allWaterPayments;
+  // AllWaterPayments? get allWaterPayments=> _allWaterPayments;
+  // Future<void> getAllWaterPayments() async{
+  //   isLoading=true;
+  //   notifyListeners();
+  //
+  //   var response= await services.allWaterPayments();
+  //   _allWaterPayments=response;
+  //
+  //   isLoading=false;
+  //   notifyListeners();
+  // }
 
   String? _status;
   String? get status=> _status;
@@ -49,18 +49,18 @@ class GetUserPayments extends ChangeNotifier{
     notifyListeners();
   }
 
-  EntireHouseFee? _entireHouseFee;
-  EntireHouseFee? get entireHouseFee=> _entireHouseFee;
-  Future<void> getEntireHouseFee() async{
-    isLoading=true;
-    notifyListeners();
-
-    var response= await services.getEntireHouseFee();
-    _entireHouseFee= response;
-
-    isLoading=false;
-    notifyListeners();
-  }
+  // EntireHouseFee? _entireHouseFee;
+  // EntireHouseFee? get entireHouseFee=> _entireHouseFee;
+  // Future<void> getEntireHouseFee() async{
+  //   isLoading=true;
+  //   notifyListeners();
+  //
+  //   var response= await services.getEntireHouseFee();
+  //   _entireHouseFee= response;
+  //
+  //   isLoading=false;
+  //   notifyListeners();
+  // }
 
   ThisMonthPayment? _thisMonthPayment;
   ThisMonthPayment? get thisMonthPayment=> _thisMonthPayment;

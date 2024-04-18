@@ -5,4 +5,5 @@ import '../../models/protest_all_response.dart';
 abstract class IProtest{
   Future<ProtestAllResponse?> getAllProtests();
   Future<String?> newProtest(ProtestRequest protestRequest);
+  Future<String?> deleteProtest(int? protestId);
 }

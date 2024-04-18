@@ -23,6 +23,7 @@ class FIBServices implements IFIBServices{
       };
 
       http.StreamedResponse response = await request.send();
+      print(response.statusCode);
       String r= await response.stream.bytesToString();
       FIBLoginResponse fibLoginResponse= FIBLoginResponse.fromJson(jsonDecode(r));
       print(r);
@@ -32,7 +33,7 @@ class FIBServices implements IFIBServices{
         // TokenManager tokenManager = TokenManager();
         // await tokenManager.saveToken("${loginParameters.toMap()}");
         // print("+++++++++++++");
-        // print(fibLoginResponse.accessToken);
+        print(fibLoginResponse.accessToken);
         return fibLoginResponse;
       } else {
         print("-----------");
@@ -41,7 +42,7 @@ class FIBServices implements IFIBServices{
         return null;
       }
     } catch (e) {
-      print(e);
+      print("%%%%%%%%%%%$e");
       return null;
     }
   }

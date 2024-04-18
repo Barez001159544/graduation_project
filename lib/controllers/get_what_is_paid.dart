@@ -6,11 +6,11 @@ class GetWhatIsPaid extends ChangeNotifier{
   WhatIsPaidModel? _whatIsPaidModel;
   WhatIsPaidModel? get whatIsPaidModel=>_whatIsPaidModel;
 
-  void getWhatIsPaid(String? type, String? amount){
+  void getWhatIsPaid(String? type, String? amount, String? selectedType, int? selectedId, String? selectedProperty){
     isLoading=true;
     notifyListeners();
 
-    _whatIsPaidModel= WhatIsPaidModel(type, amount);
+    _whatIsPaidModel= WhatIsPaidModel(type, amount, selectedType, selectedId, selectedProperty);
 
     isLoading=false;
     notifyListeners();

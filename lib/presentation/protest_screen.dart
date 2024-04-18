@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import '../constants/confirmation_custom_alert_dialog.dart';
 import '../constants/custom_textfields.dart';
 import '../constants/custom_appbar.dart';
+import '../constants/custom_toast_notification.dart';
 import '../constants/main_btn.dart';
 import '../controllers/language_changer.dart';
 import '../controllers/theme_changer.dart';
@@ -128,7 +129,15 @@ class _ProtestScreenState extends State<ProtestScreen> {
                               backgroundColor: Color(0xFFFE4A49),
                               foregroundColor: Colors.white,
                               icon: Icons.delete,
-                              label: lChanger[16]["action"], onPressed: (BuildContext context) {  },
+                              label: lChanger[16]["action"],
+                              onPressed: (BuildContext context) {
+                                getAllProtests.deleteProtest(getAllProtests.protestAllResponse?.eachProtestResponse?[index].id);
+                                if(getAllProtests.delStatus=="Ok"){
+                                  CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[16]["delNotify1"], cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                }else{
+                                  CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[16]["delNotify2"], cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                }
+                              },
                             ),
                             // SlidableAction(
                             //   backgroundColor: Color(0xFF21B7CA),
@@ -142,45 +151,119 @@ class _ProtestScreenState extends State<ProtestScreen> {
                         // The child of the Slidable is what the user sees when the
                         // component is not dragged.
                         child: Container(
-                          padding: EdgeInsets.all(10),
+                          // padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             color: cTheme.primaryColorLight,
                             border: Border(
-                              bottom: BorderSide(width: 10, color: cTheme.primaryColorLight),
+                              bottom: BorderSide(width: 1, color: cTheme.primaryColorLight),
                             ),
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              FittedBox(
-                                  child: Container(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text("${getAllProtests.protestAllResponse!.eachProtestResponse?[index].title??"N/A"}", style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark),),
-                                          Text("${getAllProtests.protestAllResponse!.eachProtestResponse?[index].updatedAt?.split("T")[0]}", style: TextStyle(color: Colors.grey, fontSize: 12),),
-                                        ],
-                                      ))),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Container(
+                          child: Theme(
+                            data: cTheme.copyWith(
+                              dividerColor: cTheme.primaryColorLight,
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                            ),
+                            child: ExpansionTile(
+                              childrenPadding: EdgeInsets.all(10),
+                              iconColor: Colors.transparent,
+                              expandedAlignment: Alignment.centerLeft,
+                              trailing: Container(
                                 width: 60,
                                 height: 60,
                                 decoration: BoxDecoration(
-                                  color: getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="pending"?Colors.yellow.withOpacity(0.4):Colors.green.withOpacity(0.4),
+                                  color: //getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?Colors.yellow.withOpacity(0.4):Colors.green.withOpacity(0.4),
+                                  getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="pending"?Colors.yellow.withOpacity(0.4):(getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="approved"?Colors.blue.withOpacity(0.4):(getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="rejected"?Colors.red.withOpacity(0.4):Colors.green.withOpacity(0.4))),
                                   borderRadius: BorderRadius.all(Radius.circular(15)),
                                 ),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="pending"?Icons.more_horiz_rounded:Icons.check, color: cTheme.primaryColorDark,),
-                                    Text(getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="pending"?lChanger[16]["status2"]:lChanger[16]["status1"], style: TextStyle(fontSize: 8),),
+                                    // Icon(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?Icons.more_horiz_rounded:Icons.check, color: cTheme.primaryColorDark,),
+                                    // Text(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?lChanger[15]["status2"]:lChanger[15]["status1"], style: TextStyle(fontSize: 8),),
+                                    //---------------
+                                    Icon(getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="pending"?Icons.timelapse_rounded:(getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="approved"?Icons.more_horiz_rounded:getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="rejected"?Icons.close_rounded:Icons.check_rounded), color: cTheme.primaryColorDark,),
+                                    Text(getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="pending"?lChanger[16]["status1"]:(getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="approved"?lChanger[16]["status2"]:(getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="rejected"?lChanger[16]["status3"]:lChanger[16]["status4"])), style: TextStyle(fontSize: 8),),
                                   ],
                                 ),
                               ),
-                            ],
-                          ),
+                              backgroundColor: Colors.transparent,
+                              collapsedBackgroundColor: Colors.transparent,
+                              title: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  FittedBox(
+                                      child: Container(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text("${getAllProtests.protestAllResponse!.eachProtestResponse?[index].title??"N/A"}", style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark),),
+                                              Text("${getAllProtests.protestAllResponse!.eachProtestResponse?[index].updatedAt?.split("T")[0]}", style: TextStyle(color: Colors.grey, fontSize: 12),),
+                                            ],
+                                          ))),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  // Container(
+                                  //   width: 60,
+                                  //   height: 60,
+                                  //   decoration: BoxDecoration(
+                                  //     color: //getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?Colors.yellow.withOpacity(0.4):Colors.green.withOpacity(0.4),
+                                  //     getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?Colors.yellow.withOpacity(0.4):(getRepairment!.repairHistoryResponse!.historyOfRepairs?[index].status=="approved"?Colors.blue.withOpacity(0.4):(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="rejected"?Colors.red.withOpacity(0.4):Colors.green.withOpacity(0.4))),
+                                  //     borderRadius: BorderRadius.all(Radius.circular(15)),
+                                  //   ),
+                                  //   child: Column(
+                                  //     mainAxisAlignment: MainAxisAlignment.center,
+                                  //     children: [
+                                  //       // Icon(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?Icons.more_horiz_rounded:Icons.check, color: cTheme.primaryColorDark,),
+                                  //       // Text(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?lChanger[15]["status2"]:lChanger[15]["status1"], style: TextStyle(fontSize: 8),),
+                                  //       //---------------
+                                  //       Icon(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?Icons.timelapse_rounded:(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="approved"?Icons.more_horiz_rounded:getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="rejected"?Icons.close_rounded:Icons.check_rounded), color: cTheme.primaryColorDark,),
+                                  //       Text(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?lChanger[16]["status1"]:(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="approved"?lChanger[16]["status2"]:(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="rejected"?lChanger[16]["status3"]:lChanger[16]["status4"])), style: TextStyle(fontSize: 8),),
+                                  //     ],
+                                  //   ),
+                                  // ),
+                                ],
+                              ),
+                              // subtitle: Text(getEngineering.repairHistoryResponse?.historyOfRepairs?[index].requestDate?.split(" ")[0]??"N/A", style: TextStyle(color: Colors.grey, fontSize: 10),),
+                              children: [
+                                Text("${getAllProtests.protestAllResponse!.eachProtestResponse?[index].description??"N/A"}", style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
+                              ],
+                            ),
+                          )
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //   children: [
+                          //     FittedBox(
+                          //         child: Container(
+                          //             child: Column(
+                          //               crossAxisAlignment: CrossAxisAlignment.start,
+                          //               children: [
+                          //                 Text("${getAllProtests.protestAllResponse!.eachProtestResponse?[index].title??"N/A"}", style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark),),
+                          //                 Text("${getAllProtests.protestAllResponse!.eachProtestResponse?[index].updatedAt?.split("T")[0]}", style: TextStyle(color: Colors.grey, fontSize: 12),),
+                          //               ],
+                          //             ))),
+                          //     SizedBox(
+                          //       width: 10,
+                          //     ),
+                          //     Container(
+                          //       width: 60,
+                          //       height: 60,
+                          //       decoration: BoxDecoration(
+                          //         color: getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="pending"?Colors.yellow.withOpacity(0.4):(getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="approved"?Colors.blue.withOpacity(0.4):(getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="rejected"?Colors.red.withOpacity(0.4):Colors.green.withOpacity(0.4))),
+                          //         borderRadius: BorderRadius.all(Radius.circular(15)),
+                          //       ),
+                          //       child: Column(
+                          //         mainAxisAlignment: MainAxisAlignment.center,
+                          //         children: [
+                          //           Icon(getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="pending"?Icons.timelapse_rounded:(getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="approved"?Icons.more_horiz_rounded:getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="rejected"?Icons.close_rounded:Icons.check_rounded), color: cTheme.primaryColorDark,),
+                          //           Text(getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="pending"?lChanger[16]["status1"]:(getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="approved"?lChanger[16]["status2"]:(getAllProtests.protestAllResponse!.eachProtestResponse?[index].status=="rejected"?lChanger[16]["status3"]:lChanger[16]["status4"])), style: TextStyle(fontSize: 8),),
+                          //         ],
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                         ),
                       );
                     }),

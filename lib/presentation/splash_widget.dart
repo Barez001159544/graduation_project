@@ -20,8 +20,8 @@ class _SplashWidgetState extends State<SplashWidget> {
           children: [
             const SizedBox(),
             Container(
-              width: 150,
-              height: 150,
+              width: 200,
+              height: 200,
               padding: const EdgeInsets.only(top: 10),
               decoration: const BoxDecoration(
                 // color: Colors.white,
@@ -30,12 +30,12 @@ class _SplashWidgetState extends State<SplashWidget> {
                 ),
               ),
               child: SizedBox(
-                height: 150,
-                width: 150,
+                height: 200,
+                width: 200,
                 child: Image.asset(
                   "images/rcms-logo-2.png",
                 ),
-              ).animate().shimmer(duration: 3.seconds, curve: Curves.easeOut, color: Colors.grey),
+              ).animate().fade(delay: 1.seconds, duration: 1.seconds).then().shimmer(duration: 3.seconds, curve: Curves.easeOut, color: Colors.grey, delay: 0.seconds),
               // SvgPicture.asset(
               //     height: 40,
               //     width: 40,

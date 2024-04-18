@@ -5,4 +5,5 @@ import '../../models/repair_history_response.dart';
 abstract class IRepair{
   Future<String?> newRepair(RepairRequest repairRequest);
   Future<RepairHistoryResponse?> getAllRepair();
+  Future<String?> deleteRepair(int? repairId);
 }

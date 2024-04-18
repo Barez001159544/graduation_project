@@ -16,20 +16,17 @@ import 'package:graduation_project/presentation/faq_screen.dart';
 import 'package:graduation_project/presentation/protest_screen.dart';
 import 'package:graduation_project/presentation/repair_history.dart';
 import 'package:graduation_project/presentation/repair_screen.dart';
-import 'package:graduation_project/presentation_depricated/community_screen.dart';
 import 'package:graduation_project/presentation/login_screen.dart';
 import 'package:graduation_project/presentation/payment_screen.dart';
 import 'package:graduation_project/presentation/profile_screen.dart';
 import 'package:graduation_project/presentation/properties_screen.dart';
-import 'package:graduation_project/presentation/services_screen.dart';
 import 'package:graduation_project/presentation/settings_screen.dart';
-import 'package:graduation_project/presentation_depricated/support_screen.dart';
-import 'package:graduation_project/presentation/taxi_services.dart';
 import 'package:provider/provider.dart';
-import 'package:badges/badges.dart' as badges;
+// import 'package:badges/badges.dart' as badges;
 import '../constants/confirmation_custom_alert_dialog.dart';
 import '../constants/custom_dropdown_menu.dart';
 import '../constants/custom_toast_notification.dart';
+import '../constants/date_difference.dart';
 import '../constants/loading_indicator.dart';
 import '../controllers/get_token.dart';
 import '../controllers/language_changer.dart';
@@ -67,6 +64,8 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           selectedProperty="Houses-${obj?.name}";
         });
+        await Provider.of<GetUserPayments>(context, listen: false).getThisMonthPayment("houses", "${selectedId}");
+        await Provider.of<GetUserPayments>(context, listen: false).getAllHousePayments("houses", "${selectedId}");
       }else{
         print("************APARTMENT AVAILABLE");
         EachApartmentsResponse? obj = Provider.of<GetUserProperties>(context, listen: false).fullyApartmentsResponse?.eachApartmentsResponse?.firstWhere((obj) => obj?.name == "${Provider.of<GetUserProperties>(context, listen: false).userHousesAndApartmentsResponse?.residentialPropertiesResponse?.apartments?[0].name}",);
@@ -74,9 +73,11 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           selectedProperty="Apartments-${obj?.name}";
         });
+        await Provider.of<GetUserPayments>(context, listen: false).getThisMonthPayment("apartments", "${selectedId}");
+        await Provider.of<GetUserPayments>(context, listen: false).getAllHousePayments("apartments", "${selectedId}");
       }
-      await Provider.of<GetUserPayments>(context, listen: false).getThisMonthPayment("houses", "${selectedId}");
-      await Provider.of<GetUserPayments>(context, listen: false).getEntireHouseFee();
+
+      // await Provider.of<GetUserPayments>(context, listen: false).getEntireHouseFee();
     });
   }
 
@@ -127,17 +128,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     selectedId=obj?.id;
                     setState(() {
                       selectedProperty="Houses-${obj?.name}";
+                      print(selectedType);
                     });
+                    await getUserPayments.getThisMonthPayment("houses", "${selectedId}");
+                    await getUserPayments.getAllHousePayments("houses", "${selectedId}");
                   }else{
                     print("************APARTMENT AVAILABLE");
                     EachApartmentsResponse? obj = getUserProperties.fullyApartmentsResponse?.eachApartmentsResponse?.firstWhere((obj) => obj?.name == "${getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.apartments?[0].name}",);
                     selectedId=obj?.id;
                     setState(() {
                       selectedProperty="Apartments-${obj?.name}";
+                      print(selectedType);
                     });
+                    await getUserPayments.getThisMonthPayment("apartments", "${selectedId}");
+                    await getUserPayments.getAllHousePayments("apartments", "${selectedId}");
                   }
-                  await getUserPayments.getThisMonthPayment("houses", "${selectedId}");
-                  await getUserPayments.getEntireHouseFee();
+                  // await getUserPayments.getThisMonthPayment("houses", "${selectedId}");
+                  // await getUserPayments.getAllHousePayments("houses", "${selectedId}");
+                  // await getUserPayments.getEntireHouseFee();
                   Future.delayed(const Duration(seconds: 1));
                 }
                 setState(() {
@@ -391,7 +399,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       crossAxisAlignment: CrossAxisAlignment.baseline,
                                                       textBaseline: TextBaseline.alphabetic,
                                                       children: [
-                                                        Text("${getUserPayments.entireHouseFee?.historyOfHouseFee?[0].amount??"N/A"}".split(".")[0].replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},'), textDirection: TextDirection.ltr, style: TextStyle(fontFamily: "Roboto", fontSize: 24, color: Colors.white),),
+                                                        Text("${getUserPayments.allHousePayments?.eachHousePayment?[0].amount??"N/A"}".split(".")[0].replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},'), textDirection: TextDirection.ltr, style: TextStyle(fontFamily: "Roboto", fontSize: 24, color: Colors.white),),
                                                         Text(" IQD", textDirection: TextDirection.ltr, style: TextStyle(fontFamily: "Roboto", fontSize: 16, color: Colors.white),),
                                                       ],
                                                     ),
@@ -426,7 +434,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       crossAxisAlignment: CrossAxisAlignment.baseline,
                                                       textBaseline: TextBaseline.alphabetic,
                                                       children: [
-                                                        Text("${(double.parse("${getUserPayments.entireHouseFee?.historyOfHouseFee?[0].amount??12}") /12)}".split(".")[0].replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},'), textDirection: TextDirection.ltr, style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: "Roboto"),),
+                                                        Text("${(double.parse("${getUserPayments.allHousePayments?.eachHousePayment?[0].amount??12}") /12)}".split(".")[0].replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},'), textDirection: TextDirection.ltr, style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: "Roboto"),),
                                                         Text(" IQD/Month", style: TextStyle(color: Colors.white, fontSize: 12, fontFamily: "Roboto"),),
                                                       ],
                                                     ),
@@ -504,8 +512,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           ),
                                                         ),
                                                         Container(
-                                                          height: 30,
-                                                          width: (wid1*0.6)*(((getUserPayments.thisMonthPayment?.eachHouseFee?.length??12)-((getUserPayments.thisMonthPayment?.eachHouseFee?.length==0?false:(getUserPayments.thisMonthPayment?.eachHouseFee?[0].isPaid==0))?1:0))/12),
+                                                          height: 30, //differenceInMonths(DateTime.parse(getUserPayments.allHousePayments?.eachHousePayment?[0].startDate??"2023-03-22"), DateTime(2023, 3, 22))
+                                                          width: (wid1*0.6)* (getUserPayments.thisMonthPayment?.eachHouseFee?.length==0?0:(getUserPayments.thisMonthPayment?.eachHouseFee?.length??1-(getUserPayments.thisMonthPayment?.eachHouseFee?[0].isPaid==0?1:0)))/(differenceInMonths(DateTime(2023, 3, 22), DateTime.parse(getUserPayments.allHousePayments?.eachHousePayment?[0].startDate??"2023-03-22"))!=0?differenceInMonths(DateTime(2023, 3, 22), DateTime.parse(getUserPayments.allHousePayments?.eachHousePayment?[0].startDate??"2023-03-22")):1),//  (((getUserPayments.thisMonthPayment?.eachHouseFee?.length??12)-((getUserPayments.thisMonthPayment?.eachHouseFee?.length==0?false:(getUserPayments.thisMonthPayment?.eachHouseFee?[0].isPaid==0))?1:0))/12),
                                                           decoration: BoxDecoration(
                                                             borderRadius: BorderRadius.only(
                                                               topLeft: Radius.circular(100),
@@ -535,7 +543,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         color: Colors.white70,
                                                         borderRadius: BorderRadius.all(Radius.circular(8)),
                                                       ),
-                                                    ):Text("${(getUserPayments.thisMonthPayment?.eachHouseFee?.length??12)-((getUserPayments.thisMonthPayment?.eachHouseFee?.length==0?false:(getUserPayments.thisMonthPayment?.eachHouseFee?[0].isPaid==0))?1:0)??"N/A"}/12 mo",textDirection: TextDirection.ltr, style: TextStyle(color: Colors.white, fontSize: 10, fontFamily: "Roboto"),),
+                                                    ):Text("${(getUserPayments.thisMonthPayment?.eachHouseFee?.length??0)-((getUserPayments.thisMonthPayment?.eachHouseFee?.length==0?false:(getUserPayments.thisMonthPayment?.eachHouseFee?[0].isPaid==0))?1:0)??"N/A"}/${differenceInMonths(DateTime(2023, 3, 22), DateTime.parse(getUserPayments.allHousePayments?.eachHousePayment?[0].startDate??"2023-03-22"))}",textDirection: TextDirection.ltr, style: TextStyle(color: Colors.white, fontSize: 10, fontFamily: "Roboto"),),
                                                   ],
                                                 ),
                                               ],
@@ -589,30 +597,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   GestureDetector(
                                     onTap: (){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context){
-                                        return TaxiServices();
-                                      }));
+                                      // Navigator.push(context, MaterialPageRoute(builder: (context){
+                                      //   return TaxiServices();
+                                      // }));
                                     },
-                                    child: badges.Badge(
-                                      badgeContent: Text("1", style: TextStyle(color: cTheme.primaryColorDark),),
-                                      showBadge: true,
-                                      child: Container(
-                                        width: wid2/2-20,
-                                        height: hei2/2-20,
-                                        decoration: BoxDecoration(
-                                          color: cTheme.primaryColorLight,
-                                          borderRadius: BorderRadius.all(Radius.circular(wid>600?20.sp:45.sp),),
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Icon(Icons.engineering_rounded, color: cTheme.primaryColor, size: 40,),
-                                            SizedBox(height: 10,),
-                                            Text(/*lChanger[6]["taxi"]*/ "Engineering", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
-                                          ],
-                                        ),
+                                    child: Container(
+                                      width: wid2/2-20,
+                                      height: hei2/2-20,
+                                      decoration: BoxDecoration(
+                                        color: cTheme.primaryColorLight,
+                                        borderRadius: BorderRadius.all(Radius.circular(wid>600?20.sp:45.sp),),
                                       ),
-                                    ),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.engineering_rounded, color: cTheme.primaryColor, size: 40,),
+                                          SizedBox(height: 10,),
+                                          Text(/*lChanger[6]["taxi"]*/ "Engineering", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
+                                        ],
+                                      ),
+                                    )
                                   ),
                                   // GestureDetector(
                                   //   onTap: (){
@@ -800,24 +804,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                           return ProtestScreen();
                                         }));
                                     },
-                                    child: badges.Badge(
-                                      badgeContent: Text("1", style: TextStyle(color: cTheme.primaryColorDark),),
-                                      showBadge: false,
-                                      child: Container(
-                                        width: wid2/2-20,
-                                        height: hei2/2-20,
-                                        decoration: BoxDecoration(
-                                          color: cTheme.primaryColorLight,
-                                          borderRadius: BorderRadius.all(Radius.circular(wid>600?20.sp:45.sp),),
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Icon(Icons.note_alt_outlined, color: cTheme.primaryColor, size: 40,),
-                                            SizedBox(height: 10,),
-                                            Text("Protest", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
-                                          ],
-                                        ),
+                                    child: Container(
+                                      width: wid2/2-20,
+                                      height: hei2/2-20,
+                                      decoration: BoxDecoration(
+                                        color: cTheme.primaryColorLight,
+                                        borderRadius: BorderRadius.all(Radius.circular(wid>600?20.sp:45.sp),),
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.note_alt_outlined, color: cTheme.primaryColor, size: 40,),
+                                          SizedBox(height: 10,),
+                                          Text("Protest", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
+                                        ],
                                       ),
                                     ),
                                   )

@@ -32,23 +32,75 @@ class RepairScreen extends StatefulWidget {
 }
 
 List items=[
-  "TV",
+  //Plumbing
+  // "pipes",
+  // "faucets",
+  // "toilets",
+  // "sinks",
+  // "showers",
+  // "water heaters",
+  // "clogs",
+  //Electrical Systems
+  // "outlets",
+  // "switches",
+  // "circuit breakers",
+  // "light fixtures",
+  //HVAC
+  // "air conditioners",
+  //Roofing
+  // "Roof leaks",
+  // "damaged shingles",
+  // "gutter problems",
+  //Windows and doors
+  // "broken glass",
+  // "malfunctioning locks",
+  // "hinges",
+  // "weatherstripping",
+  //Flooring
+  // "hardwood",
+  // "carpeting",
+  // "water damage",
+  //Walls and ceiling
+  // "cracks",
+  // "holes",
+  // "water damage",
+  // "peeling paint",
+  //Exterior
+  // "paint",
+  // "decks",
+
+  //Appliances
+  "TV"
+  "laundry machines",
+  "water heaters",
+  "Refrigerator"
+  "Microwave"
+  "Oven"
+  "Dishwasher"
+  "Freezer"
+  "Air Conditioner"
+  "Heater"
+  "Electric Grill"
+  "Fan"
+  "Water Filter/Purifier"
   "Sofa",
-  "Coffee Table",
+  "Table",
   "Bed Frame",
   "Mattress",
-  "Dining Table",
   "Chairs",
-  "Desk",
   "Bookshelf",
   "Curtains",
-  "Rugs",
-  "Lamps",
-  "Mirrors",
-  "Throw Pillows",
-  "Wall Art",
-  "Plant Pots",
-  "Kitchen Appliances"
+  "Kitchen Appliances",
+  //House Malfunctions
+  "Plumbing",
+  "Electrical Systems",
+  "Air Conditioning",
+  "Windows and doors",
+  "Flooring",
+  "Walls and ceiling",
+  "Exterior",
+  //Others
+  //Write in description
 ];
 
 
@@ -120,7 +172,7 @@ class _RepairScreenState extends State<RepairScreen> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Icon(Icons.tv_rounded, color: cTheme.primaryColorDark, size: 60,),
+                                      Icon(Icons.tv_rounded, color: cTheme.primaryColorDark, size: 42,),
                                       CustomSwitchBtn(indexes.contains(index), cTheme.scaffoldBackgroundColor, (val) {
                                         setState(() {
                                           indexes.clear();

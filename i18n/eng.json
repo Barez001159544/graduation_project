@@ -29,7 +29,6 @@
       "ph1": "Username",
       "ph2": "Password",
       "btn": "Login",
-      "fbtn": "Forgot Password?",
       "error1": "leave no field empty",
       "error2": "username or password invalid"
     },
@@ -130,6 +129,8 @@
       "action": "Delete",
       "status1": "Sent",
       "status2": "Pending",
+      "delNotify1": "Successfully deleted",
+      "delNotify2": "An error occurred",
 
       "title2": "New Repair & Maintenance",
       "status3": "Deleted",
@@ -149,10 +150,13 @@
       "title": "Protest History",
       "fab": "Make new protest",
       "empty": "empty",
-      "status1": "Sent",
-      "status2": "Pending",
-      "status3": "Deleted",
+      "status1": "Pending",
+      "status2": "Approved",
+      "status3": "Rejected",
+      "status4": "Completed",
       "action": "Delete",
+      "delNotify1": "Successfully deleted",
+      "delNotify2": "An error occurred",
 
       "steps": "Follow these steps to place your protest",
       "backBtn": "Back",

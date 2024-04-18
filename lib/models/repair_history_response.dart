@@ -10,7 +10,6 @@ class RepairHistoryResponse{
     eachRepairResponse= json.map((book) => EachRepairResponse.fromJson(book)).toList().reversed.toList();
     return RepairHistoryResponse(eachRepairResponse);
   }
-
 }
 
 class EachRepairResponse{

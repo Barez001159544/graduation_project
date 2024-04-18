@@ -261,12 +261,12 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
                                         // crossAxisAlignment: CrossAxisAlignment.baseline,
                                         // textBaseline: TextBaseline.ideographic,
                                         children: [
-                                          Icon(Icons.electric_bolt_rounded, color: cTheme.primaryColor, size: 25,),
+                                          Icon(Icons.location_on, color: cTheme.primaryColor, size: 25,),
                                           SizedBox(
                                             width: 10,
                                           ),
                                           // Text("Location: ", style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark.withOpacity(0.6)),),
-                                          Text(isHouse?"${getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse!.houses?[index].electricityUnit}":"${getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse!.apartments?[index].electricityUnit}", style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark),),
+                                          Text(isHouse?"${getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse!.houses?[index].name}":"${getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse!.apartments?[index].name}", style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark),),
                                         ],
                                       ),
                                     ],

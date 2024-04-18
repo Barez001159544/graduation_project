@@ -7,9 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:graduation_project/controllers/deprecated_controller/get_fib_auth.dart';
 import 'package:graduation_project/controllers/get_payment.dart';
-import 'package:graduation_project/controllers/get_payment_status.dart';
 import 'package:graduation_project/controllers/get_token.dart';
 import 'package:graduation_project/controllers/get_user_payments.dart';
 import 'package:graduation_project/controllers/get_what_is_paid.dart';
@@ -86,18 +84,18 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
   TextEditingController titleController= TextEditingController();
   TextEditingController descriptionController= TextEditingController();
   String? compliant;
-  String? selectedProperty;
-  String? selectedType;
-  int? selectedId;
+  // String? selectedProperty;
+  // String? selectedType;
+  // int? selectedId;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<GetUserProperties>(context, listen: false).getUserProperties();
-      Provider.of<GetUserProperties>(context, listen: false).getAllHouses();
-      Provider.of<GetUserProperties>(context, listen: false).getAllApartments();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //   Provider.of<GetUserProperties>(context, listen: false).getUserProperties();
+    //   Provider.of<GetUserProperties>(context, listen: false).getAllHouses();
+    //   Provider.of<GetUserProperties>(context, listen: false).getAllApartments();
+    // });
   }
 
   @override
@@ -211,23 +209,23 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                                   //   // lChanger.changeLanguage(val);
                                   // }),
                                   // ------------------------------
-                                  getUserProperties.isLoading?Center(
-                                    child: LoadingIndicator(cTheme.primaryColorDark),
-                                  ):SpecialCustomDropDownMenu("Property", 150, 30, 5, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.houses, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.apartments, selectedProperty, (val) {
-                                    setState(() {
-                                      selectedProperty=val;
-                                    });
-                                    selectedType="${val}".split("-")[0].toLowerCase();
-                                    if("$val".split("-")[0]=="Houses"){
-                                      EachHouseResponse? obj = getUserProperties.fullyHousesResponse?.eachHouseResponse?.firstWhere((obj) => obj?.name == "${val}".split("-")[1],);
-                                      selectedId=obj?.id;
-                                      print(">>>>>>>>>${selectedId}");
-                                    }else{
-                                      EachApartmentsResponse? obj = getUserProperties.fullyApartmentsResponse?.eachApartmentsResponse?.firstWhere((obj) => obj?.name == "${val}".split("-")[1],);
-                                      selectedId=obj?.id;
-                                      print(">>>>>>>>>${selectedId}");
-                                    }
-                                  }),
+                                  // getUserProperties.isLoading?Center(
+                                  //   child: LoadingIndicator(cTheme.primaryColorDark),
+                                  // ):SpecialCustomDropDownMenu("Property", 150, 30, 5, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.houses, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.apartments, selectedProperty, (val) {
+                                  //   setState(() {
+                                  //     selectedProperty=val;
+                                  //   });
+                                  //   selectedType="${val}".split("-")[0].toLowerCase();
+                                  //   if("$val".split("-")[0]=="Houses"){
+                                  //     EachHouseResponse? obj = getUserProperties.fullyHousesResponse?.eachHouseResponse?.firstWhere((obj) => obj?.name == "${val}".split("-")[1],);
+                                  //     selectedId=obj?.id;
+                                  //     print(">>>>>>>>>${selectedId}");
+                                  //   }else{
+                                  //     EachApartmentsResponse? obj = getUserProperties.fullyApartmentsResponse?.eachApartmentsResponse?.firstWhere((obj) => obj?.name == "${val}".split("-")[1],);
+                                  //     selectedId=obj?.id;
+                                  //     print(">>>>>>>>>${selectedId}");
+                                  //   }
+                                  // }),
                                 ],
                               ),
                           //   ),
@@ -253,7 +251,7 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                                     // crossAxisAlignment: CrossAxisAlignment.baseline,
                                     // textBaseline: TextBaseline.alphabetic,
                                     children: [
-                                      Text("${getWhatIsPaid.whatIsPaidModel?.amount}0000000", style: TextStyle(fontSize: 20, color: cTheme.primaryColorDark),),
+                                      Text("${getWhatIsPaid.whatIsPaidModel?.amount?.replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(fontSize: 20, color: cTheme.primaryColorDark),),
                                       Text("IQD", style: TextStyle(color: cTheme.primaryColorDark),),
                                     ],
                                   ),
@@ -274,8 +272,8 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                                     // crossAxisAlignment: CrossAxisAlignment.baseline,
                                     // textBaseline: TextBaseline.alphabetic,
                                     children: [
-                                      Text("${selectedProperty?.split("-")[1]??"N/A"}", style: TextStyle(fontSize: 20, color: cTheme.primaryColorDark),),
-                                      Text("${selectedProperty?.split("-")[0]??"N/A"}", style: TextStyle(color: cTheme.primaryColorDark),),
+                                      Text("${getWhatIsPaid.whatIsPaidModel!.selectedType??"N/A"}", style: TextStyle(fontSize: 20, color: cTheme.primaryColorDark),),
+                                      Text("${getWhatIsPaid.whatIsPaidModel!.selectedProperty?.split("-")[1]??"N/A"}", style: TextStyle(color: cTheme.primaryColorDark),),
                                     ],
                                   ),
                                 ),
@@ -287,7 +285,7 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                             height: 20,
                           ),
                           MainBtn(wid>600?wid*0.4:wid-40, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[8]["btn"], () async {
-                            if(selectedProperty==null){
+                            if(getWhatIsPaid.whatIsPaidModel?.selectedType==null || getWhatIsPaid.whatIsPaidModel?.selectedId==null){
                               CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "You haven't selected any property!", cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark);
                             }else{
                               // Navigator.of(context).pop();
@@ -315,8 +313,8 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                                 }else{
                                   print(getPayment.fibCheckPaymentStatusResponse!.paidBy?.name);
                                   if(getWhatIsPaid.whatIsPaidModel?.type=="Fee"){
-                                    print("$selectedType & $selectedId");
-                                    await getUserPayments.payHouse(HousePaymentRequest(selectedType, selectedId));
+                                    // print("$selectedType & $selectedId");
+                                    await getUserPayments.payHouse(HousePaymentRequest(getWhatIsPaid.whatIsPaidModel?.selectedType, getWhatIsPaid.whatIsPaidModel?.selectedId));
                                     if(getUserPayments.status=="OK"){
                                       print("${getUserPayments.status}");
                                       CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[8]["success"], cTheme.primaryColorLight, cTheme.primaryColorDark);

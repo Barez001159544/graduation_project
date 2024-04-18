@@ -32,4 +32,17 @@ class GetProtests extends ChangeNotifier{
     isLoading=false;
     notifyListeners();
   }
+
+  String? _delStatus;
+  String? get delStatus =>_delStatus;
+  Future<void> deleteProtest(int? protestId) async{
+    isLoading=true;
+    notifyListeners();
+
+    var response= await services.deleteProtest(protestId);
+    _delStatus= response;
+
+    isLoading=false;
+    notifyListeners();
+  }
 }

@@ -57,4 +57,25 @@ class Protest extends IProtest{
       print("JJJJ");
     }
   }
+
+  @override
+  Future<String?> deleteProtest(int? protestId) async{
+    _token= await TokenManager().readToken("accessToken");
+    try{
+      http.Response response= await http.delete(
+          Uri.parse("http://127.0.0.1:8000/api/protests/user/1"),
+              headers: {
+            "accept":"application/json",
+                "content-type":"application/json",
+                "authorization":"Bearer $_token",
+      },
+      );
+      if(response.statusCode==200){
+        print(response.body);
+        return "OK";
+      }
+    }catch(e){
+      //
+    }
+  }
 }

@@ -33,4 +33,17 @@ class GetRepairment extends ChangeNotifier{
     isLoading=false;
     notifyListeners();
   }
+
+  String? _delStatus;
+  String? get delStatus =>_delStatus;
+  Future<void> deleteProtest(int? repairId) async{
+    isLoading=true;
+    notifyListeners();
+
+    var response= await services.deleteRepair(repairId);
+    _delStatus= response;
+
+    isLoading=false;
+    notifyListeners();
+  }
 }

@@ -12,7 +12,6 @@ import 'package:graduation_project/controllers/get_user_properties.dart';
 import 'package:graduation_project/controllers/language_changer.dart';
 import 'package:graduation_project/controllers/theme_changer.dart';
 import 'package:graduation_project/presentation/about_app.dart';
-import 'package:graduation_project/presentation/forgot_password_reset.dart';
 import 'package:graduation_project/presentation/login_screen.dart';
 import 'package:graduation_project/presentation/payment_history.dart';
 import 'package:graduation_project/presentation/profile_screen.dart';

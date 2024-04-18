@@ -3,13 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graduation_project/constants/loading_indicator.dart';
 import 'package:graduation_project/constants/main_btn.dart';
-import 'package:graduation_project/controllers/deprecated_controller/get_auth.dart';
 import 'package:graduation_project/controllers/get_get_self.dart';
 import 'package:graduation_project/controllers/get_token.dart';
 import 'package:graduation_project/models/auth_request.dart';
-import 'package:graduation_project/presentation/forgot_password_screen.dart';
 import 'package:graduation_project/presentation/home_screen.dart';
-import 'package:graduation_project/presentation/taxi_home.dart';
 import 'package:graduation_project/presentation/home_screen.dart';
 import 'package:graduation_project/constants/tokenManager.dart';
 import 'package:provider/provider.dart';
@@ -74,11 +71,17 @@ class _LoginScreenState extends State<LoginScreen> {
                               // Text(wid>600?lChanger[2]["title1"]:lChanger[2]["title2"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 36), textAlign: TextAlign.center,),
                               // Icon(Icons.login_rounded, size: 56, color: cTheme.primaryColorDark.withOpacity(0.6),),
                               SizedBox(
-                                height: 140,
-                                width: 140,
-                                child: Image.asset(
-                                    "images/rcms-logo-2.png",
-                                ),
+                                height: 40,
+                                width: 100,
+                                child: SvgPicture.asset(
+                                    height: 40,
+                                    // width: 40,
+                                  color: cTheme.primaryColorDark,
+                                    "images/rcms-logo-2.svg",
+                                    semanticsLabel: 'App logo'),
+                                // Image.asset(
+                                //     "images/rcms-logo-2.png",
+                                // ),
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,24 +164,25 @@ class _LoginScreenState extends State<LoginScreen> {
                                   // }
 
                               }),
-                              GestureDetector(
-                                onTap: (){
-                                  Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
-                                    return ForgotPasswordScreen();
-                                  }));
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(width: 1, color: Colors.grey,),
-                                    ),
-                                    color: Colors.transparent,
-                                  ),
-                                  child: Text(lChanger[2]["fbtn"],
-                                    style: TextStyle(color: Colors.grey.shade700, fontSize: 12),
-                                  ),
-                                ),
-                              ),
+                              SizedBox(),
+                              // GestureDetector(
+                              //   onTap: (){
+                              //     Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
+                              //       return ForgotPasswordScreen();
+                              //     }));
+                              //   },
+                              //   child: Container(
+                              //     decoration: BoxDecoration(
+                              //       border: Border(
+                              //         bottom: BorderSide(width: 1, color: Colors.grey,),
+                              //       ),
+                              //       color: Colors.transparent,
+                              //     ),
+                              //     child: Text(lChanger[2]["fbtn"],
+                              //       style: TextStyle(color: Colors.grey.shade700, fontSize: 12),
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           ),
                       ),

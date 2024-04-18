@@ -59,4 +59,25 @@ class Repair extends IRepair{
       print(e);
     }
   }
+
+  @override
+  Future<String?> deleteRepair(int? repairId) async{
+    _token= await TokenManager().readToken("accessToken");
+    try{
+      http.Response response= await http.delete(
+        Uri.parse("http://127.0.0.1:8000/api/repairments/user/1"),
+        headers: {
+          "accept":"application/json",
+          "content-type":"application/json",
+          "authorization":"Bearer $_token",
+        },
+      );
+      if(response.statusCode==200){
+        print(response.body);
+        return "OK";
+      }
+    }catch(e){
+      //
+    }
+  }
 }
