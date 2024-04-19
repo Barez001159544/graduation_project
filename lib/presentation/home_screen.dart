@@ -12,6 +12,7 @@ import 'package:graduation_project/controllers/get_protests.dart';
 import 'package:graduation_project/controllers/get_repairment.dart';
 import 'package:graduation_project/controllers/get_user_payments.dart';
 import 'package:graduation_project/controllers/get_user_properties.dart';
+import 'package:graduation_project/presentation/engineering_screen.dart';
 import 'package:graduation_project/presentation/faq_screen.dart';
 import 'package:graduation_project/presentation/protest_screen.dart';
 import 'package:graduation_project/presentation/repair_history.dart';
@@ -215,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               width: 70,
                                               "images/fib-logo.svg",
                                               color: cTheme.primaryColorDark,
-                                              semanticsLabel: 'App logo'),
+                                              semanticsLabel: 'FIB logo'),
                                           // Container(
                                           //   decoration: BoxDecoration(
                                           //     color: cTheme.primaryColor,
@@ -273,7 +274,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             width: 60,
                                             "images/fib-logo.svg",
                                             color: cTheme.primaryColorDark,
-                                            semanticsLabel: 'App logo'),
+                                            semanticsLabel: 'FIB logo'),
                                       ),
                                     ),
                                     SizedBox(width: 10,),
@@ -355,7 +356,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 Expanded(
                                   child: Tooltip(
-                                    message: getUserPayments.thisMonthPayment?.eachHouseFee?.length==0?"N/A":("Current Month: ${getUserPayments.thisMonthPayment?.eachHouseFee?[0].isPaid==0?"Unpaid":"Paid"}"),
+                                    message: getUserPayments.thisMonthPayment?.eachHouseFee?.length==0?"N/A":("${lChanger[6]["cmonth"]}: ${getUserPayments.thisMonthPayment?.eachHouseFee?[0].isPaid==0?lChanger[6]["cstatus2"]:lChanger[6]["cstatus1"]}"),
                                     child: GestureDetector(
                                       onTap: (){
                                         Navigator.push(context, MaterialPageRoute(builder: (context){
@@ -387,6 +388,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               children: [
                                                 Column(
                                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                                  textDirection: TextDirection.ltr,
                                                   children: [
                                                     (getUserProperties.isLoading || getUserPayments.isLoading)?Container(
                                                       width: 180,
@@ -398,9 +400,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ):Row(
                                                       crossAxisAlignment: CrossAxisAlignment.baseline,
                                                       textBaseline: TextBaseline.alphabetic,
+                                                      textDirection: TextDirection.ltr,
                                                       children: [
                                                         Text("${getUserPayments.allHousePayments?.eachHousePayment?[0].amount??"N/A"}".split(".")[0].replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},'), textDirection: TextDirection.ltr, style: TextStyle(fontFamily: "Roboto", fontSize: 24, color: Colors.white),),
-                                                        Text(" IQD", textDirection: TextDirection.ltr, style: TextStyle(fontFamily: "Roboto", fontSize: 16, color: Colors.white),),
+                                                        SizedBox(width: 5),
+                                                        Text("IQD", textDirection: TextDirection.ltr, style: TextStyle(fontFamily: "Roboto", fontSize: 16, color: Colors.white),),
                                                       ],
                                                     ),
                                                     // SizedBox(
@@ -433,9 +437,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ):Row(
                                                       crossAxisAlignment: CrossAxisAlignment.baseline,
                                                       textBaseline: TextBaseline.alphabetic,
+                                                      textDirection: TextDirection.ltr,
                                                       children: [
                                                         Text("${(double.parse("${getUserPayments.allHousePayments?.eachHousePayment?[0].amount??12}") /12)}".split(".")[0].replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},'), textDirection: TextDirection.ltr, style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: "Roboto"),),
-                                                        Text(" IQD/Month", style: TextStyle(color: Colors.white, fontSize: 12, fontFamily: "Roboto"),),
+                                                        SizedBox(
+                                                          width: 5,
+                                                        ),
+                                                        Text("IQD/Month", style: TextStyle(color: Colors.white, fontSize: 12, fontFamily: "Roboto"),),
                                                       ],
                                                     ),
                                                   ],
@@ -595,11 +603,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  GestureDetector(
+                                  getGetSelf.getSelfResponse?.userDetails?.name=="Dr. Melany Feeney PhD"?GestureDetector(
                                     onTap: (){
-                                      // Navigator.push(context, MaterialPageRoute(builder: (context){
-                                      //   return TaxiServices();
-                                      // }));
+                                      Navigator.push(context, MaterialPageRoute(builder: (context){
+                                        return EngineeringScreen();
+                                      }));
                                     },
                                     child: Container(
                                       width: wid2/2-20,
@@ -613,11 +621,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                         children: [
                                           Icon(Icons.engineering_rounded, color: cTheme.primaryColor, size: 40,),
                                           SizedBox(height: 10,),
-                                          Text(/*lChanger[6]["taxi"]*/ "Engineering", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
+                                          Text(lChanger[6]["employee"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
                                         ],
                                       ),
                                     )
-                                  ),
+                                  ):SizedBox(),
                                   // GestureDetector(
                                   //   onTap: (){
                                   //     Navigator.push(context, MaterialPageRoute(builder: (context){
@@ -662,14 +670,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                       //         content: LoadingIndicator(cTheme.scaffoldBackgroundColor),
                                       //       );
                                       //     });
-                                      //   await getRepairment.getAllRepair();
+                                      // await getUserProperties.getUserProperties();
+                                      // print(getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.houses);
+                                      // if(getUserProperties.userHousesAndApartmentsResponse?.status=="success"){
                                       //   Navigator.of(context).pop();
-                                        Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                                          return RepairHistory();
-                                        }));
+                                      Navigator.push(context, MaterialPageRoute(builder: (context){
+                                        return PropertiesScreen();
+                                      }));
+                                      // }else{
+                                      //   Navigator.of(context).pop();
+                                      //   CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred", cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                      // }
                                     },
                                     child: Container(
-                                      width: wid2/2-20,
+                                      width: getGetSelf.getSelfResponse?.userDetails?.name=="Dr. Melany Feeney PhD"?wid2/2-20:wid2-20,
                                       height: hei2/2-20,
                                       decoration: BoxDecoration(
                                         color: cTheme.primaryColorLight,
@@ -678,13 +692,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          Icon(Icons.handyman_rounded, color: cTheme.primaryColor, size: 40,),
+                                          Icon(Icons.other_houses_rounded, color: cTheme.primaryColor, size: 40,),
                                           SizedBox(height: 10,),
-                                          Text("Repair &\nMaintenance", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16), textAlign: TextAlign.center,),
+                                          Text(lChanger[6]["properties"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
                                         ],
                                       ),
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                               Row(
@@ -707,17 +721,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                       //         content: LoadingIndicator(cTheme.scaffoldBackgroundColor),
                                       //       );
                                       //     });
-                                      // await getUserProperties.getUserProperties();
-                                      // print(getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.houses);
-                                      // if(getUserProperties.userHousesAndApartmentsResponse?.status=="success"){
+                                      //   await getRepairment.getAllRepair();
                                       //   Navigator.of(context).pop();
-                                        Navigator.push(context, MaterialPageRoute(builder: (context){
-                                          return PropertiesScreen();
-                                        }));
-                                      // }else{
-                                      //   Navigator.of(context).pop();
-                                      //   CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred", cTheme.primaryColorLight, cTheme.primaryColorDark);
-                                      // }
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                                        return RepairHistory();
+                                      }));
                                     },
                                     child: Container(
                                       width: wid2/2-20,
@@ -729,9 +737,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          Icon(Icons.other_houses_rounded, color: cTheme.primaryColor, size: 40,),
+                                          Icon(Icons.handyman_rounded, color: cTheme.primaryColor, size: 40,),
                                           SizedBox(height: 10,),
-                                          Text(lChanger[6]["properties"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
+                                          Text(lChanger[6]["randm"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16), textAlign: TextAlign.center,),
                                         ],
                                       ),
                                     ),
@@ -816,7 +824,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         children: [
                                           Icon(Icons.note_alt_outlined, color: cTheme.primaryColor, size: 40,),
                                           SizedBox(height: 10,),
-                                          Text("Protest", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
+                                          Text(lChanger[6]["protest"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
                                         ],
                                       ),
                                     ),

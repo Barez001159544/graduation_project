@@ -116,13 +116,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                           onPressed: (){
                                             pageViewController.previousPage(duration: Duration(seconds: 1), curve: Curves.ease);
                                           },
-                                          icon: Icon(Icons.keyboard_arrow_left_rounded, color: cTheme.primaryColorDark,),
+                                          icon: Icon(languageChanger.selectedLanguage=="ENG"?Icons.keyboard_arrow_left_rounded:Icons.keyboard_arrow_right_rounded, color: cTheme.primaryColorDark,),
                                       ),
                                       currentPage==1?SizedBox():IconButton(
                                           onPressed: (){
                                             pageViewController.nextPage(duration: Duration(seconds: 1), curve: Curves.ease);
                                           },
-                                          icon: Icon(Icons.keyboard_arrow_right_rounded, color: cTheme.primaryColorDark,),
+                                          icon: Icon(languageChanger.selectedLanguage=="ENG"?Icons.keyboard_arrow_right_rounded:Icons.keyboard_arrow_left_rounded, color: cTheme.primaryColorDark,),
                                       ),
                                     ],
                                   ),
@@ -142,13 +142,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             ),
                             child: Column(
                               children: [
-                                Text(currentPage==0?"Monthly Fee":"Monthly Water", style: TextStyle(fontSize: 24, color: cTheme.primaryColorDark),),
+                                Text(currentPage==0?lChanger[7]["fee"]:lChanger[7]["water"], style: TextStyle(fontSize: 24, color: cTheme.primaryColorDark),),
                                 SizedBox(
                                   height: 10,
                                 ),
                                 getUserProperties.isLoading?Center(
                                   child: LoadingIndicator(cTheme.primaryColorDark),
-                                ):SpecialCustomDropDownMenu("Property", 150, 30, 5, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.houses, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.apartments, selectedProperty, (val) {
+                                ):SpecialCustomDropDownMenu(lChanger[7]["property"], 200, 40, 5, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.houses, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.apartments, selectedProperty, (val) {
                                   setState(() {
                                     selectedProperty=val;
                                   });
@@ -168,12 +168,25 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
+                                    // SizedBox(
+                                    //   height: 40,
+                                    //   width: 100,
+                                    //   child: SvgPicture.asset(
+                                    //       height: 40,
+                                    //       // width: 40,
+                                    //       color: cTheme.primaryColorDark,
+                                    //       "images/rcms-logo-2.svg",
+                                    //       semanticsLabel: 'App logo'),
+                                    //   // Image.asset(
+                                    //   //     "images/rcms-logo-2.png",
+                                    //   // ),
+                                    // ),
                                     SvgPicture.asset(
-                                        height: 70,
-                                        width: 70,
-                                        "images/fib-logo.svg",
+                                        height: 30,
+                                        width: 30,
+                                        "images/rcms-logo-2.svg",
                                         color: cTheme.primaryColorDark,
-                                        semanticsLabel: 'FIB logo'),
+                                        semanticsLabel: 'App logo'),
                                     Container(
                                       width: 1,
                                       height: 30,
@@ -193,7 +206,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 MainBtn(wid, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[7]["btn"],
                                   () async {
                                     if(selectedProperty==null){
-                                      CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "You haven't selected any property!", cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark);
+                                      CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[7]["notification1"], cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark);
                                     }else{
                                       showDialog(
                                           context: context,
@@ -223,14 +236,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                         await getPayment.getPaymentInformation(logSuccess.accessToken, int.parse(getUserPayments.thisMonthPayment?.eachHouseFee?[0].amount?.split(".")[0]??"1000"));
                                         getWhatIsPaid.getWhatIsPaid(currentPage==0?"Fee":"Water", getUserPayments.allHousePayments?.eachHousePayment?[0].amount?.split(".")[0], selectedType, selectedId, selectedProperty);
                                         if(getPayment.createPaymentResponse?.qrCode==null){
-                                          CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred", cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                          CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[7]["notification2"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                           print("ID or Secret invalid!: 2");
                                         }else{
                                           Navigator.of(context).pop();
                                           Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context){
                                             return PaymentScannerScreen();
                                           }));
-                                          CustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, "Title", "Some text will be shown here", "Thumbs Up", true, context, (){
+                                          CustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, lChanger[7]["dialogTitle"], lChanger[7]["dialogSubtitle"], lChanger[7]["dialogBtn"], true, context, (){
                                             // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
                                             //   return Test();
                                             // }), (route) => false);
@@ -239,7 +252,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                         }
                                       }else{
                                         Navigator.of(context).pop();
-                                        CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), "An error occurred", cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                        CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[7]["notification2"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                         print("ID or Secret invalid!");
                                       }
                                     }

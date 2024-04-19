@@ -53,12 +53,12 @@ class _RepairHistoryState extends State<RepairHistory> {
             child: Scaffold(
               resizeToAvoidBottomInset: false,
               backgroundColor: cTheme.primaryColorLight,
-              appBar: CustomAppBar(cTheme.primaryColorLight, lChanger[15]["title1"], cTheme.primaryColorDark, context),
+              appBar: CustomAppBar(cTheme.primaryColorLight, lChanger[9]["title1"], cTheme.primaryColorDark, context),
               floatingActionButton: FloatingActionButton(
                 foregroundColor: cTheme.primaryColor,
                 backgroundColor: cTheme.primaryColor,
                 focusColor: cTheme.primaryColor,
-                tooltip: lChanger[15]["fab"],
+                tooltip: lChanger[9]["fab"],
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (context){
                     return RepairScreen();
@@ -85,7 +85,7 @@ class _RepairHistoryState extends State<RepairHistory> {
                           children: [
                             Icon(Icons.satellite_alt_rounded, color: cTheme.primaryColorDark, size: 70,),
                             SizedBox(height: 10,),
-                            Text(lChanger[15]["empty"], style: TextStyle(color: Colors.grey, fontSize: 12),),
+                            Text(lChanger[9]["empty"], style: TextStyle(color: Colors.grey, fontSize: 12),),
                           ],
                         ),
                       ),
@@ -131,7 +131,7 @@ class _RepairHistoryState extends State<RepairHistory> {
                               backgroundColor: Color(0xFFFE4A49),
                               foregroundColor: Colors.white,
                               icon: Icons.delete,
-                              label: lChanger[15]["action"],
+                              label: lChanger[9]["action"],
                               onPressed: (BuildContext context) {
                                 getRepairment.deleteProtest(getRepairment.repairHistoryResponse?.historyOfRepairs?[index].id);
                                 if(getRepairment.delStatus=="Ok"){
@@ -162,7 +162,6 @@ class _RepairHistoryState extends State<RepairHistory> {
                           child: ExpansionTile(
                             childrenPadding: EdgeInsets.all(10),
                             iconColor: Colors.transparent,
-                            expandedAlignment: Alignment.centerLeft,
                             trailing: Container(
                               width: 60,
                               height: 60,
@@ -175,10 +174,10 @@ class _RepairHistoryState extends State<RepairHistory> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   // Icon(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?Icons.more_horiz_rounded:Icons.check, color: cTheme.primaryColorDark,),
-                                  // Text(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?lChanger[15]["status2"]:lChanger[15]["status1"], style: TextStyle(fontSize: 8),),
+                                  // Text(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?lChanger[9]["status2"]:lChanger[9]["status1"], style: TextStyle(fontSize: 8),),
                                   //---------------
                                   Icon(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?Icons.timelapse_rounded:(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="approved"?Icons.more_horiz_rounded:getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="rejected"?Icons.close_rounded:Icons.check_rounded), color: cTheme.primaryColorDark,),
-                                  Text(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?lChanger[16]["status1"]:(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="approved"?lChanger[16]["status2"]:(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="rejected"?lChanger[16]["status3"]:lChanger[16]["status4"])), style: TextStyle(fontSize: 8),),
+                                  Text(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?lChanger[9]["status1"]:(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="approved"?lChanger[9]["status2"]:(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="rejected"?lChanger[9]["status3"]:lChanger[9]["status4"])), style: TextStyle(fontSize: 8),),
                                 ],
                               ),
                             ),
@@ -211,7 +210,7 @@ class _RepairHistoryState extends State<RepairHistory> {
                                 //     mainAxisAlignment: MainAxisAlignment.center,
                                 //     children: [
                                 //       // Icon(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?Icons.more_horiz_rounded:Icons.check, color: cTheme.primaryColorDark,),
-                                //       // Text(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?lChanger[15]["status2"]:lChanger[15]["status1"], style: TextStyle(fontSize: 8),),
+                                //       // Text(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?lChanger[9]["status2"]:lChanger[9]["status1"], style: TextStyle(fontSize: 8),),
                                 //       //---------------
                                 //       Icon(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?Icons.timelapse_rounded:(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="approved"?Icons.more_horiz_rounded:getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="rejected"?Icons.close_rounded:Icons.check_rounded), color: cTheme.primaryColorDark,),
                                 //       Text(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?lChanger[16]["status1"]:(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="approved"?lChanger[16]["status2"]:(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="rejected"?lChanger[16]["status3"]:lChanger[16]["status4"])), style: TextStyle(fontSize: 8),),
@@ -222,7 +221,27 @@ class _RepairHistoryState extends State<RepairHistory> {
                             ),
                             // subtitle: Text(getEngineering.repairHistoryResponse?.historyOfRepairs?[index].requestDate?.split(" ")[0]??"N/A", style: TextStyle(color: Colors.grey, fontSize: 10),),
                             children: [
-                              Text("${getRepairment.repairHistoryResponse!.historyOfRepairs?[index].description??"N/A"}", style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
+                              Row(
+                                children: [
+                                  Text("${lChanger[3]["acceptedBy"]}: ", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 12, fontWeight: FontWeight.bold),),
+                                  Text("${getRepairment.repairHistoryResponse!.historyOfRepairs?[index].acceptedBy??lChanger[3]["ns"]}", style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                children: [
+                                  Text("${getRepairment.repairHistoryResponse!.historyOfRepairs?[index].description??lChanger[3]["ns"]}", style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                height: 1,
+                                color: Colors.grey,
+                              ),
                             ],
                           ),
                         )
@@ -261,7 +280,7 @@ class _RepairHistoryState extends State<RepairHistory> {
                         //           mainAxisAlignment: MainAxisAlignment.center,
                         //           children: [
                         //             // Icon(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?Icons.more_horiz_rounded:Icons.check, color: cTheme.primaryColorDark,),
-                        //             // Text(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?lChanger[15]["status2"]:lChanger[15]["status1"], style: TextStyle(fontSize: 8),),
+                        //             // Text(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?lChanger[9]["status2"]:lChanger[9]["status1"], style: TextStyle(fontSize: 8),),
                         //             //---------------
                         //             Icon(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?Icons.timelapse_rounded:(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="approved"?Icons.more_horiz_rounded:getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="rejected"?Icons.close_rounded:Icons.check_rounded), color: cTheme.primaryColorDark,),
                         //             Text(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="pending"?lChanger[16]["status1"]:(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="approved"?lChanger[16]["status2"]:(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].status=="rejected"?lChanger[16]["status3"]:lChanger[16]["status4"])), style: TextStyle(fontSize: 8),),

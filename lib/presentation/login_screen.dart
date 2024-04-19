@@ -6,6 +6,7 @@ import 'package:graduation_project/constants/main_btn.dart';
 import 'package:graduation_project/controllers/get_get_self.dart';
 import 'package:graduation_project/controllers/get_token.dart';
 import 'package:graduation_project/models/auth_request.dart';
+import 'package:graduation_project/presentation/engineering_screen.dart';
 import 'package:graduation_project/presentation/home_screen.dart';
 import 'package:graduation_project/presentation/home_screen.dart';
 import 'package:graduation_project/constants/tokenManager.dart';
@@ -135,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       await getToken.writeToken("accessToken", getGetSelf.data!.bearerToken);
                                       await getGetSelf.getGetSelf();
                                       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context){
-                                        return HomeScreen();
+                                        return getGetSelf.getSelfResponse?.userDetails?.name=="Dr. Melany Feeney PhD"?HomeScreen():EngineeringScreen();
                                       }), (route) => false);
                                       // setState(() {
                                       //   errorMessage="Successful";

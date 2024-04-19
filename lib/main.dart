@@ -40,6 +40,7 @@ import 'package:graduation_project/presentation/payment_screen.dart';
 import 'package:graduation_project/services/login/auth.dart';
 import 'package:graduation_project/presentation/home_screen.dart';
 import 'package:graduation_project/constants/tokenManager.dart';
+import 'package:graduation_project/services/user/user.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -163,6 +164,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // Simulate some async operation to get the future boolean value
     bool? firstTime = await getFirstTime();
     String? rToken= await getRToken();
+    String? role= await getRole();
 
     // Delay for 1 second before executing the navigation logic
     await Future.delayed(Duration(seconds: 1)); // 6 seconds
@@ -171,8 +173,8 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.of(context, rootNavigator: false).pushReplacement(
       MaterialPageRoute(
         builder: (context) =>
-            // const EngineeringScreen(),
-        firstTime == false ? (rToken == null ? const LoginScreen() : const HomeScreen()) : const OnboardingScreen(),
+            // const SettingsScreen(),
+        firstTime == false ? (rToken == null ? const LoginScreen() : (role=="Dr. Melany Feeney PhD"?const HomeScreen():EngineeringScreen())) : const OnboardingScreen(),
       ),
     );
   }
@@ -188,6 +190,13 @@ class _MyHomePageState extends State<MyHomePage> {
     // Simulate some asynchronous operation to retrieve a String value
     String? rToken = await TokenManager().readToken("accessToken");
     return Future.value(rToken);
+  }
+  Future<String?> getRole() async {
+    await Provider.of<GetGetSelf>(context, listen: false).getGetSelf();
+    // Simulate some asynchronous operation to retrieve a String value
+    // String? rToken = await TokenManager().readToken("accessToken");
+    print("%%%%%%%%${Provider.of<GetGetSelf>(context, listen: false).getSelfResponse?.userDetails?.name}");
+    return Future.value(Provider.of<GetGetSelf>(context, listen: false).getSelfResponse?.userDetails?.name);
   }
 
   final   List _allAsset = [
@@ -227,7 +236,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Provider.of<ThemeChanger>(context, listen: false).getDefaultTheme();
       Provider.of<LanguageChanger>(context, listen: false).readJson();
       // Provider.of<GetToken>(context, listen: false).readToken("accessToken");
-      Provider.of<GetGetSelf>(context, listen: false).getGetSelf();
+      // Provider.of<GetGetSelf>(context, listen: false).getGetSelf();
       // Provider.of<GetUserPayments>(context, listen: false).getThisMonthPayment("houses", "2");
       // Provider.of<GetUserProperties>(context, listen: false).getUserProperties();
       // print(">>>>>>>>>>>>>>>${Provider.of<GetToken>(context, listen: false).dToken}");

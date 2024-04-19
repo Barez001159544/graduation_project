@@ -22,6 +22,13 @@ class GetEngineering extends ChangeNotifier{
     notifyListeners();
   }
 
+  Future<void> customGetAllRepair() async{
+    var response= await services.getAllRepair();
+    _repairHistoryResponse= response;
+
+    notifyListeners();
+  }
+
   String? _status;
   String? get status=>_status;
   bool acceptLoading=false;

@@ -105,18 +105,21 @@ class _AboutAppState extends State<AboutApp> {
                         onTap: (){
                           Navigator.of(context).pop();
                         },
-                        child: Container(
-                          width: 60,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            borderRadius: BorderRadius.all(Radius.circular(100),),
-                            border: Border.all(
-                              width: 1,
-                              color: Colors.grey,
+                        child: RotatedBox(
+                            quarterTurns: languageChanger.selectedLanguage=="ENG"?0:20,
+                          child: Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: Colors.transparent,
+                              borderRadius: BorderRadius.all(Radius.circular(100),),
+                              border: Border.all(
+                                width: 1,
+                                color: Colors.grey,
+                              ),
                             ),
+                            child: Icon(Icons.arrow_back_rounded, color: Colors.grey,),
                           ),
-                          child: Icon(Icons.arrow_back_rounded, color: Colors.grey,),
                         ),
                       ),
                     ),

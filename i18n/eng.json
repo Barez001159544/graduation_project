@@ -11,7 +11,8 @@
       "confirmationTitle": "Confirm Logout",
       "confirmationSubtitle": "Are you sure you want to log out and return to the login screen?",
       "confirmationAccept": "OK",
-      "confirmationDecline": "Decline"
+      "confirmationDecline": "Decline",
+      "faq": "Learn more"
     },
     {
       "title": "Profile",
@@ -23,7 +24,10 @@
       "ph6": "Age",
       "btn": "Save",
       "notification1": "Successfully updated",
-      "notification2": "An error occurred"
+      "notification2": "An error occurred",
+      "notification3": "Password should be more than 5 characters",
+      "notification4": "Please provide a phone number",
+      "notification5": "Please provide a job title"
     },
     {
       "ph1": "Username",
@@ -33,107 +37,82 @@
       "error2": "username or password invalid"
     },
     {
-      "title": "Recover Password",
-      "subtitle1": "Please enter your phone number",
-      "btn": "send",
-      "tryg": "Try Your G-Mail",
-      "tryp": "Try Your Phone Number",
-      "subtitle2": "Please enter your G-Mail",
-      "ph": "example@gmail.com"
+      "title": "Engineering",
+      "status1": "Pending",
+      "status2": "Approved",
+      "status3": "Rejected",
+      "status4": "Completed",
+      "acceptedBy": "Accepted by",
+      "ns": "no-one",
+      "notification1": "Successfully updated",
+      "notification2": "An error occurred",
+      "btn1": "Reject",
+      "btn2": "Approve",
+      "btn3": "Complete"
     },
     {
-      "title": "Create New Password",
-      "ph1": "New Password",
-      "ph2": "Confirm Password",
-      "btn": "Save"
+      "subtitle": "More than 100 most asked questions",
+      "message1": "Consider visiting ",
+      "message2": "our website",
+      "message3": " in case of any malfunctions"
     },
     {
-      "title": "Password Reset Complete",
-      "subtitle": "Your password reset was successful. You can now proceed to login to your account",
-      "btn": "LOGIN"
+      "title": "Properties",
+      "subtitle": "Your overall properties",
+      "empty": "empty",
+      "ph1": "Houses",
+      "ph2": "Apartments",
+      "type1": "Apartment",
+      "type2": "House"
     },
     {
       "faq": "Learn More - ",
-      "area": "Your Area",
       "welcome": "Welcome Back",
-      "taxi": "Taxi",
-      "services": "Services",
       "properties": "Your Properties",
       "tooltip1": "Host",
       "tooltip2": "Log Out",
-      "tooltip3": "Settings"
+      "tooltip3": "Settings",
+      "cmonth": "Current Month",
+      "cstatus1": "Paid",
+      "cstatus2": "Unpaid",
+      "employee": "Engineering",
+      "randm": "Repair & Maintain",
+      "protest": "Protest"
     },
     {
       "title": "FIB Payment",
       "months": "months paid",
-      "btn": "proceed"
+      "btn": "proceed",
+      "fee": "Monthly Fee",
+      "water": "Monthly Water",
+      "property": "Property",
+      "notification1": "You have not selected any property",
+      "notification2": "An error occured",
+      "dialogTitle": "Title",
+      "dialogSubtitle": "Some text will be shown here",
+      "dialogBtn": "Thumbs Up"
     },
     {
       "title": "Scan QR Code",
-      "from": "from",
-      "to": "to",
-      "you": "You",
       "btn": "Done",
       "tooltip1": "Valid Until",
       "error": "An error occurred",
-      "success": "Successfully paid"
-    },
-    {
-      "title": "Services",
-      "subtitle": "What do you need, ",
-      "service1": "Electricity",
-      "service2": "Repair & Maintain",
-      "service3": "Protest",
-      "type1": "Payment",
-      "type2": "Fixation",
-      "type3": "Communication",
-      "par1": "Reloaded 1 of 1971 libraries in 1,131ms (compile: 147 ms, reload: 424 ms, reassemble: 348 ms).",
-      "par2": "Reloaded 1 of 1971 libraries in 1,131ms (compile: 147 ms, reload: 424 ms, reassemble: 348 ms).",
-      "par3": "Reloaded 1 of 1971 libraries in 1,131ms (compile: 147 ms, reload: 424 ms, reassemble: 348 ms).",
-      "btn": "proceed"
-    },
-    {
-      "title": "Taxi Services",
-      "subtitle": "How to get a ride?",
-      "subtitle2": "Lorem ipsum is simply a dummy text for your web design and mobile app development",
-      "btn": "proceed"
-    },
-    {
-      "title": "Taxi Driver",
-      "nomber": "No.",
-      "carModel": "Model",
-      "availableNot": "You are not available",
-      "availableYes": "You are now available",
-      "btnNot": "Unavailable",
-      "btnYes": "Available"
-    },
-    {
-      "title": "Taxi is needed for:",
-      "name": "Name",
-      "location": "Location"
-    },
-    {
-      "title": "Community"
-    },
-    {
-      "title": "Login to your\nFIB Account",
-      "ph1": "Username",
-      "ph2": "Password",
-      "btn": "Login",
-      "fbtn": "Create an account"
+      "success": "Successfully paid",
+      "copy": "Copied to clipboard"
     },
     {
       "title1": "Repair & Maintain History",
       "fab": "Request repair or maintenance",
       "empty": "empty",
       "action": "Delete",
-      "status1": "Sent",
-      "status2": "Pending",
+      "status1": "Pending",
+      "status2": "Approved",
+      "status3": "Rejected",
+      "status4": "Completed",
       "delNotify1": "Successfully deleted",
       "delNotify2": "An error occurred",
 
       "title2": "New Repair & Maintenance",
-      "status3": "Deleted",
       "subtitle": "Lorem ipsum is simply a dummy text for your web design and mobile app development",
       "btn": "send",
       "description": "description",
@@ -172,38 +151,28 @@
       "p2Ph1": "Title of your compliant...",
       "p2Ph2": "Add an image about your compliance",
       "p2Ph3": "Property",
-      "p2Ph4": "hint",
+      "p2Ph4": "Type",
       "p2Ph5": "Provide the entire description about your protest here...",
-      "p2UrgencyLevel1": "Normal1",
-      "p2UrgencyLevel2": "Normal2",
-      "p2UrgencyLevel3": "Normal3",
-      "p2UrgencyLevel4": "Normal4",
-      "p2UrgencyLevel5": "Normal5",
       "confirmation": " Confirmation",
-      "notification1": "Successfully Sent",
+      "notification1": "Successfully sent",
       "notification2": "An error occurred",
       "notification3": "Don't leave any field empty",
-      "p3Title1": "Title: ",
-      "p3Title2": "Urgency Level: ",
-      "p3Title3": "Description: ",
-      "if1": "No title specified",
-      "if2": "No description specified",
       "confirmMessage": "Once you hit the confirm button below,\nyour protest message will be sent\nto your host",
       "confirmationAlertMessage": "Sent",
       "errorAlertMessage": "Error"
     },
     {
-      "title": "Support Center",
-      "ph": "Type something..."
-    },
-    {
-      "title": "Properties",
-      "subtitle": "Your overall properties",
-      "empty": "empty",
-      "ph1": "Houses: ",
-      "ph2": "Apartments: ",
-      "type1": "Apartment",
-      "type2": "House"
+      "title": "Property Info",
+      "name": "Name",
+      "type1": "House",
+      "type2": "Apartment",
+      "floor": "Floor",
+      "eUnit": "Electricity Unit",
+      "paymentHistory": "Payment History",
+      "fee": "Fee",
+      "water": "Water",
+      "unpaid": "Unpaid",
+      "paid": "paid"
     }
   ]
 }

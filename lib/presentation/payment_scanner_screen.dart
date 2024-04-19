@@ -143,7 +143,7 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                           GestureDetector(
                             onLongPress: (){
                               Clipboard.setData(ClipboardData(text: getPayment.createPaymentResponse!.readableCode));
-                              CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), "Copied to clipboard", cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark);
+                              CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[8]["copy"], cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark);
                             },
                               child: Text(getPayment.createPaymentResponse!.readableCode, style: TextStyle(fontSize: 18, color: cTheme.primaryColorDark),),
                           ),

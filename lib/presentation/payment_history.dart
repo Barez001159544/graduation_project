@@ -32,7 +32,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
           return Directionality(
             textDirection: lChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
             child: Scaffold(
-              appBar: CustomAppBar(cTheme.scaffoldBackgroundColor, lChanger.data[0]["title"], cTheme.primaryColorDark, context),
+              appBar: CustomAppBar(cTheme.scaffoldBackgroundColor, lChanger.data[11]["title"], cTheme.primaryColorDark, context),
               backgroundColor: cTheme.scaffoldBackgroundColor,
               body: SafeArea(
                 child: ListView(
@@ -50,8 +50,8 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                             padding: const EdgeInsets.only(bottom: 10),
                             child: Row(
                               children: [
-                                Text("Name: ", style: TextStyle(color: Colors.grey, fontSize: 16),),
-                                Text("${getUserProperties.oneHouseResponse!=null?"Houses":"Apartments"}-${getUserProperties.oneHouseResponse!=null?getUserProperties.oneHouseResponse?.name:getUserProperties.oneApartmentResponse?.name}", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
+                                Text("${lChanger.data[11]["name"]}: ", style: TextStyle(color: Colors.grey, fontSize: 16),),
+                                Text("${getUserProperties.oneHouseResponse!=null?lChanger.data[11]["type1"]:lChanger.data[11]["type2"]}-${getUserProperties.oneHouseResponse!=null?getUserProperties.oneHouseResponse?.name:getUserProperties.oneApartmentResponse?.name}", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
                               ],
                             ),
                           ),
@@ -59,7 +59,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                             padding: const EdgeInsets.only(bottom: 10),
                             child: Row(
                               children: [
-                                Text("Floor: ", style: TextStyle(color: Colors.grey, fontSize: 16),),
+                                Text("${lChanger.data[11]["floor"]}: ", style: TextStyle(color: Colors.grey, fontSize: 16),),
                                 Text("${getUserProperties.oneApartmentResponse?.floor}", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
                               ],
                             ),
@@ -86,7 +86,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                             padding: const EdgeInsets.only(bottom: 10),
                             child: Row(
                               children: [
-                                Text("Electricity Unit: ", style: TextStyle(color: Colors.grey, fontSize: 16),),
+                                Text("${lChanger.data[11]["eUnit"]}: ", style: TextStyle(color: Colors.grey, fontSize: 16),),
                                 Text("${getUserProperties.oneHouseResponse!=null?getUserProperties.oneHouseResponse?.electricityUnit:getUserProperties.oneApartmentResponse?.electricityUnit}", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
                               ],
                             ),
@@ -97,7 +97,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                     Padding(
                       padding: EdgeInsets.only(top: 50, bottom: 10),
                       child: Center(
-                        child: Text("Payment History", style: TextStyle(color: Colors.grey, fontSize: 16),),
+                        child: Text(lChanger.data[11]["paymentHistory"], style: TextStyle(color: Colors.grey, fontSize: 16),),
                       ),
                     ),
                     Row(
@@ -113,7 +113,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                 // }
                                 // print(isHouse);
                               });
-                            }, child: Text("Fee", style: TextStyle(color: cTheme.primaryColorDark.withOpacity(0.6), fontSize: 12),),),
+                            }, child: Text(lChanger.data[11]["fee"], style: TextStyle(color: cTheme.primaryColorDark.withOpacity(0.6), fontSize: 12),),),
                             true?Icon(Icons.keyboard_arrow_up_rounded, color: cTheme.primaryColorDark, size: 12,):Icon(Icons.keyboard_arrow_down_rounded, color: cTheme.primaryColorDark, size: 12,),
                           ],
                         ),
@@ -127,7 +127,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                 // }
                                 // print(isHouse);
                               });
-                            }, child: Text("Water", style: TextStyle(color: cTheme.primaryColorDark.withOpacity(0.6), fontSize: 12),),),
+                            }, child: Text(lChanger.data[11]["water"], style: TextStyle(color: cTheme.primaryColorDark.withOpacity(0.6), fontSize: 12),),),
                             true?Icon(Icons.keyboard_arrow_down_rounded, color: cTheme.primaryColorDark, size: 12,):Icon(Icons.keyboard_arrow_up_rounded, color: cTheme.primaryColorDark, size: 12,),
                           ],
                         ),
@@ -145,7 +145,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                       direction: wid>600?Axis.vertical:Axis.vertical,
                       children: List.generate(getUserPayments.thisMonthPaymentHistory!.eachHouseFee!.length, (index){
                         return Tooltip(
-                          message: "${getUserPayments.thisMonthPaymentHistory?.eachHouseFee?[index].isPaid==0?"Unpaid":"Paid"}",
+                          message: "${getUserPayments.thisMonthPaymentHistory?.eachHouseFee?[index].isPaid==0?lChanger.data[11]["unpaid"]:lChanger.data[11]["paid"]}",
                           child: Container(
                             width: wid>600?wid/2:wid,
                             margin: wid>600?EdgeInsets.only(top: 10, bottom: 50):EdgeInsets.all(10),

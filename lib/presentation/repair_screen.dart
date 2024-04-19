@@ -70,19 +70,18 @@ List items=[
   // "decks",
 
   //Appliances
-  "TV"
+  "TV",
   "laundry machines",
   "water heaters",
-  "Refrigerator"
-  "Microwave"
-  "Oven"
-  "Dishwasher"
-  "Freezer"
-  "Air Conditioner"
-  "Heater"
-  "Electric Grill"
-  "Fan"
-  "Water Filter/Purifier"
+  "Refrigerator",
+  "Microwave",
+  "Oven",
+  "Dishwasher",
+  "Freezer",
+  "Air Conditioner",
+  "Heater",
+  "Fan",
+  "Water Filter/Purifier",
   "Sofa",
   "Table",
   "Bed Frame",
@@ -101,6 +100,12 @@ List items=[
   "Exterior",
   //Others
   //Write in description
+];
+
+List icons=[
+  Icons.tv_rounded,
+  Icons.local_laundry_service_rounded,
+  Icons.water,
 ];
 
 
@@ -137,7 +142,7 @@ class _RepairScreenState extends State<RepairScreen> {
             textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
             child: Scaffold(
               backgroundColor: cTheme.scaffoldBackgroundColor,
-              appBar: CustomAppBar(cTheme.scaffoldBackgroundColor, lChanger[15]["title2"], cTheme.primaryColorDark, context),
+              appBar: CustomAppBar(cTheme.scaffoldBackgroundColor, lChanger[9]["title2"], cTheme.primaryColorDark, context),
               body: SafeArea(
                 child: Column(
                   children: [
@@ -148,7 +153,7 @@ class _RepairScreenState extends State<RepairScreen> {
                             padding: EdgeInsets.only(top: 20, left: languageChanger.selectedLanguage=="ENG"?20:0, right: languageChanger.selectedLanguage=="ENG"?0:20),
                             child: Align(
                               alignment: languageChanger.selectedLanguage=="ENG"?Alignment.centerLeft:Alignment.centerRight,
-                              child: Text(lChanger[15]["subtitle"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 20),),),),
+                              child: Text(lChanger[9]["subtitle"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 20),),),),
                           SizedBox(
                             height: 20,
                           ),
@@ -208,7 +213,7 @@ class _RepairScreenState extends State<RepairScreen> {
                       padding: EdgeInsets.only(top: 10, bottom: 20, right: 20, left: 20),//:EdgeInsets.only(),
                       child: Column(
                         children: [
-                          CustomTextFields(textEditingController, lChanger[15]["description"], cTheme.primaryColorDark, cTheme.primaryColorLight, cTheme.primaryColorLight, 15, 1, false),
+                          CustomTextFields(textEditingController, lChanger[9]["description"], cTheme.primaryColorDark, cTheme.primaryColorLight, cTheme.primaryColorLight, 15, 1, false),
                           SizedBox(
                             height: 10,
                           ),
@@ -231,7 +236,7 @@ class _RepairScreenState extends State<RepairScreen> {
                                 ),
                                 child: getUserProperties.isLoading?Center(
                                   child: LoadingIndicator(cTheme.primaryColorLight),
-                                ):SpecialCustomDropDownMenu(lChanger[15]["property"], wid>500?wid*0.35-80:wid/2-25, wid>500?62.0:72.0, wid, cTheme.primaryColorLight, cTheme.primaryColorDark, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.houses, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.apartments, selectedProperty, (val) {
+                                ):SpecialCustomDropDownMenu(lChanger[9]["property"], wid>500?wid*0.35-80:wid/2-25, wid>500?62.0:72.0, wid, cTheme.primaryColorLight, cTheme.primaryColorDark, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.houses, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.apartments, selectedProperty, (val) {
                                   setState(() {
                                     selectedProperty=val;
                                   });
@@ -249,7 +254,7 @@ class _RepairScreenState extends State<RepairScreen> {
                               ),
                               // -----------------------------
                               SizedBox(width: 10,),
-                              MainBtn(wid>500?wid*0.35-80:wid/2-25, wid>500?62.0:72.0, cTheme.primaryColor, lChanger[15]["btn"], () {
+                              MainBtn(wid>500?wid*0.35-80:wid/2-25, wid>500?62.0:72.0, cTheme.primaryColor, lChanger[9]["btn"], () {
                                 if(indexes.isNotEmpty && selectedProperty!=null && textEditingController.text!="") {
                                   print(indexes[0]);
                                   print(selected);
@@ -257,10 +262,10 @@ class _RepairScreenState extends State<RepairScreen> {
                                   ConfirmationCustomAlertDialog(
                                       cTheme.primaryColorLight,
                                       cTheme.primaryColorDark,
-                                      lChanger[15]["popTitle"],
-                                      lChanger[15]["popSubtitle"],
-                                      lChanger[15]["agreeBtn"],
-                                      lChanger[15]["declineBtn"],
+                                      lChanger[9]["popTitle"],
+                                      lChanger[9]["popSubtitle"],
+                                      lChanger[9]["agreeBtn"],
+                                      lChanger[9]["declineBtn"],
                                       context, () async{
                                     showDialog(
                                         context: context,
@@ -286,15 +291,15 @@ class _RepairScreenState extends State<RepairScreen> {
                                       // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context){
                                       //   return HomeScreen();
                                       // }), (route) => false);
-                                      CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[15]["notification1"], cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                      CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[9]["notification1"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                       Navigator.of(context).pop();
                                     }else{
-                                      CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[15]["notification2"], cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                      CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[9]["notification2"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                     }
                                   }, () {},
                                       cTheme.primaryColor);
                                 }else{
-                                  CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[15]["notification3"], cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                  CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[9]["notification3"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                 }
                                 }),
                             ],

@@ -68,7 +68,7 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
             textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
             child: Scaffold(
               backgroundColor: cTheme.scaffoldBackgroundColor,
-              appBar: CustomAppBar(cTheme.scaffoldBackgroundColor, lChanger[18]["title"], cTheme.primaryColorDark, context),
+              appBar: CustomAppBar(cTheme.scaffoldBackgroundColor, lChanger[5]["title"], cTheme.primaryColorDark, context),
               body: SafeArea(
                 child: getUserProperties.isLoading?LoadingIndicator(cTheme.primaryColorLight):
                 RefreshIndicator(
@@ -89,7 +89,7 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
                           children: [
                             Icon(Icons.satellite_alt_rounded, color: cTheme.primaryColorDark, size: 70,),
                             SizedBox(height: 10,),
-                            Text(lChanger[18]["empty"], style: TextStyle(color: Colors.grey, fontSize: 12),),
+                            Text(lChanger[5]["empty"], style: TextStyle(color: Colors.grey, fontSize: 12),),
                           ],
                         ),
                       ),
@@ -102,7 +102,7 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             TypeThis(
-                              string: lChanger[18]["subtitle"],
+                              string: lChanger[5]["subtitle"],
                               style: TextStyle(color: cTheme.primaryColorDark, fontSize: 20),
                               // richTextMatchers: const [
                               //   TypeThisMatcher(
@@ -135,7 +135,7 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
                                     }
                                     print(isHouse);
                                   });
-                                }, child: Text(lChanger[18]["ph1"], style: TextStyle(color: cTheme.primaryColorDark.withOpacity(0.6), fontSize: 12),),),
+                                }, child: Text("${lChanger[5]["ph1"]}:", style: TextStyle(color: cTheme.primaryColorDark.withOpacity(0.6), fontSize: 12),),),
                                 Text("${getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.houses!.length as int}", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 12),),
                                 SizedBox(width: 5,),
                                 isHouse?Icon(Icons.keyboard_arrow_up_rounded, color: cTheme.primaryColorDark, size: 12,):Icon(Icons.keyboard_arrow_down_rounded, color: cTheme.primaryColorDark, size: 12,),
@@ -151,7 +151,7 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
                                     }
                                     print(isHouse);
                                   });
-                                }, child: Text(lChanger[18]["ph2"], style: TextStyle(color: cTheme.primaryColorDark.withOpacity(0.6), fontSize: 12),),),
+                                }, child: Text("${lChanger[5]["ph2"]}:", style: TextStyle(color: cTheme.primaryColorDark.withOpacity(0.6), fontSize: 12),),),
                                 Text("${getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.apartments?.length as int}", style: TextStyle(color: cTheme.primaryColorDark, fontSize: 12),),
                                 SizedBox(width: 5,),
                                 isHouse?Icon(Icons.keyboard_arrow_down_rounded, color: cTheme.primaryColorDark, size: 12,):Icon(Icons.keyboard_arrow_up_rounded, color: cTheme.primaryColorDark, size: 12,),
@@ -254,7 +254,7 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
                                             width: 10,
                                           ),
                                           // Text("Location: ", style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark.withOpacity(0.6)),),
-                                          Text(/*isHouse?"${getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse!.houses?[index].name}":"B:${getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse!.apartments?[index].buildingName}F:${getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse!.apartments?[index].floor}A:${getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse!.apartments?[index].name}"*/"${isHouse?"House":"Apartment"}", style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark),),
+                                          Text(/*isHouse?"${getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse!.houses?[index].name}":"B:${getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse!.apartments?[index].buildingName}F:${getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse!.apartments?[index].floor}A:${getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse!.apartments?[index].name}"*/"${isHouse?lChanger[5]["ph1"]:lChanger[5]["ph2"]}", style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark),),
                                         ],
                                       ),
                                       Row(

@@ -79,7 +79,7 @@ class _NewProtestState extends State<NewProtest> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(lChanger[16]["steps"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16), textAlign: TextAlign.center,),
+                        Text(lChanger[10]["steps"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16), textAlign: TextAlign.center,),
                         SizedBox(
                           height: wid>600?50:20,
                         ),
@@ -153,11 +153,11 @@ class _NewProtestState extends State<NewProtest> {
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(lChanger[16]["p1Title"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 20),),
+                                        Text(lChanger[10]["p1Title"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 20),),
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        Text(lChanger[16]["p1Message"], style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark),),
+                                        Text(lChanger[10]["p1Message"], style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark),),
                                       ],
                                     ),
                                     Column(
@@ -189,7 +189,7 @@ class _NewProtestState extends State<NewProtest> {
                                     Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(lChanger[16]["p2Title1"], style: TextStyle(fontSize: 16, color: Colors.grey),),
+                                        Text(lChanger[10]["p2Title1"], style: TextStyle(fontSize: 16, color: Colors.grey),),
                                         SizedBox(
                                           height: 10,
                                         ),
@@ -199,7 +199,7 @@ class _NewProtestState extends State<NewProtest> {
                                         //     print(val);
                                         //   });
                                         // }),
-                                        CustomTextFields(titleController, lChanger[16]["p2Ph1"], cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.scaffoldBackgroundColor, 15, 1, false),
+                                        CustomTextFields(titleController, lChanger[10]["p2Ph1"], cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.scaffoldBackgroundColor, 15, 1, false),
                                       ],
                                     ),
                                     // SizedBox(
@@ -208,7 +208,7 @@ class _NewProtestState extends State<NewProtest> {
                                     // Column(
                                     //   crossAxisAlignment: CrossAxisAlignment.start,
                                     //   children: [
-                                    //     Text("${lChanger[16]["p2Title2"]} ${currentSliderValue.round()} Normal", style: TextStyle(fontSize: 16, color: Colors.grey),),
+                                    //     Text("${lChanger[10]["p2Title2"]} ${currentSliderValue.round()} Normal", style: TextStyle(fontSize: 16, color: Colors.grey),),
                                     //     SizedBox(
                                     //       height: 10,
                                     //     ),
@@ -247,7 +247,7 @@ class _NewProtestState extends State<NewProtest> {
                                     Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(lChanger[16]["p2Title2"], style: TextStyle(fontSize: 16, color: Colors.grey),),
+                                        Text(lChanger[10]["p2Title2"], style: TextStyle(fontSize: 16, color: Colors.grey),),
                                         SizedBox(
                                           height: 10,
                                         ),
@@ -276,7 +276,7 @@ class _NewProtestState extends State<NewProtest> {
                                                 SizedBox(
                                                   width: 10,
                                                 ),
-                                                Text(lChanger[16]["p2Ph2"], style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
+                                                Text(lChanger[10]["p2Ph2"], style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
                                               ],
                                             ),
                                           ),
@@ -291,7 +291,7 @@ class _NewProtestState extends State<NewProtest> {
                                         Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text(lChanger[16]["p2Title3"], style: TextStyle(fontSize: 16, color: Colors.grey),),
+                                            Text(lChanger[10]["p2Title3"], style: TextStyle(fontSize: 16, color: Colors.grey),),
                                             SizedBox(
                                               height: 10,
                                             ),
@@ -304,7 +304,7 @@ class _NewProtestState extends State<NewProtest> {
                                           //   -----------
                                             getUserProperties.isLoading?Center(
                                               child: LoadingIndicator(cTheme.primaryColorDark),
-                                            ):SpecialCustomDropDownMenu(lChanger[16]["p2Ph3"], wid>600?(wid-(wid*0.3+30))/2:wid/2-15, 50, 15, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.houses, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.apartments, selectedProperty, (val) {
+                                            ):SpecialCustomDropDownMenu(lChanger[10]["p2Ph3"], wid>600?(wid-(wid*0.3+30))/2:wid/2-15, 50, 15, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.houses, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.apartments, selectedProperty, (val) {
                                               print(val);
                                               print(selectedProperty);
                                               setState(() {
@@ -336,11 +336,11 @@ class _NewProtestState extends State<NewProtest> {
                                         Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text(lChanger[16]["p2Title4"], style: TextStyle(fontSize: 16, color: Colors.grey),),
+                                            Text(lChanger[10]["p2Title4"], style: TextStyle(fontSize: 16, color: Colors.grey),),
                                             SizedBox(
                                               height: 10,
                                             ),
-                                            CustomDropDownMenu(lChanger[16]["p2Ph4"], wid>600?(wid-(wid*0.3+30))/2:wid/2-15, 50, 15, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, ["outdoor", "indoor",], compliant, (value) {
+                                            CustomDropDownMenu(lChanger[10]["p2Ph4"], wid>600?(wid-(wid*0.3+30))/2:wid/2-15, 50, 15, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, ["outdoor", "indoor",], compliant, (value) {
                                               setState(() {
                                                 compliant=value;
                                               });
@@ -356,11 +356,11 @@ class _NewProtestState extends State<NewProtest> {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text(lChanger[16]["p2Title5"], style: TextStyle(fontSize: 16, color: Colors.grey),),
+                                          Text(lChanger[10]["p2Title5"], style: TextStyle(fontSize: 16, color: Colors.grey),),
                                           SizedBox(
                                             height: 10,
                                           ),
-                                          Expanded(child: CustomTextFields(descriptionController, lChanger[16]["p2Ph5"], cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.scaffoldBackgroundColor, 15, null, false)),
+                                          Expanded(child: CustomTextFields(descriptionController, lChanger[10]["p2Ph5"], cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.scaffoldBackgroundColor, 15, null, false)),
                                         ],
                                       ),
                                     ),
@@ -378,8 +378,8 @@ class _NewProtestState extends State<NewProtest> {
                                     //       ),
                                     //       child: Row(
                                     //         children: [
-                                    //           Text(lChanger[16]["p3Title1"], style: TextStyle(color: Colors.white70, fontSize: 16),),
-                                    //           Text(titleController.text==""?lChanger[16]["if1"]:titleController.text, style: TextStyle(color: Colors.white, fontSize: 16),),
+                                    //           Text(lChanger[10]["p3Title1"], style: TextStyle(color: Colors.white70, fontSize: 16),),
+                                    //           Text(titleController.text==""?lChanger[10]["if1"]:titleController.text, style: TextStyle(color: Colors.white, fontSize: 16),),
                                     //         ],
                                     //       ),
                                     //     ),
@@ -394,7 +394,7 @@ class _NewProtestState extends State<NewProtest> {
                                     //       ),
                                     //       child: Row(
                                     //         children: [
-                                    //           Text(lChanger[16]["p3Title2"], style: TextStyle(color: Colors.white70, fontSize: 16),),
+                                    //           Text(lChanger[10]["p3Title2"], style: TextStyle(color: Colors.white70, fontSize: 16),),
                                     //           Text("${compliant}", style: TextStyle(color: Colors.white, fontSize: 16),),
                                     //         ],
                                     //       ),
@@ -404,14 +404,14 @@ class _NewProtestState extends State<NewProtest> {
                                     //     ),
                                     //     Column(
                                     //       children: [
-                                    //         Text(lChanger[16]["p3Title3"], style: TextStyle(fontSize: 16, color: Colors.grey),),
+                                    //         Text(lChanger[10]["p3Title3"], style: TextStyle(fontSize: 16, color: Colors.grey),),
                                     //         SizedBox(
                                     //           height: 10,
                                     //         ),
                                     //         Container(
                                     //             width: wid,
                                     //             height: 100,
-                                    //             child: CustomTextFields(descriptionController, lChanger[16]["p2Ph3"], cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.scaffoldBackgroundColor, 15, null, true)),
+                                    //             child: CustomTextFields(descriptionController, lChanger[10]["p2Ph3"], cTheme.primaryColorDark, cTheme.primaryColorDark, cTheme.scaffoldBackgroundColor, 15, null, true)),
                                     //       ],
                                     //     ),
                                     //     // Container(
@@ -422,11 +422,11 @@ class _NewProtestState extends State<NewProtest> {
                                     //     //   ),
                                     //     //   child: Row(
                                     //     //     children: [
-                                    //     //       Text(lChanger[16]["p3Title3"], style: TextStyle(color: Colors.white70, fontSize: 16),),
+                                    //     //       Text(lChanger[10]["p3Title3"], style: TextStyle(color: Colors.white70, fontSize: 16),),
                                     //     //       Flexible(
                                     //     //         child:  Container(
                                     //     //           child:  Text(
-                                    //     //             descriptionController.text==""?lChanger[16]["if2"]:descriptionController.text,
+                                    //     //             descriptionController.text==""?lChanger[10]["if2"]:descriptionController.text,
                                     //     //             overflow: TextOverflow.ellipsis,
                                     //     //             style: TextStyle(color: Colors.white, fontSize: 16),
                                     //     //           ),
@@ -442,11 +442,11 @@ class _NewProtestState extends State<NewProtest> {
                                     //   height: 20,
                                     // ),
                                     Icon(Icons.report_gmailerrorred_rounded, color: cTheme.primaryColor, size: 70,),
-                                    Text(lChanger[16]["confirmation"], style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark, fontWeight: FontWeight.bold), textAlign: TextAlign.center, ),
+                                    Text(lChanger[10]["confirmation"], style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark, fontWeight: FontWeight.bold), textAlign: TextAlign.center, ),
                                     SizedBox(
                                       height: 10,
                                     ),
-                                    Text(lChanger[16]["confirmMessage"], style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark), textAlign: TextAlign.center, ),
+                                    Text(lChanger[10]["confirmMessage"], style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark), textAlign: TextAlign.center, ),
                                   ],
                                 )),
                               ),
@@ -471,7 +471,7 @@ class _NewProtestState extends State<NewProtest> {
                                         }
 
                                       },
-                                      child: Text(lChanger[16]["backBtn"], style: TextStyle(color: Colors.white),),
+                                      child: Text(lChanger[10]["backBtn"], style: TextStyle(color: Colors.white),),
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.grey,
                                         foregroundColor: Colors.grey,
@@ -488,7 +488,7 @@ class _NewProtestState extends State<NewProtest> {
                                     child: ElevatedButton(
                                       onPressed: () async {
                                         if(index==1 && (titleController.text=="" || selectedProperty==null || descriptionController.text=="" || compliant==null)){
-                                          CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[16]["notification3"], cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark);
+                                          CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[10]["notification3"], cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark);
                                         }else if(index==2){
                                           showDialog(
                                               context: context,
@@ -512,10 +512,10 @@ class _NewProtestState extends State<NewProtest> {
                                             // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context){
                                             //   return HomeScreen();
                                             // }), (route) => false);
-                                            CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[16]["notification1"], cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                            CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[10]["notification1"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                             Navigator.pop(context);
                                           }else{
-                                            CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[16]["notification2"], cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                            CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[10]["notification2"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                           }
                                           /// CustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, "Title", "Some text will be shown here", "Thumbs Up", true, context, (){
                                           ///   // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
@@ -530,7 +530,7 @@ class _NewProtestState extends State<NewProtest> {
                                           });
                                         }
                                       },
-                                      child: Text(index==2?lChanger[16]["confirmBtn"]:lChanger[16]["nextBtn"], style: TextStyle(color: Colors.white),),
+                                      child: Text(index==2?lChanger[10]["confirmBtn"]:lChanger[10]["nextBtn"], style: TextStyle(color: Colors.white),),
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.grey,
                                         foregroundColor: Colors.grey,

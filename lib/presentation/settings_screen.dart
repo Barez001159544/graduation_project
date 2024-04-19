@@ -173,7 +173,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     print(val);
                                     lChanger.changeLanguage(val);
                                   })),
-                                settings("Notifications", cTheme.primaryColorDark,wid,
+                                settings(lChanger.data[0]["notification"], cTheme.primaryColorDark,wid,
                                     CustomSwitchBtn(false, cTheme.primaryColorLight, (val) {
                                       // tChanger.changeTheme();
                                     })),
@@ -201,7 +201,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           return FAQScreen();
                                         }));
                                       },
-                                      child: settings("FAQ", cTheme.primaryColorDark, wid, SizedBox(),)),
+                                      child: settings("FAQ - ${lChanger.data[0]["faq"]}", cTheme.primaryColorDark, wid, SizedBox(),)),
                                   GestureDetector(
                                       onTap: (){
                                         Navigator.push(context, MaterialPageRoute(builder: (context){

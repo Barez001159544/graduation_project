@@ -25,6 +25,9 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   FocusNode _focus = FocusNode();
   bool obsecure=true;
+  String passwordText="";
+  String phoneNumberText="";
+  String jobTitleText="";
 
   @override
   void initState() {
@@ -125,17 +128,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 // ),
                                 Column(
                                   children: [
-                                    profileItem(lChanger[1]["ph1"], cTheme.primaryColor, cTheme.primaryColorDark, wid>600?wid*0.6:wid, name, false, true, FocusNode()),
+                                    profileItem(lChanger[1]["ph1"], cTheme.primaryColor, cTheme.primaryColorDark, wid>600?wid*0.6:wid, name, false, true, FocusNode(), (value){   }),
                                     SizedBox(height: 10,),
-                                    profileItem(lChanger[1]["ph2"], cTheme.primaryColor, cTheme.primaryColorDark, wid>600?wid*0.6:wid, phoneNumber, false, false, FocusNode()),
+                                    profileItem(lChanger[1]["ph2"], cTheme.primaryColor, cTheme.primaryColorDark, wid>600?wid*0.6:wid, phoneNumber, false, false, FocusNode(), (value){phoneNumberText=value;}),
                                     SizedBox(height: 10,),
-                                    profileItem(lChanger[1]["ph3"], cTheme.primaryColor, cTheme.primaryColorDark, wid>600?wid*0.6:wid, email, false, true, FocusNode()),
+                                    profileItem(lChanger[1]["ph3"], cTheme.primaryColor, cTheme.primaryColorDark, wid>600?wid*0.6:wid, email, false, true, FocusNode(), (value){   }),
                                     SizedBox(height: 10,),
-                                    profileItem(lChanger[1]["ph4"], cTheme.primaryColor, cTheme.primaryColorDark, wid>600?wid*0.6:wid, password, obsecure, false, _focus),
+                                    profileItem(lChanger[1]["ph4"], cTheme.primaryColor, cTheme.primaryColorDark, wid>600?wid*0.6:wid, password, obsecure, false, _focus, (value){passwordText=value;}),
                                     SizedBox(height: 10,),
-                                    profileItem(lChanger[1]["ph5"], cTheme.primaryColor, cTheme.primaryColorDark, wid>600?wid*0.6:wid, jobTitle, false, false, FocusNode()),
+                                    profileItem(lChanger[1]["ph5"], cTheme.primaryColor, cTheme.primaryColorDark, wid>600?wid*0.6:wid, jobTitle, false, false, FocusNode(), (value){jobTitleText=value;}),
                                     SizedBox(height: 10,),
-                                    profileItem(lChanger[1]["ph6"], cTheme.primaryColor, cTheme.primaryColorDark, wid>600?wid*0.6:wid, age, false, true, FocusNode()),
+                                    profileItem(lChanger[1]["ph6"], cTheme.primaryColor, cTheme.primaryColorDark, wid>600?wid*0.6:wid, age, false, true, FocusNode(), (value){   }),
                                   ],
                                 ),
                                 // profileItem("label", wid, Icon(Icons.edit_rounded),),
@@ -154,28 +157,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             height: wid>600?100:120,
                             child: Center(
                               child: MainBtn(wid>600?wid*0.35-80:wid-40, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[1]["btn"], () async {
-                                showDialog(
-                                    context: context,
-                                    // barrierColor: cTheme.backgroundColor,
-                                    builder: (BuildContext context){
-                                      return AlertDialog(
-                                        actionsPadding: EdgeInsets.all(0),
-                                        contentPadding: EdgeInsets.all(5),
-                                        backgroundColor: Colors.transparent,
-                                        surfaceTintColor: Colors.transparent,
-                                        // shape: RoundedRectangleBorder(
-                                        //   borderRadius: BorderRadius.circular(45),
-                                        // ),
-                                        content: LoadingIndicator(cTheme.scaffoldBackgroundColor),
-                                      );
-                                    });
-                                await getGetSelf.getUpdateUser(UpdateUserRequest(phoneNumber.text, jobTitle.text, "messi12345"));
-                                await getGetSelf.getGetSelf();
-                                Navigator.of(context).pop();
-                                if(getGetSelf.getSelfResponse?.status=="success"){
-                                  CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[1]["notification1"], cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                if(passwordText!="" && passwordText.length<5){
+                                  CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[1]["notification3"], cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                }else if(phoneNumber.text.isEmpty){
+                                  CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[1]["notification4"], cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                }else if(jobTitle.text.isEmpty){
+                                  CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[1]["notification5"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                 }else{
-                                  CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[1]["notification2"], cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                  print(passwordText.length);
+                                  showDialog(
+                                      context: context,
+                                      // barrierColor: cTheme.backgroundColor,
+                                      builder: (BuildContext context){
+                                        return AlertDialog(
+                                          actionsPadding: EdgeInsets.all(0),
+                                          contentPadding: EdgeInsets.all(5),
+                                          backgroundColor: Colors.transparent,
+                                          surfaceTintColor: Colors.transparent,
+                                          // shape: RoundedRectangleBorder(
+                                          //   borderRadius: BorderRadius.circular(45),
+                                          // ),
+                                          content: LoadingIndicator(cTheme.scaffoldBackgroundColor),
+                                        );
+                                      });
+                                  print(phoneNumber.text);
+                                  print(jobTitle.text);
+                                  print(passwordText);
+                                  await getGetSelf.getUpdateUser(UpdateUserRequest(phoneNumber.text, jobTitle.text, passwordText));
+                                  await getGetSelf.getGetSelf();
+                                  Navigator.of(context).pop();
+                                  if(getGetSelf.getSelfResponse?.status=="success"){
+                                    CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[1]["notification1"], cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                  }else{
+                                    print(getGetSelf.getSelfResponse?.status);
+                                    CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[1]["notification2"], cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                  }
                                 }
                               }),
                             ),
@@ -191,7 +207,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 }
 
-Widget profileItem(String hint, Color cursorColor, Color txtColor, double wid,TextEditingController controller, bool obText, bool isReadOnly, FocusNode focus){
+Widget profileItem(String hint, Color cursorColor, Color txtColor, double wid,TextEditingController controller, bool obText, bool isReadOnly, FocusNode focus, void onChange(String value)){
   return SizedBox(
     width: wid>600?500:wid,
     height: 40,
@@ -223,6 +239,9 @@ Widget profileItem(String hint, Color cursorColor, Color txtColor, double wid,Te
         ),
         // border: InputBorder.none,
       ),
+      onChanged: (value){
+        onChange(value);
+      },
     ),
   );
 }

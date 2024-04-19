@@ -26,6 +26,7 @@ class LoginFields extends StatelessWidget {
       ),
       decoration: InputDecoration(
         hintText: "$hint",
+        contentPadding: EdgeInsets.symmetric(vertical: 10),
         hintStyle: TextStyle(
           color: Colors.grey,
           fontSize: hint=="### ####"?24:14,
