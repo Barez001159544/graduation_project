@@ -12,11 +12,13 @@ import 'package:graduation_project/controllers/get_protests.dart';
 import 'package:graduation_project/controllers/get_repairment.dart';
 import 'package:graduation_project/controllers/get_user_payments.dart';
 import 'package:graduation_project/controllers/get_user_properties.dart';
+import 'package:graduation_project/models/entire_house_fee.dart';
+import 'package:graduation_project/models/this_month_payment.dart';
 import 'package:graduation_project/presentation/engineering_screen.dart';
 import 'package:graduation_project/presentation/faq_screen.dart';
-import 'package:graduation_project/presentation/protest_screen.dart';
+import 'package:graduation_project/presentation/protest_history.dart';
 import 'package:graduation_project/presentation/repair_history.dart';
-import 'package:graduation_project/presentation/repair_screen.dart';
+import 'package:graduation_project/presentation/repair_new.dart';
 import 'package:graduation_project/presentation/login_screen.dart';
 import 'package:graduation_project/presentation/payment_screen.dart';
 import 'package:graduation_project/presentation/profile_screen.dart';
@@ -50,6 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String? selectedProperty;
   String? selectedType;
   int? selectedId;
+  List<HouseFee> justHouseFee=[];
 
   @override
   void initState() {
@@ -77,9 +80,20 @@ class _HomeScreenState extends State<HomeScreen> {
         await Provider.of<GetUserPayments>(context, listen: false).getThisMonthPayment("apartments", "${selectedId}");
         await Provider.of<GetUserPayments>(context, listen: false).getAllHousePayments("apartments", "${selectedId}");
       }
-
       // await Provider.of<GetUserPayments>(context, listen: false).getEntireHouseFee();
     });
+    justHouseFee.clear();
+    if(Provider.of<GetUserPayments>(context, listen: false).thisMonthPayment?.eachHouseFee!=null){
+      for(HouseFee each in Provider.of<GetUserPayments>(context, listen: false).thisMonthPayment!.eachHouseFee!){
+        if(each.feeType=="house fee"){
+          justHouseFee.add(each);
+        }
+      }
+    }
+
+    for(HouseFee each in justHouseFee){
+      print("!!!!!! ${each.feeType}");
+    }
   }
 
   @override
@@ -91,9 +105,9 @@ class _HomeScreenState extends State<HomeScreen> {
     // double wid2= wid>600?wid*0.9/2-20:wid;
     // double hei2= wid>600?wid*0.5:hei/2;
     double wid1= wid>600?wid/2.2:wid;
-    double hei1= wid>600?wid/2.2:hei/2;
+    double hei1= wid>600?wid/2.2:hei/2-10;
     double wid2= wid>600?wid/2.2:wid;
-    double hei2= wid>600?wid/2.2:hei/2;
+    double hei2= wid>600?wid/2.2:hei/2+10;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     List lChanger;
     return Consumer5<LanguageChanger, GetToken, GetGetSelf, GetUserProperties, GetUserPayments>(
@@ -176,6 +190,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                       onTap: (){
                                         print("Log Out");
                                         ConfirmationCustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, lChanger[0]["confirmationTitle"], lChanger[0]["confirmationSubtitle"], lChanger[0]["confirmationAccept"], lChanger[0]["confirmationDecline"], context, (){
+                                          showDialog(
+                                              context: context,
+                                              // barrierColor: cTheme.backgroundColor,
+                                              builder: (BuildContext context){
+                                                return AlertDialog(
+                                                  actionsPadding: EdgeInsets.all(0),
+                                                  contentPadding: EdgeInsets.all(5),
+                                                  backgroundColor: Colors.transparent,
+                                                  surfaceTintColor: Colors.transparent,
+                                                  // shape: RoundedRectangleBorder(
+                                                  //   borderRadius: BorderRadius.circular(45),
+                                                  // ),
+                                                  content: LoadingIndicator(cTheme.scaffoldBackgroundColor),
+                                                );
+                                              });
+                                          getGetSelf.logOutLoading;
                                           getToken.deleteToken("accessToken");
                                           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
                                             return LoginScreen();
@@ -343,7 +373,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(lChanger[6]["welcome"].toUpperCase(), textAlign: TextAlign.center, style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark.withOpacity(0.8),),),
-                                              Text("${getGetSelf.getSelfResponse?.userDetails?.name.split(" ")[1] ?? "Anonymous"}".toUpperCase(), textAlign: TextAlign.center, style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark, fontWeight: FontWeight.bold,),),
+                                              Text("${getGetSelf.getSelfResponse?.userDetails?.name.split(" ")[0] ?? "Anonymous"}".toUpperCase(), textAlign: TextAlign.center, style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark, fontWeight: FontWeight.bold,),),
                                             ],
                                           ),
                                         ],
@@ -402,7 +432,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       textBaseline: TextBaseline.alphabetic,
                                                       textDirection: TextDirection.ltr,
                                                       children: [
-                                                        Text("${getUserPayments.allHousePayments?.eachHousePayment?[0].amount??"N/A"}".split(".")[0].replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},'), textDirection: TextDirection.ltr, style: TextStyle(fontFamily: "Roboto", fontSize: 24, color: Colors.white),),
+                                                        Text("${(justHouseFee==null || justHouseFee.isEmpty)?"N/A":justHouseFee[0].amount}".split(".")[0].replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},'), textDirection: TextDirection.ltr, style: TextStyle(fontFamily: "Roboto", fontSize: 24, color: Colors.white),),
                                                         SizedBox(width: 5),
                                                         Text("IQD", textDirection: TextDirection.ltr, style: TextStyle(fontFamily: "Roboto", fontSize: 16, color: Colors.white),),
                                                       ],
@@ -426,7 +456,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         ),
                                                       ),
                                                     ),
-                                                    (getUserProperties.isLoading || getUserPayments.isLoading)?Container(
+                                                    (getUserProperties.isLoading || getUserPayments.isLoading || getUserPayments.allHousePayments?.eachHousePayment==[])?Container(
                                                       width: 180,
                                                       height: 20,
                                                       margin: EdgeInsets.only(bottom: 5),
@@ -439,7 +469,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       textBaseline: TextBaseline.alphabetic,
                                                       textDirection: TextDirection.ltr,
                                                       children: [
-                                                        Text("${(double.parse("${getUserPayments.allHousePayments?.eachHousePayment?[0].amount??12}") /12)}".split(".")[0].replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},'), textDirection: TextDirection.ltr, style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: "Roboto"),),
+                                                        Text("${(justHouseFee==null || justHouseFee.isEmpty)?"N/A":(double.parse("${justHouseFee[0].amount??12}") /12)}".split(".")[0].replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},'), textDirection: TextDirection.ltr, style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: "Roboto"),),
                                                         SizedBox(
                                                           width: 5,
                                                         ),
@@ -458,7 +488,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ),
                                                   ),
                                                   child: Center(
-                                                    child: Icon((getUserPayments.thisMonthPayment?.eachHouseFee?.length==0?false:(getUserPayments.thisMonthPayment?.eachHouseFee?[0].isPaid==0))?CupertinoIcons.arrow_up_right:Icons.check_rounded, size: (getUserPayments.thisMonthPayment?.eachHouseFee?.length==0?false:(getUserPayments.thisMonthPayment?.eachHouseFee?[0].isPaid==0))?hei1*0.16:hei1*0.14, color: Colors.black,),
+                                                    child: Icon((justHouseFee.length==0?false:(justHouseFee[0].isPaid==0))?CupertinoIcons.arrow_up_right:Icons.check_rounded, size: (justHouseFee.length==0?false:(justHouseFee[0].isPaid==0))?hei1*0.16:hei1*0.14, color: Colors.black,),
                                                   ),
                                                 ).animate(onComplete: (controller)=> controller.loop(reverse: false, min: 0)).shimmer(curve: Curves.easeInOut, duration: 10.seconds),
                                               ],
@@ -475,7 +505,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     color: Colors.white70,
                                                     borderRadius: BorderRadius.all(Radius.circular(8)),
                                                   ),
-                                                ):SpecialCustomDropDownMenu("Property", 160, 30, 8, Color(0xff749CAD), Colors.white, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.houses, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.apartments, selectedProperty, (val) {
+                                                ):SpecialCustomDropDownMenu("Property", 160, 30, 8, Color(0xff749CAD), Colors.white, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.houses, getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.apartments, selectedProperty, (val) async {
                                                   setState(() {
                                                     selectedProperty=val;
                                                   });
@@ -484,12 +514,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     EachHouseResponse? obj = getUserProperties.fullyHousesResponse?.eachHouseResponse?.firstWhere((obj) => obj?.name == "${val}".split("-")[1],);
                                                     selectedId=obj?.id;
                                                     print(">>>>>>>>>${selectedId}");
-                                                    getUserPayments.getThisMonthPayment("houses", "$selectedId");
+                                                    await getUserPayments.getThisMonthPayment("houses", "$selectedId");
                                                   }else{
                                                     EachApartmentsResponse? obj = getUserProperties.fullyApartmentsResponse?.eachApartmentsResponse?.firstWhere((obj) => obj?.name == "${val}".split("-")[1],);
                                                     selectedId=obj?.id;
                                                     print(">>>>>>>>>${selectedId}");
-                                                    getUserPayments.getThisMonthPayment("apartments", "$selectedId");
+                                                    await getUserPayments.getThisMonthPayment("apartments", "$selectedId");
+                                                  }
+                                                  justHouseFee.clear();
+                                                  if(Provider.of<GetUserPayments>(context, listen: false).thisMonthPayment?.eachHouseFee!=null){
+                                                    for(HouseFee each in Provider.of<GetUserPayments>(context, listen: false).thisMonthPayment!.eachHouseFee!){
+                                                      if(each.feeType=="house fee"){
+                                                        justHouseFee.add(each);
+                                                      }
+                                                    }
+                                                  }
+
+                                                  for(HouseFee each in justHouseFee){
+                                                    print("!!!!!! ${each.feeType}");
                                                   }
                                                 }),
                                                 SizedBox(
@@ -499,7 +541,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   textDirection: TextDirection.ltr,
                                                   crossAxisAlignment: CrossAxisAlignment.end,
                                                   children: [
-                                                    (getUserProperties.isLoading || getUserPayments.isLoading)?Container(
+                                                    (getUserProperties.isLoading || getUserPayments.isLoading || getUserPayments.allHousePayments?.eachHousePayment==[])?Container(
                                                       width: wid1*0.6,
                                                       height: 30,
                                                       decoration: BoxDecoration(
@@ -521,7 +563,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         ),
                                                         Container(
                                                           height: 30, //differenceInMonths(DateTime.parse(getUserPayments.allHousePayments?.eachHousePayment?[0].startDate??"2023-03-22"), DateTime(2023, 3, 22))
-                                                          width: (wid1*0.6)* (getUserPayments.thisMonthPayment?.eachHouseFee?.length==0?0:(getUserPayments.thisMonthPayment?.eachHouseFee?.length??1-(getUserPayments.thisMonthPayment?.eachHouseFee?[0].isPaid==0?1:0)))/(differenceInMonths(DateTime(2023, 3, 22), DateTime.parse(getUserPayments.allHousePayments?.eachHousePayment?[0].startDate??"2023-03-22"))!=0?differenceInMonths(DateTime(2023, 3, 22), DateTime.parse(getUserPayments.allHousePayments?.eachHousePayment?[0].startDate??"2023-03-22")):1),//  (((getUserPayments.thisMonthPayment?.eachHouseFee?.length??12)-((getUserPayments.thisMonthPayment?.eachHouseFee?.length==0?false:(getUserPayments.thisMonthPayment?.eachHouseFee?[0].isPaid==0))?1:0))/12),
+                                                          width: (justHouseFee==null || justHouseFee.isEmpty)?0:(wid1*0.6)* (justHouseFee.length==0?0:(justHouseFee.length-(justHouseFee[0].isPaid==0?1:0)))/(differenceInMonths(DateTime(2023, 3, 22), DateTime.parse(justHouseFee[0].startDate??"2023-03-22"))!=0?differenceInMonths(DateTime(2023, 3, 22), DateTime.parse(justHouseFee[0].startDate??"2023-03-22")):1),//  (((getUserPayments.thisMonthPayment?.eachHouseFee?.length??12)-((getUserPayments.thisMonthPayment?.eachHouseFee?.length==0?false:(getUserPayments.thisMonthPayment?.eachHouseFee?[0].isPaid==0))?1:0))/12),
                                                           decoration: BoxDecoration(
                                                             borderRadius: BorderRadius.only(
                                                               topLeft: Radius.circular(100),
@@ -551,7 +593,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         color: Colors.white70,
                                                         borderRadius: BorderRadius.all(Radius.circular(8)),
                                                       ),
-                                                    ):Text("${(getUserPayments.thisMonthPayment?.eachHouseFee?.length??0)-((getUserPayments.thisMonthPayment?.eachHouseFee?.length==0?false:(getUserPayments.thisMonthPayment?.eachHouseFee?[0].isPaid==0))?1:0)??"N/A"}/${differenceInMonths(DateTime(2023, 3, 22), DateTime.parse(getUserPayments.allHousePayments?.eachHousePayment?[0].startDate??"2023-03-22"))}",textDirection: TextDirection.ltr, style: TextStyle(color: Colors.white, fontSize: 10, fontFamily: "Roboto"),),
+                                                    ):(justHouseFee==null || justHouseFee.isEmpty)?Text("N/A",textDirection: TextDirection.ltr, style: TextStyle(color: Colors.white, fontSize: 10, fontFamily: "Roboto"),):Text("${(justHouseFee.length)-((justHouseFee.length==0?false:(justHouseFee[0].isPaid==0))?1:0)}/${differenceInMonths(DateTime.parse(justHouseFee[0].startDate??"2023-03-22"), DateTime.parse(justHouseFee[0].endDate??"2024-03-22"))}",textDirection: TextDirection.ltr, style: TextStyle(color: Colors.white, fontSize: 10, fontFamily: "Roboto"),),
                                                   ],
                                                 ),
                                               ],
@@ -562,9 +604,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                                wid>600?SizedBox(
                                   height: wid>600?15.sp:20,
-                                ),
+                                ):SizedBox(),
                                 wid>600?GestureDetector(
                                   onTap: (){
                                     Navigator.of(context).push(MaterialPageRoute(builder: (context){
@@ -603,7 +645,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  getGetSelf.getSelfResponse?.userDetails?.name=="Dr. Melany Feeney PhD"?GestureDetector(
+                                  // getGetSelf.getSelfResponse?.userDetails?.name=="Dr. Melany Feeney PhD"
+                                  (!getGetSelf.rolesResponse!.roles!.contains("employee") || getGetSelf.rolesResponse!.roles!=null)?GestureDetector(
                                     onTap: (){
                                       Navigator.push(context, MaterialPageRoute(builder: (context){
                                         return EngineeringScreen();
@@ -683,19 +726,29 @@ class _HomeScreenState extends State<HomeScreen> {
                                       // }
                                     },
                                     child: Container(
-                                      width: getGetSelf.getSelfResponse?.userDetails?.name=="Dr. Melany Feeney PhD"?wid2/2-20:wid2-20,
+                                      // width: getGetSelf.getSelfResponse?.userDetails?.name=="Dr. Melany Feeney PhD"
+                                          width: !getGetSelf.rolesResponse!.roles!.contains("employee")?wid2/2-20:wid2-20,
                                       height: hei2/2-20,
                                       decoration: BoxDecoration(
                                         color: cTheme.primaryColorLight,
                                         borderRadius: BorderRadius.all(Radius.circular(wid>600?20.sp:45.sp),),
+                                        image: DecorationImage(
+                                          image: AssetImage("images/houses+buildings.jpg"),
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Icon(Icons.other_houses_rounded, color: cTheme.primaryColor, size: 40,),
-                                          SizedBox(height: 10,),
-                                          Text(lChanger[6]["properties"], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
-                                        ],
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(Radius.circular(wid>600?20.sp:45.sp),),
+                                          color: Colors.black45,
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Icon(Icons.keyboard_arrow_up_rounded, color: Colors.white, size: 50,).animate(onComplete: (controller)=> controller.loop(reverse: true,)).moveY(duration: 2.seconds, curve: Curves.easeInOut),
+                                            Text(lChanger[6]["properties"], style: TextStyle(color: Colors.white, fontSize: 16),),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -809,7 +862,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       //   await getProtests.getAllProtests();
                                       // Navigator.of(context).pop();
                                         Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                                          return ProtestScreen();
+                                          return ProtestHistory();
                                         }));
                                     },
                                     child: Container(

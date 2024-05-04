@@ -21,7 +21,6 @@ class LoginFields extends StatelessWidget {
       ]:<TextInputFormatter>[],
       keyboardType: hint=="### ####"?TextInputType.number:TextInputType.emailAddress,
       style: TextStyle(
-        color: primaryColor,
         fontSize: hint=="### ####"?24:16,
       ),
       decoration: InputDecoration(

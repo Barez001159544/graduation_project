@@ -65,7 +65,7 @@ class Repair extends IRepair{
     _token= await TokenManager().readToken("accessToken");
     try{
       http.Response response= await http.delete(
-        Uri.parse("http://127.0.0.1:8000/api/repairments/user/1"),
+        Uri.parse("http://127.0.0.1:8000/api/repairments/user/$repairId"),
         headers: {
           "accept":"application/json",
           "content-type":"application/json",

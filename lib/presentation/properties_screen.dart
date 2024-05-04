@@ -7,7 +7,7 @@ import 'package:graduation_project/controllers/get_user_payments.dart';
 import 'package:graduation_project/controllers/get_user_properties.dart';
 import 'package:graduation_project/models/fully_aparments_reponse.dart';
 import 'package:graduation_project/models/fully_houses_response.dart';
-import 'package:graduation_project/presentation/payment_history.dart';
+import 'package:graduation_project/presentation/properties_payment_history.dart';
 import 'package:provider/provider.dart';
 import 'package:typethis/typethis.dart';
 
@@ -201,7 +201,7 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
                               }
                               Navigator.of(context).pop();
                               Navigator.push(context, MaterialPageRoute(builder: (context){
-                                return PaymentHistory();
+                                return PropertiesPaymentHistory();
                               }));
                             },
                             child: Container(

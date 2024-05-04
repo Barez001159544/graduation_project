@@ -63,7 +63,7 @@ class Protest extends IProtest{
     _token= await TokenManager().readToken("accessToken");
     try{
       http.Response response= await http.delete(
-          Uri.parse("http://127.0.0.1:8000/api/protests/user/1"),
+          Uri.parse("http://127.0.0.1:8000/api/protests/user/$protestId"),
               headers: {
             "accept":"application/json",
                 "content-type":"application/json",

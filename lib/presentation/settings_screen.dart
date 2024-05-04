@@ -7,13 +7,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:graduation_project/controllers/get_get_self.dart';
 import 'package:graduation_project/controllers/get_token.dart';
 import 'package:graduation_project/controllers/get_user_properties.dart';
 import 'package:graduation_project/controllers/language_changer.dart';
 import 'package:graduation_project/controllers/theme_changer.dart';
 import 'package:graduation_project/presentation/about_app.dart';
 import 'package:graduation_project/presentation/login_screen.dart';
-import 'package:graduation_project/presentation/payment_history.dart';
+import 'package:graduation_project/presentation/properties_payment_history.dart';
 import 'package:graduation_project/presentation/profile_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -50,13 +51,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
     double hei = MediaQuery.of(context).size.height;
     bool or=MediaQuery.of(context).orientation==Orientation.landscape?true:false;
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
-    return Consumer4<ThemeChanger, LanguageChanger, GetToken, GetUserProperties>(
-        builder: (_, tChanger, lChanger, getToken, getUserProperties, child) {
+    return Consumer5<ThemeChanger, LanguageChanger, GetToken, GetUserProperties, GetGetSelf>(
+        builder: (_, tChanger, lChanger, getToken, getUserProperties, getGetSelf, child) {
           return Directionality(
             textDirection: lChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
             child: Scaffold(
-              appBar: CustomAppBar(or?cTheme.scaffoldBackgroundColor:cTheme.primaryColor, lChanger.data[0]["title"], or?cTheme.primaryColorDark:Colors.white, context),
-              backgroundColor: cTheme.scaffoldBackgroundColor,
+              appBar: CustomAppBar(or?cTheme.scaffoldBackgroundColor:cTheme.primaryColor, lChanger.data[0]["title"], Colors.white, context),
+              // backgroundColor: cTheme.scaffoldBackgroundColor,
               body: SafeArea(
                 child: Stack(
                   alignment: Alignment.center,
@@ -173,10 +174,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     print(val);
                                     lChanger.changeLanguage(val);
                                   })),
-                                settings(lChanger.data[0]["notification"], cTheme.primaryColorDark,wid,
-                                    CustomSwitchBtn(false, cTheme.primaryColorLight, (val) {
-                                      // tChanger.changeTheme();
-                                    })),
+                                // settings(lChanger.data[0]["notification"], cTheme.primaryColorDark,wid,
+                                //     CustomSwitchBtn(false, cTheme.primaryColorLight, (val) {
+                                //       // tChanger.changeTheme();
+                                //     })),
                                   // settings("More", cTheme.primaryColorDark, wid, FToggleButton(
                                   //   isEnable: false,
                                   //   onChangeStatus: (bool val) {},
@@ -224,6 +225,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         onTap: (){
                           print("Log Out");
                           ConfirmationCustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, lChanger.data[0]["confirmationTitle"], lChanger.data[0]["confirmationSubtitle"], lChanger.data[0]["confirmationAccept"], lChanger.data[0]["confirmationDecline"], context, (){
+                            showDialog(
+                                context: context,
+                                // barrierColor: cTheme.backgroundColor,
+                                builder: (BuildContext context){
+                                  return AlertDialog(
+                                    actionsPadding: EdgeInsets.all(0),
+                                    contentPadding: EdgeInsets.all(5),
+                                    backgroundColor: Colors.transparent,
+                                    surfaceTintColor: Colors.transparent,
+                                    // shape: RoundedRectangleBorder(
+                                    //   borderRadius: BorderRadius.circular(45),
+                                    // ),
+                                    content: LoadingIndicator(cTheme.scaffoldBackgroundColor),
+                                  );
+                                });
+                            getGetSelf.logOutLoading;
                             getToken.deleteToken("accessToken");
                             Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
                               return LoginScreen();
@@ -280,7 +297,7 @@ Widget settings(String label, labelColor, double wid, Widget widgetFunction){
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: TextStyle(color: labelColor),),
+        Text(label, style: TextStyle(),),
         widgetFunction,
       ],
     ),

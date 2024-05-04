@@ -4,5 +4,5 @@ import '../../models/repair_history_response.dart';
 
 abstract class IEngineering{
   Future<RepairHistoryResponse?> getAllRepair();
-  Future<String?> acceptRepairment(AcceptRepairmentRequest acceptRepairmentRequest);
+  Future<String?> acceptRepairment(int? id, AcceptRepairmentRequest acceptRepairmentRequest);
 }

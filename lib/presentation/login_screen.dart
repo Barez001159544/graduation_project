@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
               textDirection: languageChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
               child: Scaffold(
                 resizeToAvoidBottomInset: false,
-              backgroundColor: wid>600?cTheme.scaffoldBackgroundColor:cTheme.primaryColorLight,//Color(0xff155E7D),
+              // backgroundColor: wid>600?cTheme.scaffoldBackgroundColor:cTheme.primaryColorLight,//Color(0xff155E7D),
               body: SafeArea(
                 child: (getGetSelf.isLoading || getToken.isLoading)?LoadingIndicator(cTheme.scaffoldBackgroundColor):Stack(
                   children: [
@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: wid>600?wid*0.45:hei,
                           padding: EdgeInsets.symmetric(vertical: 20),
                           decoration: BoxDecoration(
-                            color: cTheme.primaryColorLight,
+                            color: Theme.of(context).primaryColorLight,
                             borderRadius: BorderRadius.all(
                               Radius.circular(wid>600?45:0),
                             ),
@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: SvgPicture.asset(
                                     height: 40,
                                     // width: 40,
-                                  color: cTheme.primaryColorDark,
+                                  color: Theme.of(context).primaryColorDark,
                                     "images/rcms-logo-2.svg",
                                     semanticsLabel: 'App logo'),
                                 // Image.asset(
@@ -135,8 +135,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                       // TokenManager().saveToken("accessToken", getAuth.data!.bearerToken);
                                       await getToken.writeToken("accessToken", getGetSelf.data!.bearerToken);
                                       await getGetSelf.getGetSelf();
+                                      await getGetSelf.getUserRoles(getGetSelf.getSelfResponse?.userDetails?.email);
                                       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context){
-                                        return getGetSelf.getSelfResponse?.userDetails?.name=="Dr. Melany Feeney PhD"?HomeScreen():EngineeringScreen();
+                                        return getGetSelf.rolesResponse!.roles!.contains("resident")?HomeScreen():EngineeringScreen();
                                       }), (route) => false);
                                       // setState(() {
                                       //   errorMessage="Successful";

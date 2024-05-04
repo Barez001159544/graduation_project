@@ -43,7 +43,9 @@
       "status3": "Rejected",
       "status4": "Completed",
       "acceptedBy": "Accepted by",
-      "ns": "no-one",
+      "rTitle": "Title",
+      "rComponent": "Component",
+      "ns": "not-specified",
       "notification1": "Successfully updated",
       "notification2": "An error occurred",
       "btn1": "Reject",
@@ -51,10 +53,10 @@
       "btn3": "Complete"
     },
     {
-      "subtitle": "More than 100 most asked questions",
+      "subtitle": "find answers to most asked questions",
       "message1": "Consider visiting ",
       "message2": "our website",
-      "message3": " in case of any malfunctions"
+      "message3": " in case of any app malfunctions"
     },
     {
       "title": "Properties",
@@ -77,7 +79,8 @@
       "cstatus2": "Unpaid",
       "employee": "Engineering",
       "randm": "Repair & Maintain",
-      "protest": "Protest"
+      "protest": "Protest",
+      "no-info": "No payment information about this property is available"
     },
     {
       "title": "FIB Payment",
@@ -87,9 +90,10 @@
       "water": "Monthly Water",
       "property": "Property",
       "notification1": "You have not selected any property",
-      "notification2": "An error occured",
-      "dialogTitle": "Title",
-      "dialogSubtitle": "Some text will be shown here",
+      "notification2": "An error occurred",
+      "notification3": "Already Paid",
+      "dialogTitle": "Action Required",
+      "dialogSubtitle": "Please do not forget to hit the button below after you transfer money through your FIB account",
       "dialogBtn": "Thumbs Up"
     },
     {
@@ -113,12 +117,12 @@
       "delNotify2": "An error occurred",
 
       "title2": "New Repair & Maintenance",
-      "subtitle": "Lorem ipsum is simply a dummy text for your web design and mobile app development",
+      "subtitle": "Fill the followings and it will be directed to an employee, and someone will get to you soon",
       "btn": "send",
-      "description": "description",
+      "description": "Description",
       "property": "Property",
-      "popTitle": "Title",
-      "popSubtitle": "Message should be showed here as a 2 line text",
+      "popTitle": "Confirm Request",
+      "popSubtitle": "Are you sure you want to request this repairment or maintenance?",
       "agreeBtn": "Ok",
       "declineBtn": "Decline",
       "notification1": "Successfully Sent",
@@ -142,7 +146,7 @@
       "nextBtn": "Next",
       "confirmBtn": "Confirm",
       "p1Title": "Title first",
-      "p1Message": "Performing hot reload Syncing files to device Windows Reloaded 1 of 1972 libraries in 576ms (compile: 54 ms, reload: 186 ms, reassemble: 175 ms).",
+      "p1Message": "Please be mindful to use respectful language in your email submission. We aim to maintain a professional environment and appreciate your cooperation.",
       "p2Title1": "Nature of complaint",
       "p2Title2": "Upload an image (optional)",
       "p2Title3": "Location",

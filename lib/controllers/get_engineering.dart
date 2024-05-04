@@ -33,11 +33,11 @@ class GetEngineering extends ChangeNotifier{
   String? get status=>_status;
   bool acceptLoading=false;
 
-  Future<void> acceptRepairment(AcceptRepairmentRequest) async{
+  Future<void> acceptRepairment(int? id, AcceptRepairmentRequest) async{
     acceptLoading=true;
     notifyListeners();
 
-    var response= await services.acceptRepairment(AcceptRepairmentRequest);
+    var response= await services.acceptRepairment(id, AcceptRepairmentRequest);
     _status= response;
 
     acceptLoading=false;

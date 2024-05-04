@@ -12,15 +12,37 @@ import '../controllers/language_changer.dart';
 import '../controllers/theme_changer.dart';
 import '../custom theme data/themes.dart';
 import '../models/all_house_payments.dart';
+import '../models/this_month_payment.dart';
 
-class PaymentHistory extends StatefulWidget {
-  const PaymentHistory({super.key});
+class PropertiesPaymentHistory extends StatefulWidget {
+  const PropertiesPaymentHistory({super.key});
 
   @override
-  State<PaymentHistory> createState() => _PaymentHistoryState();
+  State<PropertiesPaymentHistory> createState() => _PropertiesPaymentHistoryState();
 }
 
-class _PaymentHistoryState extends State<PaymentHistory> {
+class _PropertiesPaymentHistoryState extends State<PropertiesPaymentHistory> {
+  List<HouseFee> justWater=[];
+  List<HouseFee> justFee=[];
+  bool isHouse=true;
+  @override
+  void initState() {
+    super.initState();
+    justWater.clear();
+    justFee.clear();
+    if(Provider.of<GetUserPayments>(context, listen: false).thisMonthPaymentHistory?.eachHouseFee!=null){
+      for(HouseFee each in Provider.of<GetUserPayments>(context, listen: false).thisMonthPaymentHistory!.eachHouseFee!){
+        if(each.feeType=="water"){
+          justWater.add(each);
+        }else if(each.feeType=="house fee"){
+          justFee.add(each);
+        }
+      }
+    }
+    isHouse=justWater.isEmpty?true:false;
+    print("1>>>>>>${justWater}");
+    print(">>>>>>${justFee}");
+  }
   @override
   Widget build(BuildContext context) {
     double wid = MediaQuery.of(context).size.width;
@@ -29,6 +51,17 @@ class _PaymentHistoryState extends State<PaymentHistory> {
     ThemeData cTheme = Provider.of<ThemeChanger>(context).isDark? darkTheme : lightTheme;
     return Consumer4<ThemeChanger, LanguageChanger, GetUserProperties, GetUserPayments>(
         builder: (_, tChanger, lChanger, getUserProperties, getUserPayments, child) {
+          // if(getUserPayments.thisMonthPayment?.eachHouseFee!=null){
+          //   for(HouseFee each in getUserPayments.thisMonthPayment!.eachHouseFee!){
+          //     if(each.feeType=="water"){
+          //       justWater.add(each);
+          //     }else if(each.feeType=="fee"){
+          //       justFee.add(each);
+          //     }
+          //   }
+          // }
+          // print("1>>>>>>${justWater}");
+          // print(">>>>>>${justFee}");
           return Directionality(
             textDirection: lChanger.selectedLanguage=="ENG"?TextDirection.ltr:TextDirection.rtl,
             child: Scaffold(
@@ -108,13 +141,16 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                           children: [
                             TextButton(onPressed: (){
                               setState(() {
+                                if(justFee.isNotEmpty){
+                                  isHouse=true;
+                                }
                                 // if((getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.houses!.isNotEmpty as bool)){
                                 //   isHouse=true;
                                 // }
                                 // print(isHouse);
                               });
                             }, child: Text(lChanger.data[11]["fee"], style: TextStyle(color: cTheme.primaryColorDark.withOpacity(0.6), fontSize: 12),),),
-                            true?Icon(Icons.keyboard_arrow_up_rounded, color: cTheme.primaryColorDark, size: 12,):Icon(Icons.keyboard_arrow_down_rounded, color: cTheme.primaryColorDark, size: 12,),
+                            isHouse?Icon(Icons.keyboard_arrow_up_rounded, color: cTheme.primaryColorDark, size: 12,):Icon(Icons.keyboard_arrow_down_rounded, color: cTheme.primaryColorDark, size: 12,),
                           ],
                         ),
                         Row(
@@ -122,13 +158,16 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                           children: [
                             TextButton(onPressed: (){
                               setState(() {
+                                if(justWater.isNotEmpty){
+                                  isHouse=false;
+                                }
                                 // if((getUserProperties.userHousesAndApartmentsResponse?.residentialPropertiesResponse?.apartments!.isNotEmpty as bool)){
                                 //   isHouse=false;
                                 // }
                                 // print(isHouse);
                               });
                             }, child: Text(lChanger.data[11]["water"], style: TextStyle(color: cTheme.primaryColorDark.withOpacity(0.6), fontSize: 12),),),
-                            true?Icon(Icons.keyboard_arrow_down_rounded, color: cTheme.primaryColorDark, size: 12,):Icon(Icons.keyboard_arrow_up_rounded, color: cTheme.primaryColorDark, size: 12,),
+                            isHouse?Icon(Icons.keyboard_arrow_down_rounded, color: cTheme.primaryColorDark, size: 12,):Icon(Icons.keyboard_arrow_up_rounded, color: cTheme.primaryColorDark, size: 12,),
                           ],
                         ),
                       ],
@@ -143,9 +182,9 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                       ),
                     ):Flex(
                       direction: wid>600?Axis.vertical:Axis.vertical,
-                      children: List.generate(getUserPayments.thisMonthPaymentHistory!.eachHouseFee!.length, (index){
+                      children: List.generate(((isHouse && justFee.isNotEmpty)?justFee:justWater).length, (index){
                         return Tooltip(
-                          message: "${getUserPayments.thisMonthPaymentHistory?.eachHouseFee?[index].isPaid==0?lChanger.data[11]["unpaid"]:lChanger.data[11]["paid"]}",
+                          message: "${((isHouse && justFee.isNotEmpty)?justFee:justWater)[index].isPaid==0?lChanger.data[11]["unpaid"]:lChanger.data[11]["paid"]}",
                           child: Container(
                             width: wid>600?wid/2:wid,
                             margin: wid>600?EdgeInsets.only(top: 10, bottom: 50):EdgeInsets.all(10),
@@ -166,7 +205,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                         SizedBox(
                                           width: 10,
                                         ),
-                                        Text("${getUserPayments.thisMonthPaymentHistory!.eachHouseFee?[index].amountPaid} IQD", style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
+                                        Text("${((isHouse && justFee.isNotEmpty)?justFee:justWater)[index].amountPaid} IQD", style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
                                       ],
                                     ),
                                     // SizedBox(
@@ -185,7 +224,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                       height: 10,
                                       width: 10,
                                       decoration: BoxDecoration(
-                                        color: getUserPayments.thisMonthPaymentHistory?.eachHouseFee?[index].isPaid==0?Colors.red:Colors.green,
+                                        color: ((isHouse && justFee.isNotEmpty)?justFee:justWater)[index].isPaid==0?Colors.red:Colors.green,
                                         borderRadius: BorderRadius.all(Radius.circular(10)),
                                       ),
                                     ),
@@ -203,10 +242,10 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                         SizedBox(
                                           width: 10,
                                         ),
-                                        Text("${getUserPayments.thisMonthPaymentHistory!.eachHouseFee?[index].feeType}".split("T")[0], style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
+                                        Text("${((isHouse && justFee.isNotEmpty)?justFee:justWater)[index].feeType}".split("T")[0], style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
                                       ],
                                     ),
-                                    Container(child: Text("${getUserPayments.thisMonthPaymentHistory!.eachHouseFee?[index].updatedAt}".split("T")[0].replaceAll("-", "."), style: TextStyle(color: cTheme.primaryColorDark.withOpacity(0.6), fontSize: 10),)),
+                                    Container(child: Text("${((isHouse && justFee.isNotEmpty)?justFee:justWater)[index].updatedAt}".split("T")[0].replaceAll("-", "."), style: TextStyle(color: cTheme.primaryColorDark.withOpacity(0.6), fontSize: 10),)),
                                   ],
                                 ),
                               ],

@@ -32,13 +32,16 @@ class Engineering extends IEngineering{
   }
 
   @override
-  Future<String?> acceptRepairment(AcceptRepairmentRequest acceptRepairmentRequest) async{
+  Future<String?> acceptRepairment(int? id, AcceptRepairmentRequest acceptRepairmentRequest) async{
     _token= await TokenManager().readToken("accessToken");
+    print(id);
+    print(acceptRepairmentRequest.status);
     try{
       http.Response response= await http.put(
-        Uri.parse("http://127.0.0.1:8000/api/repairments/employee"),
+        Uri.parse("http://127.0.0.1:8000/api/repairments/employee/$id"),
         body: jsonEncode(acceptRepairmentRequest.toJson()),
         headers: {
+          "content-type": "application/json",
           "accept": "application/json",
           "authorization": "Bearer $_token",
         },
@@ -46,6 +49,7 @@ class Engineering extends IEngineering{
       if(response.statusCode==200){
         return "OK";
       }else{
+        print(response.reasonPhrase);
         print("not ok");
       }
     }catch(e){

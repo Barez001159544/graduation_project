@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:graduation_project/constants/loading_indicator.dart';
 import 'package:graduation_project/controllers/get_protests.dart';
-import 'package:graduation_project/presentation/new_protest.dart';
+import 'package:graduation_project/presentation/protest_new.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/confirmation_custom_alert_dialog.dart';
@@ -16,14 +16,14 @@ import '../controllers/language_changer.dart';
 import '../controllers/theme_changer.dart';
 import '../custom theme data/themes.dart';
 
-class ProtestScreen extends StatefulWidget {
-  const ProtestScreen({super.key});
+class ProtestHistory extends StatefulWidget {
+  const ProtestHistory({super.key});
 
   @override
-  State<ProtestScreen> createState() => _ProtestScreenState();
+  State<ProtestHistory> createState() => _ProtestHistoryState();
 }
 
-class _ProtestScreenState extends State<ProtestScreen> {
+class _ProtestHistoryState extends State<ProtestHistory> {
   TextEditingController titleController = TextEditingController();
   TextEditingController coreController = TextEditingController();
 
@@ -72,7 +72,7 @@ class _ProtestScreenState extends State<ProtestScreen> {
                   onRefresh: () async{
                     getAllProtests.getAllProtests();
                   },
-                  child: getAllProtests.protestAllResponse?.eachProtestResponse==null?ListView(
+                  child: ((getAllProtests.protestAllResponse?.eachProtestResponse)==null || getAllProtests.protestAllResponse!.eachProtestResponse!.isEmpty)?ListView(
                     children: [
                       SizedBox(
                         height: 50,
@@ -130,9 +130,10 @@ class _ProtestScreenState extends State<ProtestScreen> {
                               foregroundColor: Colors.white,
                               icon: Icons.delete,
                               label: lChanger[10]["action"],
-                              onPressed: (BuildContext context) {
-                                getAllProtests.deleteProtest(getAllProtests.protestAllResponse?.eachProtestResponse?[index].id);
-                                if(getAllProtests.delStatus=="Ok"){
+                              onPressed: (BuildContext ctx) async{
+                                await getAllProtests.deleteProtest(getAllProtests.protestAllResponse?.eachProtestResponse?[index].id);
+                                if(getAllProtests.delStatus=="OK"){
+                                  getAllProtests.getAllProtests();
                                   CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[10]["delNotify1"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                 }else{
                                   CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[10]["delNotify2"], cTheme.primaryColorLight, cTheme.primaryColorDark);
@@ -160,7 +161,7 @@ class _ProtestScreenState extends State<ProtestScreen> {
                           ),
                           child: Theme(
                             data: cTheme.copyWith(
-                              dividerColor: cTheme.primaryColorLight,
+                              dividerColor: Colors.transparent,
                               splashColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               hoverColor: Colors.transparent,
@@ -230,7 +231,7 @@ class _ProtestScreenState extends State<ProtestScreen> {
                               children: [
                                 Row(
                                   children: [
-                                    Text("${getAllProtests.protestAllResponse!.eachProtestResponse?[index].description??"N/A"}", style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
+                                    Expanded(child: Text(overflow: TextOverflow.ellipsis, maxLines: 10, "${getAllProtests.protestAllResponse!.eachProtestResponse?[index].description??"N/A"}", style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),)),
                                   ],
                                 ),
                                 SizedBox(

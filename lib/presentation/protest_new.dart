@@ -512,6 +512,7 @@ class _NewProtestState extends State<NewProtest> {
                                             // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context){
                                             //   return HomeScreen();
                                             // }), (route) => false);
+                                            getProtests.getAllProtests();
                                             CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[10]["notification1"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                             Navigator.pop(context);
                                           }else{

@@ -24,8 +24,9 @@ import 'package:graduation_project/models/auth_response.dart';
 import 'package:graduation_project/presentation/about_app.dart';
 import 'package:graduation_project/presentation/engineering_screen.dart';
 import 'package:graduation_project/presentation/faq_screen.dart';
+import 'package:graduation_project/presentation/refresh_login.dart';
 import 'package:graduation_project/presentation/splash_widget.dart';
-import 'package:graduation_project/presentation/new_protest.dart';
+import 'package:graduation_project/presentation/protest_new.dart';
 import 'package:graduation_project/presentation/payment_scanner_screen.dart';
 import 'package:graduation_project/presentation/payment_screen.dart';
 import 'package:graduation_project/presentation/home_screen.dart';
@@ -33,11 +34,10 @@ import 'package:graduation_project/presentation/login_screen.dart';
 import 'package:graduation_project/presentation/onboarding_screen.dart';
 import 'package:graduation_project/presentation/profile_screen.dart';
 import 'package:graduation_project/presentation/properties_screen.dart';
-import 'package:graduation_project/presentation/protest_screen.dart';
-import 'package:graduation_project/presentation/repair_screen.dart';
+import 'package:graduation_project/presentation/protest_history.dart';
+import 'package:graduation_project/presentation/repair_new.dart';
 import 'package:graduation_project/presentation/settings_screen.dart';
 import 'package:graduation_project/presentation/payment_screen.dart';
-import 'package:graduation_project/services/login/auth.dart';
 import 'package:graduation_project/presentation/home_screen.dart';
 import 'package:graduation_project/constants/tokenManager.dart';
 import 'package:graduation_project/services/user/user.dart';
@@ -173,8 +173,8 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.of(context, rootNavigator: false).pushReplacement(
       MaterialPageRoute(
         builder: (context) =>
-            // const SettingsScreen(),
-        firstTime == false ? (rToken == null ? const LoginScreen() : (role=="Dr. Melany Feeney PhD"?const HomeScreen():EngineeringScreen())) : const OnboardingScreen(),
+            // const FAQScreen(),
+        firstTime == false ? (rToken == null ? const LoginScreen() : (role=="Resident"?const HomeScreen():(role=="Employee"?const EngineeringScreen():const RefreshLogin()))) : const OnboardingScreen(),
       ),
     );
   }
@@ -189,14 +189,23 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<String?> getRToken() async {
     // Simulate some asynchronous operation to retrieve a String value
     String? rToken = await TokenManager().readToken("accessToken");
+    // await TokenManager().deleteToken("accessToken");
+    // print("deleted");
     return Future.value(rToken);
   }
   Future<String?> getRole() async {
     await Provider.of<GetGetSelf>(context, listen: false).getGetSelf();
+    await Provider.of<GetGetSelf>(context, listen: false).getUserRoles(Provider.of<GetGetSelf>(context, listen: false).getSelfResponse?.userDetails?.email);
+    print("************");
+    print(Provider.of<GetGetSelf>(context, listen: false).rolesResponse?.roles);
+    print("************");
     // Simulate some asynchronous operation to retrieve a String value
     // String? rToken = await TokenManager().readToken("accessToken");
     print("%%%%%%%%${Provider.of<GetGetSelf>(context, listen: false).getSelfResponse?.userDetails?.name}");
-    return Future.value(Provider.of<GetGetSelf>(context, listen: false).getSelfResponse?.userDetails?.name);
+    // return Future.value(Provider.of<GetGetSelf>(context, listen: false).getSelfResponse?.userDetails?.name);
+    //(Provider.of<GetGetSelf>(context, listen: false).rolesResponse!.roles!.contains("resident"))?"Resident":"Employee"
+    return Future.value(Provider.of<GetGetSelf>(context, listen: false).getSelfResponse?.userDetails!=null?((Provider.of<GetGetSelf>(context, listen: false).rolesResponse!.roles!.contains("resident"))?"Resident":"Employee"):"None");
+  // return "Resident";
   }
 
   final   List _allAsset = [
@@ -209,7 +218,8 @@ class _MyHomePageState extends State<MyHomePage> {
   "images/onboard2.png",
   "images/onboard3.png",
     "images/rcms-logo-2.png",
-        "images/rcms-logo-1.png"
+        "images/rcms-logo-1.png",
+        "images/houses+buildings.jpg",
   ];
   final   List _allSVGs = [
     "images/007-boy-2.svg",

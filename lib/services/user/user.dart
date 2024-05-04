@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:graduation_project/models/roles_response.dart';
 import 'package:graduation_project/models/update_user_request.dart';
 import 'package:graduation_project/models/user_details.dart';
 import 'package:http/http.dart' as http;
@@ -76,6 +77,55 @@ class User extends IUser{
           'Authorization': 'Bearer $_token',
         },
         body: jsonEncode(updateUserRequest),
+      );
+      if(response.statusCode==200){
+        print(response.body);
+        return "Success";
+      }else{
+        print(response.reasonPhrase);
+      }
+    }catch(e){
+      print(e);
+    }
+  }
+
+  @override
+  Future<RolesResponse?> getRoles(String? email) async{
+    _token= await TokenManager().readToken("accessToken");
+    try{
+      http.Response response= await http.get(
+        Uri.parse("http://127.0.0.1:8000/api/roles/$email"),
+        headers: {
+          "Accept": "application/json",
+          "content-type": "application/json",
+          "authorization": "Bearer $_token"
+        },
+      );
+
+      if(response.statusCode==200){
+        print(response.statusCode);
+        print(response.body);
+        RolesResponse rolesResponse= RolesResponse.fromJson(jsonDecode(response.body));
+        return rolesResponse;
+      }else{
+        print(response.reasonPhrase);
+      }
+    }catch(e){
+      print(e);
+    }
+  }
+
+  @override
+  Future<String?> logOut() async{
+    _token= await TokenManager().readToken("accessToken");
+    try{
+      http.Response response= await http.get(
+        Uri.parse('http://127.0.0.1:8000/api/logoff'),
+        headers: {
+          "Accept": "application/json",
+          "content-type": "application/json",
+          'Authorization': 'Bearer $_token',
+        },
       );
       if(response.statusCode==200){
         print(response.body);

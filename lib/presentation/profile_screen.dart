@@ -157,7 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             height: wid>600?100:120,
                             child: Center(
                               child: MainBtn(wid>600?wid*0.35-80:wid-40, wid>600?62.0:72.0, cTheme.primaryColor, lChanger[1]["btn"], () async {
-                                if(passwordText!="" && passwordText.length<5){
+                                if(passwordText=="" || passwordText.length<5){
                                   CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[1]["notification3"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                 }else if(phoneNumber.text.isEmpty){
                                   CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[1]["notification4"], cTheme.primaryColorLight, cTheme.primaryColorDark);

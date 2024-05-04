@@ -314,7 +314,7 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                                   print(getPayment.fibCheckPaymentStatusResponse!.paidBy?.name);
                                   if(getWhatIsPaid.whatIsPaidModel?.type=="Fee"){
                                     // print("$selectedType & $selectedId");
-                                    await getUserPayments.payHouse(HousePaymentRequest(getWhatIsPaid.whatIsPaidModel?.selectedType, getWhatIsPaid.whatIsPaidModel?.selectedId));
+                                    await getUserPayments.payHouse(HousePaymentRequest(getWhatIsPaid.whatIsPaidModel?.selectedType, getWhatIsPaid.whatIsPaidModel?.selectedId, getWhatIsPaid.whatIsPaidModel?.selectedPaymentId));
                                     if(getUserPayments.status=="OK"){
                                       print("${getUserPayments.status}");
                                       CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[8]["success"], cTheme.primaryColorLight, cTheme.primaryColorDark);

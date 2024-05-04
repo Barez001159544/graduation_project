@@ -1,4 +1,5 @@
 
+import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:graduation_project/controllers/get_repairment.dart";
@@ -24,11 +25,11 @@ import "../models/fully_houses_response.dart";
 import "home_screen.dart";
 import "login_screen.dart";
 
-class RepairScreen extends StatefulWidget {
-  const RepairScreen({super.key});
+class NewRepair extends StatefulWidget {
+  const NewRepair({super.key});
 
   @override
-  State<RepairScreen> createState() => _RepairScreenState();
+  State<NewRepair> createState() => _NewRepairState();
 }
 
 List items=[
@@ -74,30 +75,19 @@ List items=[
   "laundry machines",
   "water heaters",
   "Refrigerator",
-  "Microwave",
-  "Oven",
   "Dishwasher",
-  "Freezer",
   "Air Conditioner",
   "Heater",
-  "Fan",
-  "Water Filter/Purifier",
-  "Sofa",
+  //
   "Table",
   "Bed Frame",
-  "Mattress",
   "Chairs",
-  "Bookshelf",
-  "Curtains",
-  "Kitchen Appliances",
   //House Malfunctions
   "Plumbing",
   "Electrical Systems",
-  "Air Conditioning",
   "Windows and doors",
-  "Flooring",
-  "Walls and ceiling",
-  "Exterior",
+  "House Structure",
+  "Others",
   //Others
   //Write in description
 ];
@@ -105,11 +95,25 @@ List items=[
 List icons=[
   Icons.tv_rounded,
   Icons.local_laundry_service_rounded,
-  Icons.water,
+  Icons.water_rounded,
+  Icons.kitchen_rounded,
+  Icons.restaurant_menu_rounded,
+  Icons.ac_unit_rounded,
+  Icons.wb_sunny_rounded,
+  //
+  Icons.table_bar_rounded,
+  Icons.bed_rounded,
+  Icons.chair_rounded,
+  //HouseMalfunctions
+  Icons.plumbing_rounded,
+  Icons.electrical_services_rounded,
+  Icons.door_back_door_rounded,
+  Icons.house_rounded,
+  Icons.more_horiz_rounded,
 ];
 
 
-class _RepairScreenState extends State<RepairScreen> {
+class _NewRepairState extends State<NewRepair> {
   List indexes=[];
   TextEditingController textEditingController= TextEditingController();
   String? selected;
@@ -177,7 +181,7 @@ class _RepairScreenState extends State<RepairScreen> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Icon(Icons.tv_rounded, color: cTheme.primaryColorDark, size: 42,),
+                                      Icon(icons[index], color: cTheme.primaryColorDark, size: 42,),
                                       CustomSwitchBtn(indexes.contains(index), cTheme.scaffoldBackgroundColor, (val) {
                                         setState(() {
                                           indexes.clear();
@@ -291,6 +295,7 @@ class _RepairScreenState extends State<RepairScreen> {
                                       // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context){
                                       //   return HomeScreen();
                                       // }), (route) => false);
+                                          getRepairment.getAllRepair();
                                       CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[9]["notification1"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                       Navigator.of(context).pop();
                                     }else{

@@ -5,8 +5,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:graduation_project/constants/loading_indicator.dart';
 import 'package:graduation_project/controllers/get_protests.dart';
 import 'package:graduation_project/controllers/get_repairment.dart';
-import 'package:graduation_project/presentation/new_protest.dart';
-import 'package:graduation_project/presentation/repair_screen.dart';
+import 'package:graduation_project/presentation/protest_new.dart';
+import 'package:graduation_project/presentation/repair_new.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/confirmation_custom_alert_dialog.dart';
@@ -61,7 +61,7 @@ class _RepairHistoryState extends State<RepairHistory> {
                 tooltip: lChanger[9]["fab"],
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                    return RepairScreen();
+                    return NewRepair();
                   }));
                 },
                 child: Icon(Icons.add_rounded, color: Colors.white,),
@@ -74,7 +74,7 @@ class _RepairHistoryState extends State<RepairHistory> {
                   onRefresh: () async{
                     getRepairment.getAllRepair();
                   },
-                  child: (getRepairment.repairHistoryResponse?.historyOfRepairs)==null?ListView(
+                  child: ((getRepairment.repairHistoryResponse?.historyOfRepairs)==null || getRepairment.repairHistoryResponse!.historyOfRepairs!.isEmpty)?ListView(
                     children: [
                       SizedBox(
                         height: 50,
@@ -132,9 +132,10 @@ class _RepairHistoryState extends State<RepairHistory> {
                               foregroundColor: Colors.white,
                               icon: Icons.delete,
                               label: lChanger[9]["action"],
-                              onPressed: (BuildContext context) {
+                              onPressed: (BuildContext ctx) {
                                 getRepairment.deleteProtest(getRepairment.repairHistoryResponse?.historyOfRepairs?[index].id);
-                                if(getRepairment.delStatus=="Ok"){
+                                if(getRepairment.delStatus=="OK"){
+                                  getRepairment.getAllRepair();
                                   CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[16]["delNotify1"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                 }else{
                                   CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[16]["delNotify2"], cTheme.primaryColorLight, cTheme.primaryColorDark);
@@ -154,7 +155,7 @@ class _RepairHistoryState extends State<RepairHistory> {
                         // component is not dragged.
                         child: Theme(
                           data: cTheme.copyWith(
-                            dividerColor: cTheme.primaryColorLight,
+                            dividerColor: Colors.transparent,
                             splashColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             hoverColor: Colors.transparent,
@@ -232,7 +233,7 @@ class _RepairHistoryState extends State<RepairHistory> {
                               ),
                               Row(
                                 children: [
-                                  Text("${getRepairment.repairHistoryResponse!.historyOfRepairs?[index].description??lChanger[3]["ns"]}", style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
+                                  Expanded(child: Text(overflow: TextOverflow.ellipsis, maxLines: 10, "${getRepairment.repairHistoryResponse!.historyOfRepairs?[index].description??lChanger[3]["ns"]}", style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),)),
                                 ],
                               ),
                               SizedBox(
