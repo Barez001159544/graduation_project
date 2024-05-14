@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -12,6 +13,11 @@ class SplashWidget extends StatefulWidget {
 class _SplashWidgetState extends State<SplashWidget> {
   @override
   Widget build(BuildContext context) {
+    double wid= MediaQuery.of(context).size.width;
+    SystemChrome.setPreferredOrientations([
+      wid>600?DeviceOrientation.landscapeLeft:DeviceOrientation.portraitUp,
+      wid>600?DeviceOrientation.landscapeRight:DeviceOrientation.portraitUp,
+    ]);
     return Scaffold(
       backgroundColor: const Color(0xff155E7D),
       body: Center(

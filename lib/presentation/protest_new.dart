@@ -244,48 +244,48 @@ class _NewProtestState extends State<NewProtest> {
                                     // SizedBox(
                                     //   height: 20,
                                     // ),
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(lChanger[10]["p2Title2"], style: TextStyle(fontSize: 16, color: Colors.grey),),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        GestureDetector(
-                                          onTap: () async {
-                                            await pickImage();
-                                            setState((){
-                                              print(">>>>>>>>>>$file");
-                                            });
-                                          },
-                                          child: Container(
-                                            width: wid,
-                                            height: 50,
-                                            decoration: BoxDecoration(
-                                              color: cTheme.primaryColor.withOpacity(0.5),
-                                              borderRadius: BorderRadius.all(Radius.circular(15)),
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                file!=null?SizedBox(
-                                                  height: 45,
-                                                  width: 45,
-                                                  child: Image.file(file!),
-                                                ):Icon(Icons.image_rounded, color: cTheme.primaryColorDark, size: 30,),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Text(lChanger[10]["p2Ph2"], style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
+                                    // Column(
+                                    //   crossAxisAlignment: CrossAxisAlignment.start,
+                                    //   children: [
+                                    //     Text(lChanger[10]["p2Title2"], style: TextStyle(fontSize: 16, color: Colors.grey),),
+                                    //     SizedBox(
+                                    //       height: 10,
+                                    //     ),
+                                    //     GestureDetector(
+                                    //       onTap: () async {
+                                    //         await pickImage();
+                                    //         setState((){
+                                    //           print(">>>>>>>>>>$file");
+                                    //         });
+                                    //       },
+                                    //       child: Container(
+                                    //         width: wid,
+                                    //         height: 50,
+                                    //         decoration: BoxDecoration(
+                                    //           color: cTheme.primaryColor.withOpacity(0.5),
+                                    //           borderRadius: BorderRadius.all(Radius.circular(15)),
+                                    //         ),
+                                    //         child: Row(
+                                    //           mainAxisAlignment: MainAxisAlignment.center,
+                                    //           children: [
+                                    //             file!=null?SizedBox(
+                                    //               height: 45,
+                                    //               width: 45,
+                                    //               child: Image.file(file!),
+                                    //             ):Icon(Icons.image_rounded, color: cTheme.primaryColorDark, size: 30,),
+                                    //             SizedBox(
+                                    //               width: 10,
+                                    //             ),
+                                    //             Text(lChanger[10]["p2Ph2"], style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
+                                    //           ],
+                                    //         ),
+                                    //       ),
+                                    //     ),
+                                    //   ],
+                                    // ),
+                                    // SizedBox(
+                                    //   height: 20,
+                                    // ),
                                     Row(
                                       children: [
                                         Column(

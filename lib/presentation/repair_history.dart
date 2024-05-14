@@ -25,6 +25,75 @@ class RepairHistory extends StatefulWidget {
   State<RepairHistory> createState() => _RepairHistoryState();
 }
 
+List items=[
+  //Appliances
+  "television broken",
+  "TV",
+  "laundry machines",
+  "water heaters",
+  "Refrigerator",
+  "Dishwasher",
+  "Air Conditioner",
+  "Heater",
+  //Furniture Pieces
+  "Table",
+  "Bed Frame",
+  "Chairs",
+  //Structural Issues
+  "Plumbing",
+  "Electrical Systems",
+  "Windows and doors",
+  "House Structure",
+  //Others
+  "Others (Write in description)",
+];
+
+List itemsInArabic=[
+  //Appliances
+  "تلفازj",
+  "تلفاز",
+  "آلات الغسيل",
+  "سخانات المياه",
+  "ثلاجة",
+  "غسالة صحون",
+  "مكيف هواء",
+  "مدفأة",
+  //Furniture Pieces
+  "طاولة",
+  "إطار السرير",
+  "كراسي",
+  //Stractural Issues
+  "السباكة",
+  "أنظمة الكهرباء",
+  "النوافذ والأبواب",
+  "هيكل المنزل",
+  //Others
+  "أخرى (اكتب في الوصف)",
+];
+
+List itemsInKurdish=[
+  //Appliances
+  "تەلەفزیۆنی تێکچوو",
+  "TV",
+  "جلشۆر",
+  "گەرمکەری ئاو",
+  "بەفرگر",
+  "قاپشۆر",
+  "فێنککەرەوە",
+  "گەرمکەرەوە",
+  //Furniture Pieces
+  "مێز",
+  "جێگای نووستن",
+  "قەنەفە",
+  //Structural Issues
+  "ئاو و ئاوەڕۆ",
+  "سیستەمەی کارەبا",
+  "دەرگا و پەنجەرە",
+  "شێوەی خانوو",
+  //Others
+  "هیتر (لە دەربارە بینووسە)",
+];
+
 class _RepairHistoryState extends State<RepairHistory> {
   TextEditingController titleController = TextEditingController();
   TextEditingController coreController = TextEditingController();
@@ -132,13 +201,13 @@ class _RepairHistoryState extends State<RepairHistory> {
                               foregroundColor: Colors.white,
                               icon: Icons.delete,
                               label: lChanger[9]["action"],
-                              onPressed: (BuildContext ctx) {
-                                getRepairment.deleteProtest(getRepairment.repairHistoryResponse?.historyOfRepairs?[index].id);
+                              onPressed: (BuildContext ctx) async {
+                                await getRepairment.deleteProtest(getRepairment.repairHistoryResponse?.historyOfRepairs?[index].id);
                                 if(getRepairment.delStatus=="OK"){
                                   getRepairment.getAllRepair();
-                                  CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[16]["delNotify1"], cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                  CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[9]["delNotify1"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                 }else{
-                                  CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[16]["delNotify2"], cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                  CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[9]["delNotify2"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                 }
                             },
                             ),
@@ -192,7 +261,7 @@ class _RepairHistoryState extends State<RepairHistory> {
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text("${getRepairment.repairHistoryResponse!.historyOfRepairs?[index].title??"N/A"}", style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark),),
+                                            Text("${languageChanger.selectedLanguage=="ENG"?items[items.indexOf(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].title??"Others")]:(languageChanger.selectedLanguage=="ENG"?itemsInArabic[items.indexOf(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].title??"Others")]:itemsInKurdish[items.indexOf(getRepairment.repairHistoryResponse!.historyOfRepairs?[index].title??"Others")])}", style: TextStyle(fontSize: 16, color: cTheme.primaryColorDark),),
                                             Text("${getRepairment.repairHistoryResponse!.historyOfRepairs?[index].updatedAt?.split("T")[0]}", style: TextStyle(color: Colors.grey, fontSize: 12),),
                                           ],
                                         ))),

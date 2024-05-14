@@ -231,7 +231,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     final binding = WidgetsFlutterBinding.ensureInitialized();
     binding.addPostFrameCallback((_) async {
-      BuildContext context = binding.renderViewElement as BuildContext;
+      BuildContext context = binding.rootElement as BuildContext; //renderViewElement
         for (String element in _allSVGs) {
           SvgPicture.asset(element);
         }

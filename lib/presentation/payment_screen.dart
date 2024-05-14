@@ -175,7 +175,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                     for(HouseFee each in getUserPayments.thisMonthPayment!.eachHouseFee!){
                                       if(each.feeType=="water"){
                                         justWater.add(each);
-                                      }else if(each.feeType=="fee"){
+                                      }else if(each.feeType=="house fee"){
                                         justFee.add(each);
                                       }
                                     }
@@ -230,7 +230,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                         if(justWater==null || justWater.isEmpty){
                                           CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[7]["notification2"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                         }else{
-                                          if(getUserPayments.thisMonthPayment!.eachHouseFee![0].isPaid==1){
+                                          if(justWater.first.isPaid==1){//getUserPayments.thisMonthPayment!.eachHouseFee![0].isPaid==1
                                             CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[7]["notification3"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                           }else{
                                             showDialog(
@@ -258,8 +258,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                               // await getToken.writeToken("FIBToken", logSuccess.accessToken);
                                               /// TokenManager().saveToken("FIBToken", logSuccess.accessToken);
                                               print("--------------");
-                                              await getPayment.getPaymentInformation(logSuccess.accessToken, int.parse(getUserPayments.thisMonthPayment?.eachHouseFee?[0].amount?.split(".")[0]??"1000"));
-                                              getWhatIsPaid.getWhatIsPaid("Water", justWater[0].amountPaid?.split(".")[0], selectedType, selectedId, selectedProperty, justWater[0].id);
+                                              await getPayment.getPaymentInformation(logSuccess.accessToken, int.parse("1"/*justWater[0].amountPaid?.split(".")[0]*/));
+                                              getWhatIsPaid.getWhatIsPaid("Water", "1"/*justWater[0].amountPaid?.split(".")[0]*/, selectedType, selectedId, selectedProperty, justWater[0].id);
                                               if(getPayment.createPaymentResponse?.qrCode==null){
                                                 CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[7]["notification2"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                                 print("ID or Secret invalid!: 2");
@@ -284,9 +284,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                         }
                                       }else if(currentPage==0){ ///Fee
                                         if(justFee==null || justFee.isEmpty){
+                                          print("GGGGGGGGGGGG");
+                                          print(justFee);
                                           CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[7]["notification2"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                         }else{
-                                          if(getUserPayments.thisMonthPayment!.eachHouseFee![0].isPaid==1){
+                                          if(justFee.first.isPaid==1){
                                             CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[7]["notification3"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                           }else{
                                             showDialog(
@@ -314,8 +316,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                               // await getToken.writeToken("FIBToken", logSuccess.accessToken);
                                               /// TokenManager().saveToken("FIBToken", logSuccess.accessToken);
                                               print("--------------");
-                                              await getPayment.getPaymentInformation(logSuccess.accessToken, int.parse(getUserPayments.thisMonthPayment?.eachHouseFee?[0].amount?.split(".")[0]??"1000"));
-                                              getWhatIsPaid.getWhatIsPaid("Fee", justFee[0].amountPaid?.split(".")[0], selectedType, selectedId, selectedProperty, justFee[0].id);
+                                              await getPayment.getPaymentInformation(logSuccess.accessToken, int.parse("1"/*justFee[0].amountPaid?.split(".")[0]*/));
+                                              getWhatIsPaid.getWhatIsPaid("Fee", "1"/*justFee[0].amountPaid?.split(".")[0]*/, selectedType, selectedId, selectedProperty, justFee[0].id);
                                               if(getPayment.createPaymentResponse?.qrCode==null){
                                                 CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[7]["notification2"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                                 print("ID or Secret invalid!: 2");

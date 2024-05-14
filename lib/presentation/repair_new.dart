@@ -33,44 +33,8 @@ class NewRepair extends StatefulWidget {
 }
 
 List items=[
-  //Plumbing
-  // "pipes",
-  // "faucets",
-  // "toilets",
-  // "sinks",
-  // "showers",
-  // "water heaters",
-  // "clogs",
-  //Electrical Systems
-  // "outlets",
-  // "switches",
-  // "circuit breakers",
-  // "light fixtures",
-  //HVAC
-  // "air conditioners",
-  //Roofing
-  // "Roof leaks",
-  // "damaged shingles",
-  // "gutter problems",
-  //Windows and doors
-  // "broken glass",
-  // "malfunctioning locks",
-  // "hinges",
-  // "weatherstripping",
-  //Flooring
-  // "hardwood",
-  // "carpeting",
-  // "water damage",
-  //Walls and ceiling
-  // "cracks",
-  // "holes",
-  // "water damage",
-  // "peeling paint",
-  //Exterior
-  // "paint",
-  // "decks",
-
   //Appliances
+  "television broken"
   "TV",
   "laundry machines",
   "water heaters",
@@ -78,18 +42,70 @@ List items=[
   "Dishwasher",
   "Air Conditioner",
   "Heater",
-  //
+  //Furniture Pieces
   "Table",
   "Bed Frame",
   "Chairs",
-  //House Malfunctions
+  //Structural Issues
   "Plumbing",
   "Electrical Systems",
   "Windows and doors",
   "House Structure",
-  "Others",
   //Others
-  //Write in description
+  "Others",
+];
+
+List itemsInArabic=[
+  //Appliances
+  "تلفازj",
+  "تلفاز",
+  "آلات الغسيل",
+  "سخانات المياه",
+  "ثلاجة",
+  "غسالة صحون",
+  "مكيف هواء",
+  "مدفأة",
+  //Furniture Pieces
+  "طاولة",
+  "إطار السرير",
+  "كراسي",
+  //Stractural Issues
+  "السباكة",
+  "أنظمة الكهرباء",
+  "النوافذ والأبواب",
+  "هيكل المنزل",
+  //Others
+  "أخرى",
+];
+
+List itemsInKurdish=[
+  //Appliances
+  "تەلەفزیۆنی تێکچوو",
+  "TV",
+  "جلشۆر",
+  "گەرمکەری ئاو",
+  "بەفرگر",
+  "قاپشۆر",
+  "فێنککەرەوە",
+  "گەرمکەرەوە",
+  //Furniture Pieces
+  "مێز",
+  "جێگای نووستن",
+  "قەنەفە",
+  //Structural Issues
+  "ئاو و ئاوەڕۆ",
+  "سیستەمەی کارەبا",
+  "دەرگا و پەنجەرە",
+  "شێوەی خانوو",
+  //Others
+  "هیتر",
+];
+
+List components=[
+  "Appliances",
+  "Furniture Pieces",
+  "Structural Issues",
+  "Others",
 ];
 
 List icons=[
@@ -186,6 +202,7 @@ class _NewRepairState extends State<NewRepair> {
                                         setState(() {
                                           indexes.clear();
                                           val?indexes.add(index):indexes.remove(index);
+                                          print(components[indexes[0]<7?0:(indexes[0]<10?1:(indexes[0]<14?2:3))]);
                                           print(index);
                                         });
                                       })
@@ -205,7 +222,7 @@ class _NewRepairState extends State<NewRepair> {
                                       // ),
                                     ],
                                   ),
-                                  Text(items[index], style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
+                                  Text(languageChanger.selectedLanguage=="ENG"?items[index]:(languageChanger.selectedLanguage=="ENG"?itemsInArabic[index]:itemsInKurdish[index]), style: TextStyle(color: cTheme.primaryColorDark, fontSize: 16),),
                                 ],
                               ),
                             );
@@ -289,7 +306,7 @@ class _NewRepairState extends State<NewRepair> {
                                         print(textEditingController.text);
                                         print(selected);
                                         print(items[indexes[0]]);
-                                        await getRepairment.newRepair(RepairRequest("television broken", "electronic components", "${textEditingController.text}", "$selectedType", selectedId));
+                                        await getRepairment.newRepair(RepairRequest(items[indexes[0]], components[indexes[0]<7?0:(indexes[0]<10?1:(indexes[0]<14?2:3))], "${textEditingController.text}", "$selectedType", selectedId));
                                         Navigator.of(context).pop();
                                         if(getRepairment.status=="OK"){
                                       // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context){

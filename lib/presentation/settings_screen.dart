@@ -83,8 +83,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Container(
-                                  width: or?120:90,
-                                  height: or?120:90,
+                                  width: or?120:hei*0.11,
+                                  height: or?120:hei*0.11,
                                   decoration: BoxDecoration(
                                     color: cTheme.primaryColor,
                                     image: DecorationImage(
@@ -224,7 +224,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       child: GestureDetector(
                         onTap: (){
                           print("Log Out");
-                          ConfirmationCustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, lChanger.data[0]["confirmationTitle"], lChanger.data[0]["confirmationSubtitle"], lChanger.data[0]["confirmationAccept"], lChanger.data[0]["confirmationDecline"], context, (){
+                          ConfirmationCustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, lChanger.data[0]["confirmationTitle"], lChanger.data[0]["confirmationSubtitle"], lChanger.data[0]["confirmationAccept"], lChanger.data[0]["confirmationDecline"], context, () async {
                             showDialog(
                                 context: context,
                                 // barrierColor: cTheme.backgroundColor,
@@ -240,11 +240,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     content: LoadingIndicator(cTheme.scaffoldBackgroundColor),
                                   );
                                 });
-                            getGetSelf.logOutLoading;
-                            getToken.deleteToken("accessToken");
-                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
-                              return LoginScreen();
-                            }), (route) => false);
+                            await getGetSelf.getLogoff();
+                            if(getGetSelf.logOutStatus!="Success" || getGetSelf.logOutStatus==null){
+                              CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger.data[7]["notification2"], cTheme.primaryColorLight, cTheme.primaryColorDark);
+                              Navigator.of(context).pop();
+                            }else{
+                              getToken.deleteToken("accessToken");
+                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
+                                return LoginScreen();
+                              }), (route) => false);
+                            }
                           }, (){}, cTheme.primaryColor);
                         },
                         child: Container(

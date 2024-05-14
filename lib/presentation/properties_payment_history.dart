@@ -39,7 +39,7 @@ class _PropertiesPaymentHistoryState extends State<PropertiesPaymentHistory> {
         }
       }
     }
-    isHouse=justWater.isEmpty?true:false;
+    isHouse=justWater.isNotEmpty?true:false;
     print("1>>>>>>${justWater}");
     print(">>>>>>${justFee}");
   }
@@ -175,7 +175,7 @@ class _PropertiesPaymentHistoryState extends State<PropertiesPaymentHistory> {
                     SizedBox(
                       height: 10,
                     ),
-                    (getUserPayments.thisMonthPaymentHistory?.eachHouseFee)!.isEmpty?Padding(
+                    (getUserPayments.thisMonthPaymentHistory?.eachHouseFee==null || getUserPayments.thisMonthPaymentHistory?.eachHouseFee==[] || (getUserPayments.thisMonthPaymentHistory?.eachHouseFee)!.isEmpty)?Padding(
                       padding: EdgeInsets.only(top: 40),
                       child: Center(
                         child: Icon(Icons.satellite_alt_rounded),
@@ -245,7 +245,7 @@ class _PropertiesPaymentHistoryState extends State<PropertiesPaymentHistory> {
                                         Text("${((isHouse && justFee.isNotEmpty)?justFee:justWater)[index].feeType}".split("T")[0], style: TextStyle(fontSize: 12, color: cTheme.primaryColorDark),),
                                       ],
                                     ),
-                                    Container(child: Text("${((isHouse && justFee.isNotEmpty)?justFee:justWater)[index].updatedAt}".split("T")[0].replaceAll("-", "."), style: TextStyle(color: cTheme.primaryColorDark.withOpacity(0.6), fontSize: 10),)),
+                                    Container(child: Text("${((isHouse && justFee.isNotEmpty)?justFee:justWater)[index].createdAt}".split("T")[0].replaceAll("-", "."), style: TextStyle(color: cTheme.primaryColorDark.withOpacity(0.6), fontSize: 10),)),
                                   ],
                                 ),
                               ],

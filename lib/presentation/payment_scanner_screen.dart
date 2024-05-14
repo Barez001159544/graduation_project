@@ -301,6 +301,7 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                               //         content: LoadingIndicator(cTheme.scaffoldBackgroundColor),
                               //       );
                               //     });
+                              print(getWhatIsPaid);
                               var request= FIBLoginParameters("client_credentials", "koya-uni", "1fb32463-c472-4572-8797-670b15be7e3c");
                               await getPayment.getAuth(request);
                               var logSuccess= getPayment.fibLoginResponse; //await rInfo.fibAuthenticate(request);
@@ -312,7 +313,7 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                                   CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[8]["error"], cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark);
                                 }else{
                                   print(getPayment.fibCheckPaymentStatusResponse!.paidBy?.name);
-                                  if(getWhatIsPaid.whatIsPaidModel?.type=="Fee"){
+                                  // if(getWhatIsPaid.whatIsPaidModel?.type=="Fee"){
                                     // print("$selectedType & $selectedId");
                                     await getUserPayments.payHouse(HousePaymentRequest(getWhatIsPaid.whatIsPaidModel?.selectedType, getWhatIsPaid.whatIsPaidModel?.selectedId, getWhatIsPaid.whatIsPaidModel?.selectedPaymentId));
                                     if(getUserPayments.status=="OK"){
@@ -325,9 +326,9 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                                       // Navigator.of(context).pop();
                                       CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[8]["error"], cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark);
                                     }
-                                  }else{
-                                    /// Pay for Water here...
-                                  }
+                                  // }else{
+                                  //   /// Pay for Water here...
+                                  // }
                                   // CustomToastNotification(context, Icon(Icons.check_circle_outline_rounded, color: Colors.green,), lChanger[8]["success"], cTheme.primaryColorLight, cTheme.primaryColorDark);
                                   // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
                                   //   return HomeScreen();

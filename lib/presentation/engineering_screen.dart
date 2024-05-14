@@ -9,6 +9,7 @@ import 'package:graduation_project/controllers/get_engineering.dart';
 import 'package:graduation_project/controllers/get_get_self.dart';
 import 'package:graduation_project/controllers/get_token.dart';
 import 'package:graduation_project/controllers/get_user_properties.dart';
+import 'package:graduation_project/presentation/repair_history.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/confirmation_custom_alert_dialog.dart';
@@ -28,6 +29,95 @@ class EngineeringScreen extends StatefulWidget {
   @override
   State<EngineeringScreen> createState() => _EngineeringScreenState();
 }
+
+List items=[
+  //Appliances
+  "television broken",
+  "TV",
+  "laundry machines",
+  "water heaters",
+  "Refrigerator",
+  "Dishwasher",
+  "Air Conditioner",
+  "Heater",
+  //Furniture Pieces
+  "Table",
+  "Bed Frame",
+  "Chairs",
+  //Structural Issues
+  "Plumbing",
+  "Electrical Systems",
+  "Windows and doors",
+  "House Structure",
+  //Others
+  "Others (Write in description)",
+];
+
+List itemsInArabic=[
+  //Appliances
+  "تلفازj",
+  "تلفاز",
+  "آلات الغسيل",
+  "سخانات المياه",
+  "ثلاجة",
+  "غسالة صحون",
+  "مكيف هواء",
+  "مدفأة",
+  //Furniture Pieces
+  "طاولة",
+  "إطار السرير",
+  "كراسي",
+  //Stractural Issues
+  "السباكة",
+  "أنظمة الكهرباء",
+  "النوافذ والأبواب",
+  "هيكل المنزل",
+  //Others
+  "أخرى (اكتب في الوصف)",
+];
+
+List itemsInKurdish=[
+  //Appliances
+  "تەلەفزیۆنی تێکچوو",
+  "TV",
+  "جلشۆر",
+  "گەرمکەری ئاو",
+  "بەفرگر",
+  "قاپشۆر",
+  "فێنککەرەوە",
+  "گەرمکەرەوە",
+  //Furniture Pieces
+  "مێز",
+  "جێگای نووستن",
+  "قەنەفە",
+  //Structural Issues
+  "ئاو و ئاوەڕۆ",
+  "سیستەمەی کارەبا",
+  "دەرگا و پەنجەرە",
+  "شێوەی خانوو",
+  //Others
+  "هیتر (لە دەربارە بینووسە)",
+];
+
+List components=[
+  "Appliances",
+  "Furniture Pieces",
+  "Structural Issues",
+  "Others",
+];
+
+List componentsInArabic=[
+  "الأجهزة",
+  "قطع الأثاث",
+  "مشاكل هيكلية",
+  "أخرى",
+];
+List componentsInKurdish=[
+  "ئامێرەکان",
+  "مۆبیلیات",
+  "شێوازی خانو",
+  "هیتر",
+];
 
 class _EngineeringScreenState extends State<EngineeringScreen> {
   @override
@@ -100,11 +190,11 @@ class _EngineeringScreenState extends State<EngineeringScreen> {
                   },
                 ),
                 actions: [
-                  CustomDropDownMenu("Lang", 80, 30, 5, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], languageChanger.selectedLanguage, (val) {
+                  getGetSelf.rolesResponse!.roles!.contains("resident")?SizedBox():CustomDropDownMenu("Lang", 80, 30, 5, cTheme.scaffoldBackgroundColor, cTheme.primaryColorDark, ["KRD", "ARB", "ENG"], languageChanger.selectedLanguage, (val) {
                     print(val);
                     languageChanger.changeLanguage(val);
                   }),
-                  Builder(
+                  getGetSelf.rolesResponse!.roles!.contains("resident")?SizedBox():Builder(
                     builder: (BuildContext){
                       return IconButton(onPressed: (){
                         // setState(() {
@@ -139,7 +229,7 @@ class _EngineeringScreenState extends State<EngineeringScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(Icons.engineering_rounded, color: cTheme.primaryColor, size: 112,),
-                              Text("Dr. Melany Wood"),
+                              Text(getGetSelf.getSelfResponse!.userDetails!.name),
                             ],
                           ),
                         ),
@@ -232,17 +322,8 @@ class _EngineeringScreenState extends State<EngineeringScreen> {
                                         children: [
                                           Row(
                                             children: [
-                                              Text("${lChanger[3]["acceptedBy"]}: ", style: TextStyle(color: Colors.grey, fontSize: 12,),),
-                                              Text(getEngineering.repairHistoryResponse?.historyOfRepairs?[index].title??"N/A", style: TextStyle(fontSize: 14),),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Row(
-                                            children: [
                                               Text("${lChanger[3]["rTitle"]}: ", style: TextStyle(color: Colors.grey, fontSize: 12,),),
-                                              Text(getEngineering.repairHistoryResponse?.historyOfRepairs?[index].repairmentComponents??"N/A", style: TextStyle(fontSize: 14),),
+                                              Text(languageChanger.selectedLanguage=="ENG"?items[items.indexOf(getEngineering.repairHistoryResponse?.historyOfRepairs?[index].title??"Others")]:(languageChanger.selectedLanguage=="ENG"?itemsInArabic[items.indexOf(getEngineering.repairHistoryResponse!.historyOfRepairs?[index].title??"Others")]:itemsInKurdish[items.indexOf(getEngineering.repairHistoryResponse!.historyOfRepairs?[index].title??"Others")]), style: TextStyle(fontSize: 14),),
                                             ],
                                           ),
                                           SizedBox(
@@ -251,6 +332,15 @@ class _EngineeringScreenState extends State<EngineeringScreen> {
                                           Row(
                                             children: [
                                               Text("${lChanger[3]["rComponent"]}: ", style: TextStyle(color: Colors.grey, fontSize: 12,),),
+                                              Text(languageChanger.selectedLanguage=="ENG"?components[components.indexOf(getEngineering.repairHistoryResponse?.historyOfRepairs?[index].repairmentComponents??"Others")]:(languageChanger.selectedLanguage=="ARB"?componentsInArabic[components.indexOf(getEngineering.repairHistoryResponse?.historyOfRepairs?[index].repairmentComponents??"Others")]:componentsInKurdish[components.indexOf(getEngineering.repairHistoryResponse?.historyOfRepairs?[index].repairmentComponents??"Others")])??"N/A", style: TextStyle(fontSize: 14),),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text("${lChanger[3]["acceptedBy"]}: ", style: TextStyle(color: Colors.grey, fontSize: 12,),),
                                               Text(getEngineering.repairHistoryResponse?.historyOfRepairs?[index].acceptedBy??"${lChanger[3]["ns"]}", style: TextStyle(fontSize: 12),),
                                             ],
                                           ),

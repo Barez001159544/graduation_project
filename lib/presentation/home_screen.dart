@@ -92,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     for(HouseFee each in justHouseFee){
-      print("!!!!!! ${each.feeType}");
+      print("!!!!!! ${each.createdAt}");
     }
   }
 
@@ -189,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     GestureDetector(
                                       onTap: (){
                                         print("Log Out");
-                                        ConfirmationCustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, lChanger[0]["confirmationTitle"], lChanger[0]["confirmationSubtitle"], lChanger[0]["confirmationAccept"], lChanger[0]["confirmationDecline"], context, (){
+                                        ConfirmationCustomAlertDialog(cTheme.primaryColorLight, cTheme.primaryColorDark, lChanger[0]["confirmationTitle"], lChanger[0]["confirmationSubtitle"], lChanger[0]["confirmationAccept"], lChanger[0]["confirmationDecline"], context, () async {
                                           showDialog(
                                               context: context,
                                               // barrierColor: cTheme.backgroundColor,
@@ -205,11 +205,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   content: LoadingIndicator(cTheme.scaffoldBackgroundColor),
                                                 );
                                               });
-                                          getGetSelf.logOutLoading;
-                                          getToken.deleteToken("accessToken");
-                                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
-                                            return LoginScreen();
-                                          }), (route) => false);
+                                          await getGetSelf.getLogoff();
+                                          if(getGetSelf.logOutStatus!="Success" || getGetSelf.logOutStatus==null){
+                                            CustomToastNotification(context, Icon(Icons.error_outline_rounded, color: Colors.red,), lChanger[7]["notification2"], cTheme.primaryColorLight, cTheme.primaryColorDark);
+                                            Navigator.of(context).pop();
+                                          }else{
+                                            getToken.deleteToken("accessToken");
+                                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
+                                              return LoginScreen();
+                                            }), (route) => false);
+                                          }
                                         }, (){}, cTheme.primaryColor);
                                       },
                                       child: Container(
@@ -226,44 +231,37 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ),
                                     Tooltip(
-                                      message: lChanger[6]["tooltip1"],
-                                      child: GestureDetector(
-                                        onTap: (){
-                                          Navigator.push(context, MaterialPageRoute(builder: (context){
-                                            return ProfileScreen();
-                                          }));
-                                        },
-                                        child: Container(
-                                          height: hei1*0.25,
-                                          width: hei1*0.25,
-                                          padding: EdgeInsets.all(12.sp),
-                                          decoration: BoxDecoration(
-                                            color: cTheme.primaryColorLight,
-                                            borderRadius: BorderRadius.all(Radius.circular(17.sp),),
-                                          ),
-                                          child: SvgPicture.asset(
-                                              height: 70,
-                                              width: 70,
-                                              "images/fib-logo.svg",
-                                              color: cTheme.primaryColorDark,
-                                              semanticsLabel: 'FIB logo'),
-                                          // Container(
-                                          //   decoration: BoxDecoration(
-                                          //     color: cTheme.primaryColor,
-                                          //     borderRadius: BorderRadius.all(
-                                          //       Radius.circular(100.sp),
-                                          //     ),
-                                          //     image: DecorationImage(
-                                          //       image: AssetImage("images/007-boy-2.jpg"),
-                                          //       fit: BoxFit.cover,
-                                          //     ),
-                                          //     border: Border.all(
-                                          //       width: 3,
-                                          //       color: cTheme.primaryColor,
-                                          //     ),
-                                          //   ),
-                                          // ),
+                                      message: "RCMS",
+                                      child: Container(
+                                        height: hei1*0.25,
+                                        width: hei1*0.25,
+                                        padding: EdgeInsets.all(12.sp),
+                                        decoration: BoxDecoration(
+                                          color: cTheme.primaryColorLight,
+                                          borderRadius: BorderRadius.all(Radius.circular(17.sp),),
                                         ),
+                                        child: SvgPicture.asset(
+                                            height: 70,
+                                            width: 70,
+                                            "images/rcms-logo-3.svg",
+                                            color: cTheme.primaryColorDark,
+                                            semanticsLabel: 'RCMS'),
+                                        // Container(
+                                        //   decoration: BoxDecoration(
+                                        //     color: cTheme.primaryColor,
+                                        //     borderRadius: BorderRadius.all(
+                                        //       Radius.circular(100.sp),
+                                        //     ),
+                                        //     image: DecorationImage(
+                                        //       image: AssetImage("images/007-boy-2.jpg"),
+                                        //       fit: BoxFit.cover,
+                                        //     ),
+                                        //     border: Border.all(
+                                        //       width: 3,
+                                        //       color: cTheme.primaryColor,
+                                        //     ),
+                                        //   ),
+                                        // ),
                                       ),
                                     ),
                                     Tooltip(
@@ -289,7 +287,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ):Row(
                                   children: [
                                     Tooltip(
-                                      message: lChanger[6]["tooltip1"],
+                                      message: "RCMS",
                                       child: Container(
                                         width: 80,
                                         height: 80,
@@ -302,9 +300,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: SvgPicture.asset(
                                             height: 60,
                                             width: 60,
-                                            "images/fib-logo.svg",
+                                            "images/rcms-logo-3.svg",
                                             color: cTheme.primaryColorDark,
-                                            semanticsLabel: 'FIB logo'),
+                                            semanticsLabel: 'RCMS'),
                                       ),
                                     ),
                                     SizedBox(width: 10,),

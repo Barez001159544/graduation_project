@@ -78,7 +78,7 @@
       "cstatus1": "Paid",
       "cstatus2": "Unpaid",
       "employee": "Engineering",
-      "randm": "Repair & Maintain",
+      "randm": "Maintenance",
       "protest": "Protest",
       "no-info": "No payment information about this property is available"
     },
@@ -105,8 +105,8 @@
       "copy": "Copied to clipboard"
     },
     {
-      "title1": "Repair & Maintain History",
-      "fab": "Request repair or maintenance",
+      "title1": "Maintenance History",
+      "fab": "Maintenance",
       "empty": "empty",
       "action": "Delete",
       "status1": "Pending",
@@ -115,14 +115,13 @@
       "status4": "Completed",
       "delNotify1": "Successfully deleted",
       "delNotify2": "An error occurred",
-
-      "title2": "New Repair & Maintenance",
+      "title2": "Maintenance",
       "subtitle": "Fill the followings and it will be directed to an employee, and someone will get to you soon",
       "btn": "send",
       "description": "Description",
       "property": "Property",
       "popTitle": "Confirm Request",
-      "popSubtitle": "Are you sure you want to request this repairment or maintenance?",
+      "popSubtitle": "Are you sure you want to request this Repair/Maintenance?",
       "agreeBtn": "Ok",
       "declineBtn": "Decline",
       "notification1": "Successfully Sent",
@@ -140,7 +139,6 @@
       "action": "Delete",
       "delNotify1": "Successfully deleted",
       "delNotify2": "An error occurred",
-
       "steps": "Follow these steps to place your protest",
       "backBtn": "Back",
       "nextBtn": "Next",
@@ -161,7 +159,7 @@
       "notification1": "Successfully sent",
       "notification2": "An error occurred",
       "notification3": "Don't leave any field empty",
-      "confirmMessage": "Once you hit the confirm button below,\nyour protest message will be sent\nto your host",
+      "confirmMessage": "Once you hit the confirm button below,\nyour protest message will be sent\nto your residential management",
       "confirmationAlertMessage": "Sent",
       "errorAlertMessage": "Error"
     },

@@ -23,7 +23,6 @@ class _AboutAppState extends State<AboutApp> {
   @override
   Widget build(BuildContext context) {
     final info = AppInfo.of(context);
-    appInfo.add(info.package.appName);
     appInfo.add(info.package.version);
 
     double wid = MediaQuery.of(context).size.width;
