@@ -1,4 +1,5 @@
 class UserDetails{
+  late int id;
   late String name;
   late String email;
   // late String password;
@@ -10,9 +11,10 @@ class UserDetails{
   // late String buildingNumber;
   // late String imgUrl;
 
-  UserDetails(this.name, this.email, this.phoneNumber, this.age, this.jobTitle,);
+  UserDetails(this.id, this.name, this.email, this.phoneNumber, this.age, this.jobTitle,);
 
   Map<String, dynamic> toJson()=>{
+    'id': id,
     'name': name,
     'email': email,
     // 'password': password,
@@ -24,6 +26,7 @@ class UserDetails{
   };
 
   UserDetails.fromJson(Map<String, dynamic> json){
+    id= json['id'];
     name= json['name'];
     email= json['email'];
     // password= json['password'];

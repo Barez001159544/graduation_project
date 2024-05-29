@@ -43,7 +43,7 @@ class User extends IUser{
     _token=await TokenManager().readToken("accessToken");
     try{
       http.Response response= await http.get(
-        Uri.parse("http://127.0.0.1:8000/api/residents/self"),
+        Uri.parse("http://127.0.0.1:8000/api/resident/self"),
         headers: {
           "Accept": "application/json",
           "content-type": "application/json",
@@ -70,7 +70,7 @@ class User extends IUser{
     _token= await TokenManager().readToken("accessToken");
     try{
       http.Response response= await http.put(
-          Uri.parse('http://127.0.0.1:8000/api/residents/self/update'),
+          Uri.parse('http://127.0.0.1:8000/api/resident/self/update'),
         headers: {
           "Accept": "application/json",
           "content-type": "application/json",
@@ -90,11 +90,11 @@ class User extends IUser{
   }
 
   @override
-  Future<RolesResponse?> getRoles(String? email) async{
+  Future<RolesResponse?> getRoles(String? id) async{
     _token= await TokenManager().readToken("accessToken");
     try{
       http.Response response= await http.get(
-        Uri.parse("http://127.0.0.1:8000/api/roles/$email"),
+        Uri.parse("http://127.0.0.1:8000/api/roles/$id"),
         headers: {
           "Accept": "application/json",
           "content-type": "application/json",
@@ -103,6 +103,7 @@ class User extends IUser{
       );
 
       if(response.statusCode==200){
+        print("8888888888888");
         print(response.statusCode);
         print(response.body);
         RolesResponse rolesResponse= RolesResponse.fromJson(jsonDecode(response.body));

@@ -9,8 +9,6 @@ import '../models/update_user_request.dart';
 
 class GetGetSelf extends ChangeNotifier{
   bool isLoading=false;
-  GetSelfResponse? _getSelfResponse;
-  GetSelfResponse? get getSelfResponse=> _getSelfResponse;
 
   AuthResponse? _data;
   AuthResponse? get data=>_data;
@@ -28,6 +26,8 @@ class GetGetSelf extends ChangeNotifier{
     notifyListeners();
   }
 
+  GetSelfResponse? _getSelfResponse;
+  GetSelfResponse? get getSelfResponse=> _getSelfResponse;
 
   Future<void> getGetSelf() async {
     isLoading=true;
@@ -35,7 +35,6 @@ class GetGetSelf extends ChangeNotifier{
 
     var response= await services.getSelf();
     _getSelfResponse= response;
-
 
     isLoading=false;
     notifyListeners();
@@ -55,11 +54,11 @@ class GetGetSelf extends ChangeNotifier{
   RolesResponse? _rolesResponse;
   RolesResponse? get rolesResponse=> _rolesResponse;
 
-  Future<void> getUserRoles(String? email) async {
+  Future<void> getUserRoles(String? id) async {
     isLoading=true;
     notifyListeners();
 
-    var response= await services.getRoles(email);
+    var response= await services.getRoles(id);
     _rolesResponse=response;
 
     isLoading=false;

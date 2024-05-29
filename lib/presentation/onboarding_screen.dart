@@ -17,15 +17,15 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 final images = [
-  AssetImage("images/onboard1.png"),
   AssetImage("images/onboard2.png"),
+  AssetImage("images/onboard1.png"),
   AssetImage("images/onboard3.png"),
 ];
 
 List txt=[
-  "Lorem ipsum is simply a\ndummy text for your design or\nyour mobile app.",
-  "Lorem ipsum is simply a\ndummy text for your design or\nyour mobile app2.",
-  "Lorem ipsum is simply a\ndummy text for your design or\nyour mobile app3.",
+  "Welcome to the RCMS app,\nhere you can manage\nyour properties at ease",
+  "Discover powerful features\nsuch as Payment, making Protest,\nrequesting Maintenance & more",
+  "Ready to dive in?\nsubscribe with a residential\nmanagement and enjoy",
 ];
 
 int ind = 0;
@@ -86,15 +86,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
                   ),
                 ),
                 Container(
-                  width: wid>480?400:wid,
-                  height: wid>480?480:wid + 100,
+                  width: wid>480?hei/2:wid,
+                  height: wid>480?hei/2:wid + 100,
                   child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                   Container(
-                  width: wid>480?400:wid,
-                    height: wid>480?400:wid,
+                  width: wid>480?hei/2.7:wid,
+                    height: wid>480?hei/2.7:wid,
                     decoration: BoxDecoration(
+                      // color: Colors.green,
                       image: DecorationImage(
                         image: images[ind],
                         fit: BoxFit.cover,

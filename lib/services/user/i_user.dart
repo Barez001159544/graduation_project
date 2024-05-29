@@ -9,6 +9,6 @@ abstract class IUser{
   Future<AuthResponse?> authenticate(AuthRequest);
   Future<GetSelfResponse?> getSelf();
   Future<String?> updateUser(UpdateUserRequest updateUserRequest);
-  Future<RolesResponse?> getRoles(String? email);
+  Future<RolesResponse?> getRoles(String? id);
   Future<String?> logOut();
 }

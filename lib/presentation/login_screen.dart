@@ -135,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       // TokenManager().saveToken("accessToken", getAuth.data!.bearerToken);
                                       await getToken.writeToken("accessToken", getGetSelf.data!.bearerToken);
                                       await getGetSelf.getGetSelf();
-                                      await getGetSelf.getUserRoles(getGetSelf.getSelfResponse?.userDetails?.email);
+                                      await getGetSelf.getUserRoles("${getGetSelf.getSelfResponse?.userDetails?.id}");
                                       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context){
                                         return getGetSelf.rolesResponse!.roles!.contains("resident")?HomeScreen():EngineeringScreen();
                                       }), (route) => false);

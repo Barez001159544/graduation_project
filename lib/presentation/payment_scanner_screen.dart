@@ -129,7 +129,7 @@ class _PaymentScannerScreenState extends State<PaymentScannerScreen> {
                             height: or?wid/5:wid*0.6,
                             margin: EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              // color: Colors.white,
                               borderRadius: BorderRadius.all(Radius.circular(20),),
                             ),
                             child: Center(

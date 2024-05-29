@@ -97,14 +97,6 @@ Future<void> main() async {
           ),
         ],
         child: MyApp(),
-        /// UNCOMMENT when new device_preview version is released
-        // DevicePreview(
-        //   enabled: !kReleaseMode,
-        //   tools: [
-        //     ...DevicePreview.defaultTools
-        //   ],
-        //   builder: (context)=>const MyApp(),
-        // ),
       ),
     ),
   );
@@ -164,16 +156,17 @@ class _MyHomePageState extends State<MyHomePage> {
     // Simulate some async operation to get the future boolean value
     bool? firstTime = await getFirstTime();
     String? rToken= await getRToken();
+    print("&&&&&&&${rToken}");
     String? role= await getRole();
+    await Future.delayed(Duration(seconds: 1)); // 6 seconds
 
     // Delay for 1 second before executing the navigation logic
-    await Future.delayed(Duration(seconds: 1)); // 6 seconds
 
     // Navigate based on the boolean value
     Navigator.of(context, rootNavigator: false).pushReplacement(
       MaterialPageRoute(
         builder: (context) =>
-            // const FAQScreen(),
+            // const OnboardingScreen(),
         firstTime == false ? (rToken == null ? const LoginScreen() : (role=="Resident"?const HomeScreen():(role=="Employee"?const EngineeringScreen():const RefreshLogin()))) : const OnboardingScreen(),
       ),
     );
@@ -194,8 +187,9 @@ class _MyHomePageState extends State<MyHomePage> {
     return Future.value(rToken);
   }
   Future<String?> getRole() async {
+    print("~~~~~~~~~");
     await Provider.of<GetGetSelf>(context, listen: false).getGetSelf();
-    await Provider.of<GetGetSelf>(context, listen: false).getUserRoles(Provider.of<GetGetSelf>(context, listen: false).getSelfResponse?.userDetails?.email);
+    await Provider.of<GetGetSelf>(context, listen: false).getUserRoles("${Provider.of<GetGetSelf>(context, listen: false).getSelfResponse?.userDetails?.id}");
     print("************");
     print(Provider.of<GetGetSelf>(context, listen: false).rolesResponse?.roles);
     print("************");

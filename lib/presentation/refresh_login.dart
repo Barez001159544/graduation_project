@@ -18,7 +18,7 @@ class _RefreshLoginState extends State<RefreshLogin> {
 
   Future<String?> getRole() async {
     await Provider.of<GetGetSelf>(context, listen: false).getGetSelf();
-    await Provider.of<GetGetSelf>(context, listen: false).getUserRoles(Provider.of<GetGetSelf>(context, listen: false).getSelfResponse?.userDetails?.email);
+    await Provider.of<GetGetSelf>(context, listen: false).getUserRoles("${Provider.of<GetGetSelf>(context, listen: false).getSelfResponse?.userDetails?.id}");
     print("************");
     // print(Provider.of<GetGetSelf>(context, listen: false).rolesResponse?.roles);
     print("************");

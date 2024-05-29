@@ -32,7 +32,6 @@ class EngineeringScreen extends StatefulWidget {
 
 List items=[
   //Appliances
-  "television broken",
   "TV",
   "laundry machines",
   "water heaters",
@@ -55,7 +54,6 @@ List items=[
 
 List itemsInArabic=[
   //Appliances
-  "تلفازj",
   "تلفاز",
   "آلات الغسيل",
   "سخانات المياه",
@@ -78,7 +76,6 @@ List itemsInArabic=[
 
 List itemsInKurdish=[
   //Appliances
-  "تەلەفزیۆنی تێکچوو",
   "TV",
   "جلشۆر",
   "گەرمکەری ئاو",

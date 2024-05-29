@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
@@ -54,7 +55,7 @@ ToastFuture CustomToastNotification(BuildContext context, Icon icon, String mess
             //Icon(Icons.error_outline_rounded, color: Colors.red,),
             icon,
             SizedBox(width: 15,),
-            Text(message, style: TextStyle(color: txtColor),),
+            Flexible(child: Text(message, style: TextStyle(color: txtColor,), maxLines: 2, overflow: TextOverflow.ellipsis,)),
           ],
         ),
       ),

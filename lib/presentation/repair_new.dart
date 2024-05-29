@@ -34,7 +34,6 @@ class NewRepair extends StatefulWidget {
 
 List items=[
   //Appliances
-  "television broken"
   "TV",
   "laundry machines",
   "water heaters",
@@ -57,7 +56,6 @@ List items=[
 
 List itemsInArabic=[
   //Appliances
-  "تلفازj",
   "تلفاز",
   "آلات الغسيل",
   "سخانات المياه",
@@ -80,7 +78,6 @@ List itemsInArabic=[
 
 List itemsInKurdish=[
   //Appliances
-  "تەلەفزیۆنی تێکچوو",
   "TV",
   "جلشۆر",
   "گەرمکەری ئاو",
@@ -202,7 +199,8 @@ class _NewRepairState extends State<NewRepair> {
                                         setState(() {
                                           indexes.clear();
                                           val?indexes.add(index):indexes.remove(index);
-                                          print(components[indexes[0]<7?0:(indexes[0]<10?1:(indexes[0]<14?2:3))]);
+                                          // print(indexes[0]);
+                                          // print(components[indexes[0]<7?0:(indexes[0]<10?1:(indexes[0]<14?2:(indexes[0]==15?3:3)))]);
                                           print(index);
                                         });
                                       })
