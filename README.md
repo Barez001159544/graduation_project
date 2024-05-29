@@ -34,7 +34,7 @@ RCMS (Residential Complex Management System) is a Flutter-based mobile applicati
 First the app requires the backend: [Back-End Link](https://github.com/ZhyaRebwar/ResidentialComplexManagementSystem.git)
 
 Clone the repository:
-git clone https://github.com/your-username/rcms.git
+git clone https://github.com/Barez001159544/graduation_project.git
 
 Navigate to the project directory:
 cd graduation_project
